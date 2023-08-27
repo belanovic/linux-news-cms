@@ -109,7 +109,7 @@ export default function Call({
                 /* video: makeCall.type === 'video'? true : false */
             }
             connect();
-             (true);
+            /*  (true); */
             setShowDisconnect(true);
             setShowCallee(true);
             activeCaller = localStorage.getItem('loggedUsername');
@@ -139,7 +139,7 @@ export default function Call({
         })
         
         socket.on('roomIsBusy', (room) => {
-             (false);
+            /*  (false); */
 
             setShowDisconnect(false);
             setShowCallee(false);
@@ -161,7 +161,7 @@ export default function Call({
             const hasVideo = await getVideo(video, streamConstraints);
             if(!hasVideo) {
                 socket.emit('leaveRoom', activeRoom);
-                 (false);
+                /*  (false); */
                 setShowDisconnect(false);
                 setShowCallee(false);
                 activeCaller = '';
@@ -189,7 +189,7 @@ export default function Call({
                 activeRoom = room;
                 activeCaller = caller;
                 setTalker(caller);
-                 (true);
+                /*  (true); */
                 if(constraints.video) {
                     setShowVideo(true);
                 }
@@ -209,7 +209,7 @@ export default function Call({
             setShowCaller(false);
             setTalker('');
             setShowCallee(false);
-             (false);
+            /*  (false); */
             setShowVideo(false);
             socket.emit('leaveRoom', activeRoom);
         })
@@ -286,7 +286,7 @@ export default function Call({
 
             setShowTimer(false);
             setShowDisconnect(false);
-             (false);
+            /*  (false); */
             setShowVideo(false);
             setShowTalker(false);
             
