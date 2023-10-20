@@ -9,11 +9,11 @@ export default function Proba() {
     const handleClickCounter = () => {
         setCounter(prev => prev + 1);
     }
-    useEffect(() => console.log(counter));
+    useEffect(() => console.log(counter), []);
 
     const handleClick = async () => {
-        const res = await fetch(`${HOST_BACKEND}/proba`, {
-            credentials: 'include',
+        const res = await fetch(`${HOST_BACKEND}/probaa`, {
+          /*   credentials: 'include', */
             headers: {
                 
                 /* 'Content-Type': 'application/json',
