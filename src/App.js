@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Order from './Order.js';
 import SearchDate from './SearchDate';
 import Proba from './Proba.js';
+import Proba1 from './Proba1.js';
 ///////  sss
 export default function App() {
 
@@ -32,6 +33,7 @@ export default function App() {
                 <div className="cmsOverlay" ref={cmsOverlay} style={{ display: showCmsOverlay }}></div>
                 <Header showHomepageBtn={false} showFrontend={false} allArticlesBtn={false} newArticleBtn={false} />
                 <Proba />
+                <Proba1 />
                 <Switch>
                     <Route exact path="/"> 
                         <Homepage /> 

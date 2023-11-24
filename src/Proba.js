@@ -7,7 +7,7 @@ export default function Proba() {
     const [counter, setCounter] = useState(0);
 
     const handleClickCounter = () => {
-        setCounter(prev => prev + 1);
+        setCounter(prev => prev + 1); 
     }
     useEffect(() => console.log(counter), []);
 

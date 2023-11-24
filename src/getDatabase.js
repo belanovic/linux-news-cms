@@ -26,7 +26,6 @@ export async function getArticle(id) {
                 /* 'Content-Type': 'application/json',
                 'x-auth-token' : localStorage.getItem('x-auth-token') */
                 'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token')
-   
             }
         });
         const selectedArticle = await response.json();
@@ -78,7 +77,7 @@ export async function postArticle({id, title, subtitle, text, paragraphs, note, 
         return newArticle
     }
     catch (err) {
-        console.log(err);
+        console.log(err); 
     }
 }
 
