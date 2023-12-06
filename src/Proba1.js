@@ -1,19 +1,52 @@
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react';
+import {jwtDecode} from 'jwt-decode';
 
 export default function Proba1() {
 
     const [odgovor, setOdgovor] = useState([]);
     const [counter, setCounter] = useState(0);
 
-    const [username, setUsername]  = useState('');
-    const [password, setPassword]  = useState('');
+    const [usernameRegister, setUsernameRegister]  = useState('');
+    const [passwordRegister, setPasswordRegister]  = useState('');
+
+    const [usernameLogin, setUsernameLogin]  = useState('');
+    const [passwordLogin, setPasswordLogin]  = useState('');
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    
 
     const handleChange = (e) => {
         const value = e.target.value;
-        e.target.name == "username"? setUsername(value) : setPassword(value)
+        const name = e.target.name;
+        if(name == 'usernameRegister') setUsernameRegister(value)
+        if(name == 'passwordRegister') setPasswordRegister(value)
+        if(name == 'usernameLogin') setUsernameLogin(value)
+        if(name == 'passwordLogin') setPasswordLogin(value)
     }
 
+
+
+    const sendRequest = async () => {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + /* 'sldfsdfsdfsdfsf' */ localStorage.getItem('token')
+            }
+        }
+        let res_body;
+        try {
+            const res = await fetch('http://localhost:2000/find', options);
+            res_body = await res.json();
+            if(res_body.error) {
+                alert(res_body.error.message)
+                return
+            }
+            setOdgovor(res_body);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
     const register = async (e) => {
         const options = {
             method: 'POST',
@@ -21,51 +54,51 @@ export default function Proba1() {
                 'Content-Type':'application/json' 
             },
             body: JSON.stringify({
-                username: username,
-                password: password
+                username: usernameRegister,
+                password: passwordRegister
             })
         }
         const res = await fetch('http://localhost:2000/register', options);
         const body = await res.json();
-        /* console.log(`response od register fetcha: ${payload}`); */
-        console.log(body);
+        /* alert('You are registered as ' + body.username); */
+        alert(body);
     }
 
     const login = async () => {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'                
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                username: username,
-                password: password
+            body: JSON.stringify({ 
+                username: usernameLogin,
+                password: passwordLogin
             })
         };
         const res = await fetch('http://localhost:2000/login', options);
         const login_message = await res.json();
         if(login_message.logged_in) {
-            console.log(`You are logged in. You token is ${login_message.token}`);
+            alert(`You are logged in as ${login_message.username}. You token is ${login_message.token}`);
             localStorage.setItem('token', login_message.token);
+            setLoggedIn(true);
+            setUsernameLogin('');
+            setPasswordLogin('');
         } else {
-            console.log(login_message.error_message);
+            alert(login_message.error_message);
         }
         
     }
-
-    const sendRequest = async () => {
-        const options = {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }
-        const res = await fetch('http://localhost:2000/find', options);
-        const data = await res.json();
-        console.log(data)
-        setOdgovor(data)
+    const logout = () => {
+        const removed = localStorage.removeItem('token');
+        setLoggedIn(false);
+        setOdgovor([])
     }
+
     /* console.log('pozvana komponenta funkcija') */
+    
+    useEffect(() => {
+        localStorage.getItem('token')? setLoggedIn(true) : setLoggedIn(false)
+    }, [])
 
     return (
         <div className = "proba1" style = {{
@@ -77,18 +110,18 @@ export default function Proba1() {
                 <span>Username</span>
                 <input
                     className = "username"
-                    name = "username"
+                    name = "usernameRegister"
                     type = "text"
-                    value = {username}
+                    value = {usernameRegister}
                     onKeyDown={(e) => {if(e.key == 'Enter') register(e)}}
                     onChange = {handleChange}
                 ></input>
                 <span>Password</span>
                 <input
                     className='password'
-                    name = "password"
+                    name = "passwordRegister"
                     type = "text"
-                    value = {password}
+                    value = {passwordRegister}
                     onKeyDown={(e) => {if(e.key == 'Enter') register(e)} }
                     onChange = {handleChange}
                 ></input>
@@ -101,31 +134,44 @@ export default function Proba1() {
                     <span>Username</span>
                     <input
                         className = "username"
-                        name = "username"
+                        name = "usernameLogin"
                         type = "text"
-                        value = {username}
+                        value = {usernameLogin}
                         onKeyDown={(e) => {if(e.key == 'Enter') login(e)}}
                         onChange = {handleChange}
                     ></input>
                     <span>Password</span>
                     <input
                         className='password'
-                        name = "password"
+                        name = "passwordLogin"
                         type = "text"
-                        value = {password}
+                        value = {passwordLogin}
                         onKeyDown={(e) => {if(e.key == 'Enter') login(e)} }
                         onChange = {handleChange}
                     ></input>
                 <button
-                    onClick = {login}
-                >login
+                    onClick = {() => loggedIn? logout() : login()}
+                >{loggedIn? 'logout' : 'login'}
                 </button>
+                {loggedIn?
+                <span>{jwtDecode(localStorage.getItem('token')).username}</span>
+                :
+                ''
+                }
             </div>
-            <button
-                onClick = {sendRequest}
-            >Send http request
-            </button>
-            <div>{odgovor.map((prom, i) => <li key = {i}>{prom.title}</li>)}</div>
+            {loggedIn?
+            <div>
+                <button
+                    onClick = {sendRequest}
+                >Send http request
+                </button>
+                <div>{odgovor.map((prom, i) => <li key = {i}>{prom.title}</li>)}</div>
+            </div>
+            :
+            ''
+            }
+
+            
         </div> 
     )
 }
