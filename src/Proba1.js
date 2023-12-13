@@ -1,6 +1,8 @@
 
 import React, {useState, useEffect} from 'react';
 import {jwtDecode} from 'jwt-decode';
+import Cookies from 'universal-cookie'
+const cookies = new Cookies();
 
 export default function Proba1() {
 
@@ -25,14 +27,10 @@ export default function Proba1() {
         if(name == 'passwordLogin') setPasswordLogin(value)
     }
 
-
-
     const sendRequest = async () => {
         const options = {
             method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + /* 'sldfsdfsdfsdfsf' */ localStorage.getItem('token')
-            }
+            credentials: 'include'
         }
         let res_body;
         try {
@@ -44,6 +42,7 @@ export default function Proba1() {
             }
             setOdgovor(res_body);
         } catch (error) {
+            
             alert(error.message);
         }
     }
@@ -58,46 +57,71 @@ export default function Proba1() {
                 password: passwordRegister
             })
         }
-        const res = await fetch('http://localhost:2000/register', options);
-        const body = await res.json();
-        /* alert('You are registered as ' + body.username); */
-        alert(body);
+        try {
+            const res = await fetch('http://localhost:2000/register', options);
+            const res_body = await res.json();
+            if(res_body.error) {
+                alert(res_body.error.message);
+                return
+            }
+            if(res_body.registration_msg.registered == false) {
+                alert(res_body.registration_msg.failure_msg);
+                return
+            }
+            alert('You are registered as ' + res_body.registration_msg.username);
+            return
+            
+        } catch (error) {
+            alert(error.message)
+        }
     }
 
     const login = async () => {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify({ 
                 username: usernameLogin,
                 password: passwordLogin
             })
         };
-        const res = await fetch('http://localhost:2000/login', options);
-        const login_message = await res.json();
-        if(login_message.logged_in) {
-            alert(`You are logged in as ${login_message.username}. You token is ${login_message.token}`);
-            localStorage.setItem('token', login_message.token);
-            setLoggedIn(true);
-            setUsernameLogin('');
-            setPasswordLogin('');
-        } else {
-            alert(login_message.error_message);
+        try {
+            const res = await fetch('http://localhost:2000/login', options);
+            const res_body = await res.json();
+            if(res_body.error) {
+                alert(res_body.error.message);
+                return
+            }
+            if(res_body.login_msg.logged_in) {
+                alert(`You are logged in as ${res_body.login_msg.username}. You token is ${res_body.login_msg.token}`);
+                console.log(cookies.get('token'));
+                setLoggedIn(true);
+                setUsernameLogin('');
+                setPasswordLogin('');
+            } else {
+                alert(res_body.login_msg.failure_msg);
+            }
+        } catch (error) {
+            alert(error.message)
         }
+        
         
     }
     const logout = () => {
-        const removed = localStorage.removeItem('token');
+        const removed = cookies.remove('token');
         setLoggedIn(false);
+        setUsernameLogin('');
+        setPasswordLogin('');
         setOdgovor([])
     }
 
     /* console.log('pozvana komponenta funkcija') */
     
     useEffect(() => {
-        localStorage.getItem('token')? setLoggedIn(true) : setLoggedIn(false)
+        cookies.get('token')? setLoggedIn(true) : setLoggedIn(false)
     }, [])
 
     return (
@@ -115,6 +139,8 @@ export default function Proba1() {
                     value = {usernameRegister}
                     onKeyDown={(e) => {if(e.key == 'Enter') register(e)}}
                     onChange = {handleChange}
+                    
+                    
                 ></input>
                 <span>Password</span>
                 <input
@@ -124,6 +150,7 @@ export default function Proba1() {
                     value = {passwordRegister}
                     onKeyDown={(e) => {if(e.key == 'Enter') register(e)} }
                     onChange = {handleChange}
+                    
                 ></input>
             <button
                 onClick = {register}
@@ -139,6 +166,7 @@ export default function Proba1() {
                         value = {usernameLogin}
                         onKeyDown={(e) => {if(e.key == 'Enter') login(e)}}
                         onChange = {handleChange}
+                        
                     ></input>
                     <span>Password</span>
                     <input
@@ -148,13 +176,14 @@ export default function Proba1() {
                         value = {passwordLogin}
                         onKeyDown={(e) => {if(e.key == 'Enter') login(e)} }
                         onChange = {handleChange}
+                        
                     ></input>
                 <button
                     onClick = {() => loggedIn? logout() : login()}
                 >{loggedIn? 'logout' : 'login'}
                 </button>
                 {loggedIn?
-                <span>{jwtDecode(localStorage.getItem('token')).username}</span>
+                <span>{jwtDecode(cookies.get('token')).username}</span>
                 :
                 ''
                 }
