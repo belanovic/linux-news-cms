@@ -244,7 +244,7 @@ export default function Chat() {
             >
                 <div className = "overlay-message" >{overlayMessage}</div>
             </div>
-            <Call
+     {/*        <Call
                 callee = {callee}
                 makeCall = {makeCall}
                 setMakeCall = {setMakeCall}
@@ -255,7 +255,7 @@ export default function Chat() {
                 setShowOverlay = {setShowOverlay}
                 overlayMessage = {overlayMessage}
                 setOverlayMessage = {setOverlayMessage}                 
-            />
+            /> */}
             <div className = "chat-rooms">
                 <input
                     type ="text"

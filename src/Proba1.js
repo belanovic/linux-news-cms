@@ -17,6 +17,8 @@ export default function Proba1() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     
+    const [query, setQuery] = useState('');
+    const [film, setFilm] = useState('');
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -25,24 +27,31 @@ export default function Proba1() {
         if(name == 'passwordRegister') setPasswordRegister(value)
         if(name == 'usernameLogin') setUsernameLogin(value)
         if(name == 'passwordLogin') setPasswordLogin(value)
+        if(name == 'query') setQuery(value)
     }
 
-    const sendRequest = async () => {
+    const searchFilm = async () => {
         const options = {
-            method: 'GET',
-            credentials: 'include'
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify({
+                title: query
+            })
         }
-        let res_body;
         try {
-            const res = await fetch('http://localhost:2000/find', options);
-            res_body = await res.json();
+            const res = await fetch('http://localhost:2000/findFilm', options);
+            if(res.status == 401) {
+                alert('401 - Authentication error');
+                logout();
+                return
+            }
+            let res_body = await res.json();
             if(res_body.error) {
                 alert(res_body.error.message)
                 return
             }
             setOdgovor(res_body);
         } catch (error) {
-            
             alert(error.message);
         }
     }
@@ -95,23 +104,22 @@ export default function Proba1() {
                 alert(res_body.error.message);
                 return
             }
-            if(res_body.login_msg.logged_in) {
-                alert(`You are logged in as ${res_body.login_msg.username}. You token is ${res_body.login_msg.token}`);
-                console.log(cookies.get('token'));
-                setLoggedIn(true);
-                setUsernameLogin('');
-                setPasswordLogin('');
-            } else {
+            if(res_body.login_msg.logged_in == false) {
                 alert(res_body.login_msg.failure_msg);
+                return
             }
-        } catch (error) {
+            alert(`You are logged in as ${res_body.login_msg.username}`);
+            setLoggedIn(true);
+            setUsernameLogin('');
+            setPasswordLogin('');
+        } catch (error) { 
             alert(error.message)
         }
         
         
     }
     const logout = () => {
-        const removed = cookies.remove('token');
+        const removed = cookies.remove('token', {sameSite: true});
         setLoggedIn(false);
         setUsernameLogin('');
         setPasswordLogin('');
@@ -190,9 +198,18 @@ export default function Proba1() {
             </div>
             {loggedIn?
             <div>
+                <input
+                    className = "query"
+                    name = "query"
+                    type = "text"
+                    value = {query}
+                    onChange= {handleChange}
+                    onKeyDown={(e) => {if(e.key == 'Enter') searchFilm(e)}}
+
+                ></input>
                 <button
-                    onClick = {sendRequest}
-                >Send http request
+                    onClick = {searchFilm}
+                >Search Film
                 </button>
                 <div>{odgovor.map((prom, i) => <li key = {i}>{prom.title}</li>)}</div>
             </div>
