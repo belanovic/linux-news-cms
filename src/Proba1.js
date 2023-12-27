@@ -204,7 +204,7 @@ export default function Proba1() {
         setTitle('')
     }
 
-    /* console.log('pozvana komponenta funkcija') */
+    /* console.log('pozvana komponenta funkcijaa') */
     
     useEffect(() => {
         cookies.get('token')? setLoggedIn(true) : setLoggedIn(false)
