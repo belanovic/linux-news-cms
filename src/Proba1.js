@@ -24,6 +24,87 @@ export default function Proba1() {
     const [year, setYear] = useState('');
 
 
+    /* AIzaSyDSDfYJUpsGhNhIPaDqzNxNXrPS9veXolU */
+
+    const searchWeb = async () => {
+/*         const options = {
+            method: 'GET'
+        }
+        const res = await fetch(`https://www.googleapis.com/customsearch/v1?key=AIzaSyDSDfYJUpsGhNhIPaDqzNxNXrPS9veXolU&cx=e266e4266097746da&q=ukraine`, options);
+        const resBody = await res.json();
+        console.log(resBody); */
+
+/*         const url = 'https://duckduckgo-duckduckgo-zero-click-info.p.rapidapi.com/?q=ukrajina&callback=process_duckduckgo&no_html=1&no_redirect=1&skip_disambig=1&format=json';
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'd1d887415cmsh985b8cd21e3d018p1ed1ebjsn723510c1ce85',
+                'X-RapidAPI-Host': 'duckduckgo-duckduckgo-zero-click-info.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await fetch(url, options);
+            const result = await response.text();
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        } */
+ /*        const url = 'https://webknox-search.p.rapidapi.com/media/images/search?keyword=cat';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'd1d887415cmsh985b8cd21e3d018p1ed1ebjsn723510c1ce85',
+                    'X-RapidAPI-Host': 'webknox-search.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.text();
+                console.log(result);
+            } catch (error) {
+                console.error(error);
+            }*/
+        /*     const url = 'https://myallies-breaking-news-v1.p.rapidapi.com/GetCompanyDetailsBySymbol?symbol=twtr';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'd1d887415cmsh985b8cd21e3d018p1ed1ebjsn723510c1ce85',
+                    'X-RapidAPI-Host': 'myallies-breaking-news-v1.p.rapidapi.com'
+                }
+            };
+            
+            try {
+                const response = await fetch(url, options);
+                const result = await response.text();
+                console.log(result);
+            } catch (error) {
+                console.error(error);
+            } */
+
+            const url = 'https://duckduckgo10.p.rapidapi.com/search?term=food&safeSearch=off&region=wt-wt';
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': 'd1d887415cmsh985b8cd21e3d018p1ed1ebjsn723510c1ce85',
+                        'X-RapidAPI-Host': 'duckduckgo10.p.rapidapi.com'
+                    }
+                };
+
+                try {
+                    const response = await fetch(url, options);
+                    const result = await response.text();
+                    console.log(result);
+                } catch (error) {
+                    console.error(error);
+                }
+            
+
+    } 
+
+   /*  searchWeb() */
+
     const handleChange = (e) => {
         const value = e.target.value;
         const name = e.target.name;
@@ -72,27 +153,32 @@ export default function Proba1() {
     }
 
     const getAllFilms = async () => {
-        const options = {
-            method: 'GET',
-            credentials: 'include'
+        try {
+            const options = {
+                method: 'GET',
+                credentials: 'include'
+            }
+            const res = await fetch('http://localhost:2000/allFilms', options);
+            if(res.status == 401) {
+                alert('401 - Authentication error');
+                logout();
+                return
+            }
+            const resBody = await res.json();
+    
+            if(resBody.error) {
+                alert(resBody.error.message);
+                return
+            }
+            if(resBody.queryMsg.isSuccess == false) {
+                alert(resBody.queryMsg.failureMsg);
+                return
+            }
+            setOdgovor(resBody.queryMsg.filmsFound)
+        } catch (error) {
+            alert(error.message)
         }
-        const res = await fetch('http://localhost:2000/allFilms', options);
-        if(res.status == 401) {
-            alert('401 - Authentication error');
-            logout();
-            return
-        }
-        const resBody = await res.json();
-
-        if(resBody.error) {
-            alert(resBody.error.message);
-            return
-        }
-        if(resBody.queryMsg.isSuccess == false) {
-            alert(resBody.queryMsg.failureMsg);
-            return
-        }
-        setOdgovor(resBody.queryMsg.filmsFound)
+       
     }
 
     const postFilm = async () => {
@@ -104,7 +190,7 @@ export default function Proba1() {
             credentials: 'include',
             body: JSON.stringify({
                 title: title,
-                genre: 'action',
+                genre: genre,
                 year: 1994
             })
         }
@@ -167,13 +253,14 @@ export default function Proba1() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + 'lsdjfslkdjfksklsjdflksjdfjksdfj'
             },
             credentials: 'include',
             body: JSON.stringify({ 
                 username: usernameLogin,
                 password: passwordLogin
-            })
-        };
+            }) 
+        }; 
         try {
             const res = await fetch('http://localhost:2000/login', options);
             const resBody = await res.json();
@@ -367,3 +454,4 @@ export default function Proba1() {
         </div> 
     )
 }
+ 
