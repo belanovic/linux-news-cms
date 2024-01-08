@@ -120,7 +120,7 @@ export default function Proba1() {
 
     const searchFilm = async () => {
         const options = {
-            method: 'POST',
+            method: 'POST', 
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
@@ -288,7 +288,7 @@ export default function Proba1() {
         setUsernameLogin('');
         setPasswordLogin('');
         setOdgovor([]);
-        setTitle('')
+        setTitle('');
     }
 
     /* console.log('pozvana komponenta funkcijaa') */
@@ -454,4 +454,3 @@ export default function Proba1() {
         </div> 
     )
 }
- 

@@ -117,24 +117,42 @@ export default function Form() {
         setShowCmsOverlay('none')
     }
 
+
+            
+/*     if(responseBody.error) {
+        alert(responseBody.error.message);
+        return
+    }
+    if(responseBody.registrationMsg.isSuccess == false) {
+        alert(responseBody.registrationMsg.failureMsg);
+        return responseBody.registrationMsg
+    }
+    return responseBody.registrationMsg */
+
+
+
     const handleClickSignUp = async (e) => {
         e.preventDefault();
         setRequestSent(true);
-        setShowCmsOverlay('block')
-        const {newUser} = await registerUser(firstName, lastName, usernameSignUp, passwordSignUp, email, profileImgNameLarge, profileImgURLLarge, profileImgURLSmall, profileImgNameSmall);
+        setShowCmsOverlay('block');
+        const registrationMsg = await registerUser(firstName, lastName, usernameSignUp, passwordSignUp, email, profileImgNameLarge, profileImgURLLarge, profileImgURLSmall, profileImgNameSmall);
         setRequestSent(false); 
         setShowCmsOverlay('none');
-        if(newUser[0] === false) {
-            console.log(newUser);
-            /* alert(newUser[2]); */
+        
+        if(registrationMsg == null) return;
+
+        if(registrationMsg.isSuccess == false) {
+            alert(registrationMsg.failureMsg);
             return
-        } else if(newUser[0] === true) {
-            alert(newUser[1]);
+        }
+    
+        if(registrationMsg.isSuccess == true) {
+            console.log(registrationMsg.userRegistered);
+            alert('You are registered as ' + registrationMsg.userRegistered.username);
             setSignInIsActive(true);
             setSignUpIsActive(false);
             clearFields();
         }
-        /* console.log(newUser); */
     }
 
     useEffect(() => {

@@ -1,36 +1,44 @@
 import HOST_BACKEND from './hostBackend.js';
 
 export async function registerUser(firstName, lastName, usernameSignUp, passwordSignUp, email, profileImgNameLarge, profileImgURLLarge, profileImgURLSmall, profileImgNameSmall) {
-    try {
-        const response = await fetch(`${HOST_BACKEND}/oneUserFE`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                username: usernameSignUp,
-                password: passwordSignUp,
-                email: email,
-                profileImgNameLarge: profileImgNameLarge,
-                profileImgURLLarge: profileImgURLLarge,
-                profileImgURLSmall: profileImgURLSmall,
-                profileImgNameSmall: profileImgNameSmall
-            })
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            username: usernameSignUp,
+            password: passwordSignUp,
+            email: email,
+            profileImgNameLarge: profileImgNameLarge,
+            profileImgURLLarge: profileImgURLLarge,
+            profileImgURLSmall: profileImgURLSmall,
+            profileImgNameSmall: profileImgNameSmall
         })
-        const newUser = await response.json();
-        return {newUser}
     }
-    catch (err) {
-        console.log(err);
+    try {
+        const response = await fetch(`${HOST_BACKEND}/register`, options)
+        const responseBody = await response.json();
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null
+        }
+        if(responseBody.registrationMsg){
+            return responseBody.registrationMsg;
+        }
+        return null
+    }
+    catch (error) {
+        alert(error.message);
+        return null
     }
 }
 
 export async function loginUser(usernameSignIn, passwordSignIn) {
     try {
-        const response = await fetch(`${HOST_BACKEND}/authOneUserFE`, {
+        const response = await fetch(`${HOST_BACKEND}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
