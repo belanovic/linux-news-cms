@@ -5,6 +5,9 @@ import {registerUser} from './getUser.js';
 import {loginUser} from './getUser.js';
 import Profile from './Profile.js';
 import './style/form.css';
+import {jwtDecode} from 'jwt-decode';
+import Cookies from 'universal-cookie'
+const cookies = new Cookies();
 /* import io from 'socket.io-client';
 import HOST_CALL from './hostCall.js';
 

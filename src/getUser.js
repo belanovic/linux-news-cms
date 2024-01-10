@@ -41,20 +41,29 @@ export async function loginUser(usernameSignIn, passwordSignIn) {
         const response = await fetch(`${HOST_BACKEND}/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'text/plain'
+                'Content-Type': 'application/json'
             },
-
+            credentials: 'include',
             body: JSON.stringify({
                 username: usernameSignIn,
                 password: passwordSignIn
             })
         })
-        const user = await response.json();
-     
-        return user
+        const responseBody = await response.json();
+        
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null
+        }
+
+        if(responseBody.loginMsg) {
+            return responseBody.loginMsg
+        }
+        return responseBody
     }
-    catch (err) {
-        console.log(err);
+    catch (error) {
+        console.log(error);
+        return null
     }
 }
 
