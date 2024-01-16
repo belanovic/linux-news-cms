@@ -1,5 +1,5 @@
 import react, { useState, useEffect, useContext } from 'react';
-import { getFrontpageNews, updateFrontpage, getByDate } from './getDatabase';
+import { getFrontpageNews, updateFrontpage, getByDate } from './getArticles';
 import { context } from './newsContext.js';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import SearchDate from './SearchDate';

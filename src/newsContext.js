@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import {jwtDecode} from 'jwt-decode';
+import Cookies from 'universal-cookie'
+const cookies = new Cookies();
 
 const context = React.createContext();
 
@@ -38,19 +41,12 @@ function Provider(props) {
     }]
 
     const checkStorageToken = () => {
-        const storageToken = localStorage.getItem('x-auth-token');
+/*         const storageToken = localStorage.getItem('x-auth-token');
         return storageToken === 'none' || storageToken === null || storageToken === undefined ?
-            false : true
+            false : true */
+        return cookies.get('token')? true : false; 
     }
 
- /*    const checkStorageToken = () => {
-        setIsLoggedIn((prev) => {
-            const storageToken = localStorage.getItem('x-auth-token');
-            return storageToken === 'none' || storageToken === null || storageToken === undefined ?
-                false : true
-        })
-    }
- */
     useEffect(() => {
         setIsLoggedIn(checkStorageToken());
     })
@@ -67,10 +63,10 @@ function Provider(props) {
          console.log(n)
      }, [listAllArticles]) */
 
-     useEffect(() => {
+/*      useEffect(() => {
         console.log('from news context');
         console.log(isLoggedIn);
-    }, [isLoggedIn])
+    }, [isLoggedIn]) */
 
     return (
         <context.Provider value={{

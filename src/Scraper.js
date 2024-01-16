@@ -1,5 +1,5 @@
 import react, {useState} from 'react';
-import {scrape} from './getDatabase';
+import {scrape} from './getArticles';
 
 export default function Scraper({setTitle, setSubtitle, setInitialText}) {
 

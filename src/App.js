@@ -4,7 +4,7 @@ import Homepage from './Homepage.js';
 import AllArticles from './AllArticles.js';
 import Article from './Article.js';
 import Delete from './Delete.js';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { context } from './newsContext';
 import Footer from './Footer'; 
 import Form from './Form.js';
@@ -14,6 +14,8 @@ import SearchDate from './SearchDate';
 import Proba from './Proba.js';
 import Proba1 from './Proba1.js';
 ///////  sss
+
+
 export default function App() {
 
     const cmsOverlay = useRef(null);
@@ -33,7 +35,7 @@ export default function App() {
                 <div className="cmsOverlay" ref={cmsOverlay} style={{ display: showCmsOverlay }}></div>
                 <Header showHomepageBtn={false} showFrontend={false} allArticlesBtn={false} newArticleBtn={false} />
               {/* <Proba /> */}
-              <Proba1 />
+              {/* <Proba1 /> */}
                 <Switch>
                     <Route exact path="/"> 
                         <Homepage /> 
@@ -44,6 +46,7 @@ export default function App() {
                     <Route path='/allArticles'>  
                         <AllArticles />
                     </Route>
+
                     <Route path='/oneArticle/:id'>
                         <Article key = 'notNew' setShowCmsOverlay={setShowCmsOverlay} />
                     </Route>

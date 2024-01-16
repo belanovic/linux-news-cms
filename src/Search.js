@@ -1,6 +1,6 @@
 import react, { useState, useContext, useEffect } from 'react';
 import { context } from './newsContext.js';
-import { getAllArticles } from './getDatabase';
+import { getAllArticles } from './getArticles';
 import './style/search.css';
 
 export default function Search({option}) {
@@ -19,8 +19,11 @@ export default function Search({option}) {
     }
     const findTitle = async () => {
         setRequestSent(true);
-        const all = await getAllArticles();
-        const newsFound = all.filter((article) => {
+        const allNews = await getAllArticles();
+        if(allNews == null) {
+            allNews = []
+        }
+        const newsFound = allNews.filter((article) => {
             const reg = new RegExp(`${query}`, 'i');
             const i = article.title.search(reg);
             console.log(i);
@@ -31,8 +34,11 @@ export default function Search({option}) {
     }
     const findTag = async () => {
         setRequestSent(true);
-        const all = await getAllArticles();
-        const newsFound = all.filter((article) => {
+        const allNews = await getAllArticles();
+        if(allNews == null) {
+            allNews = []
+        }
+        const newsFound = allNews.filter((article) => {
             const reg = new RegExp(`${query}`, 'i'); 
             const some = article.tagsArr.some(tag => {
                 const i = tag.search(reg);

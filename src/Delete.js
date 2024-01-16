@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { context } from './newsContext.js';
-import { deleteArticle, getAllArticles } from './getDatabase.js';
+import { deleteArticle, getAllArticles } from './getArticles.js';
 import Title from './Title.js';
 import Subtitle from './Subtitle.js';
 import Textarea from './Textarea.js';
@@ -56,6 +56,9 @@ export default function Delete() {
             console.log('deleted video: ' + deletedVideo);
 
             const allNews = await getAllArticles();
+            if(allNews == null) {
+                allNews = []
+            }
             const promiseResolveA = await setListAllArticles(allNews);
             const promiseResolveB = await setListLoaded(true);
             window.location.href = '/allArticles';

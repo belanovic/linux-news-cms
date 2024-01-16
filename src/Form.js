@@ -86,53 +86,46 @@ export default function Form() {
         e.preventDefault();
         setShowCmsOverlay('block');
         setRequestSent(true);
-        const userAndToken = await loginUser(usernameSignIn, passwordSignIn);
-        /* console.log(userAndToken[2]); */
-        if(userAndToken[0] === false) {
-            /* console.log(userAndToken); */
-            setErrorMsg(userAndToken[2])
+        const loginMsg = await loginUser(usernameSignIn, passwordSignIn);
+        
+        if(loginMsg == null) {
             setRequestSent(false);
             setShowCmsOverlay('none');
-            return;
-        };
+            return
+        }
 
-        localStorage.setItem('x-auth-token', userAndToken[3]);
+        if(loginMsg.isSuccess == false) {
+            setErrorMsg(loginMsg.failureMsg)
+            setRequestSent(false);
+            setShowCmsOverlay('none');
+            return
+        }
 
-        localStorage.setItem('loggedUsername', userAndToken[2].username); 
-        localStorage.setItem('loggedFirstName', userAndToken[2].firstName); 
-        localStorage.setItem('loggedLastName', userAndToken[2].lastName);
-        localStorage.setItem('loggedEmail', userAndToken[2].email);
+        /* localStorage.setItem('x-auth-token', userAndToken[3]); */
 
-        localStorage.setItem('profileImgURLLarge', userAndToken[2].profileImgURLLarge);
-        localStorage.setItem('profileImgNameLarge', userAndToken[2].profileImgNameLarge);
-        localStorage.setItem('profileImgURLSmall', userAndToken[2].profileImgURLSmall);
-        localStorage.setItem('profileImgNameSmall', userAndToken[2].profileImgNameSmall);
+        if(loginMsg.isSuccess == true) {
+            localStorage.setItem('loggedUsername', loginMsg.userLoggedIn.username); 
+            localStorage.setItem('loggedFirstName', loginMsg.userLoggedIn.firstName); 
+            localStorage.setItem('loggedLastName', loginMsg.userLoggedIn.lastName);
+            localStorage.setItem('loggedEmail', loginMsg.userLoggedIn.email);
+    
+            localStorage.setItem('profileImgURLLarge', loginMsg.userLoggedIn.profileImgURLLarge);
+            localStorage.setItem('profileImgNameLarge', loginMsg.userLoggedIn.profileImgNameLarge);
+            localStorage.setItem('profileImgURLSmall', loginMsg.userLoggedIn.profileImgURLSmall);
+            localStorage.setItem('profileImgNameSmall', loginMsg.userLoggedIn.profileImgNameSmall);
+    
+            setRequestSent(false);
+            setShowCmsOverlay('none');
 
-        
+            setIsLoggedIn((prev) => {
+                /* const v = localStorage.getItem('x-auth-token') === 'none'? false : true; */
+                const v = jwtDecode(cookies.get('token'))? true : false; 
+                return v
+           })
+
+        }
         /* socket.emit('create', localStorage.getItem('loggedUsername')); */
-
-        setIsLoggedIn((prev) => {
-             /* console.log(localStorage.getItem('x-auth-token')) */
-             const v = localStorage.getItem('x-auth-token') === 'none'? false : true;
-             return v
-        })
-        setRequestSent(false);
-        setShowCmsOverlay('none')
     }
-
-
-            
-/*     if(responseBody.error) {
-        alert(responseBody.error.message);
-        return
-    }
-    if(responseBody.registrationMsg.isSuccess == false) {
-        alert(responseBody.registrationMsg.failureMsg);
-        return responseBody.registrationMsg
-    }
-    return responseBody.registrationMsg */
-
-
 
     const handleClickSignUp = async (e) => {
         e.preventDefault();

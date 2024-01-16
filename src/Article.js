@@ -3,7 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { context } from './newsContext.js';
 import { getArticle, getAllArticles, postArticle, 
         updateArticle, getFrontpageNews, 
-        updateArticlePosition } from './getDatabase.js';
+        updateArticlePosition, 
+        deleteArticle} from './getArticles.js';
 import PositionPublish from './PositionPublish.js';
 import Title from './Title.js';
 import Subtitle from './Subtitle.js';
@@ -16,7 +17,7 @@ import Video from './Video.js';
 import firebase from './firebase.js';
 import { uploadImageDB, removeImageDB } from './handleImageDB';
 import { uploadVideoDB, removeVideoDB } from './handleVideoDB';
-import {publishTwit} from './getDatabase';
+import {publishTwit} from './getArticles';
 import TextEditor from './TextEditor.js';
 import Line from './Line';
 import Note from './Note';
@@ -111,7 +112,14 @@ export default function Article({ setShowCmsOverlay, isNew }) {
             setShowCmsOverlay('none');
             return
         }
+
         const selectedArticle = await getArticle(id);
+        if(selectedArticle == null) {
+            setShowCmsOverlay('none');
+            window.location.href = '/allArticles';
+            return
+        }
+
         setIsNewArticle(false);
         setTitle(selectedArticle.title);
         setNote(selectedArticle.note);
@@ -153,10 +161,9 @@ export default function Article({ setShowCmsOverlay, isNew }) {
 
     }
     async function handleSave() {
-        if (title.length === 0 || text.length === 0) {
-            return;
-        }
+
         setShowCmsOverlay('block');
+
         const vest = {
             id: id,
             category: category,
@@ -205,12 +212,20 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 if (published) {
                     vest.datePublished = new Date();
                 }
-                let response = await postArticle(vest);
-                let deployedArticle = await response.text(response);
+
+                let deployedArticle = await postArticle(vest);
+                if(deployedArticle == null) {
+                    setShowCmsOverlay('none');
+                    return;
+                }
+
                 if(sendTwit) {
                     const r = await publishTwit(twit);
                 }
                 const allNews = await getAllArticles();
+                if(allNews == null) {
+                    allNews = []
+                }
                 const promiseResolveA = await setListAllArticles(allNews);
                 const promiseResolveB = await setListLoaded(true);
 
@@ -221,8 +236,8 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 window.location.href = '/allArticles';
                 setShowCmsOverlay('block');
                 return deployedArticle
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                alert(error.message);
             }
 
         } else {
@@ -264,12 +279,26 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 if (published === true && alreadyPublished === false) {
                     vest.datePublished = new Date()
                 }
-                let response = await updateArticle(vest);
-                let updatedArticle = await response.json();
+
+                const updateMsg = await updateArticle(vest);
+
+                if(updateMsg == null) {
+                    setShowCmsOverlay('none');
+                    return 
+                }
+                if(updateMsg.isSuccess == false) {
+                    alert(updateMsg.failureMsg);
+                    setShowCmsOverlay('none');
+                    return 
+                }
+
                 if (IdArticleToChangePosition !== '') {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);
                 }
                 const allNews = await getAllArticles();
+                if(allNews == null) {
+                    allNews = []
+                }
                 if(sendTwit) {
                     const r = await publishTwit(twit);
                 }
@@ -277,7 +306,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 const promiseResolveB = await setListLoaded(true);
                 window.location.href = '/allArticles';
                 setShowCmsOverlay('block');
-                return updatedArticle
+                return updateMsg.updatedArticle
             } catch (err) {
                 console.log(err);
             }

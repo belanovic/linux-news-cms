@@ -1,6 +1,6 @@
 import react, { useState, useContext, useEffect } from 'react';
 import { context } from './newsContext.js';
-import { getAllArticles, getByCategory } from './getDatabase';
+import { getAllArticles, getByCategory } from './getArticles';
 import Calendar from './Calendar';
 import './style/cathegory.css';
 
@@ -25,7 +25,9 @@ export default function Cathegory({ setPageNum, sortArticles }) {
 
         if (cathegory === 'allArticles') {
             let allNews = await getAllArticles();
-            /* const allNewsDate =  */
+            if(allNews == null) {
+                allNews = []
+            }
             if(isDated) {
                 allNews = allNews.filter((article) => {
                     const articleYear = new Date(article.dateCreated).getFullYear();
@@ -73,7 +75,9 @@ export default function Cathegory({ setPageNum, sortArticles }) {
     useEffect(async () => {
         if (cathegory === 'allArticles') {
             let allNews = await getAllArticles();
-           
+            if(allNews == null) {
+                allNews = []
+            }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
             const promiseResolveB = await setListLoaded(true);

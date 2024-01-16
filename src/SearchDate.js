@@ -1,5 +1,5 @@
 import react, { useState, useEffect, useContext } from 'react';
-import { getByDate } from './getDatabase';
+import { getByDate } from './getArticles';
 import { context } from './newsContext';
 
 const years = [];

@@ -6,6 +6,9 @@ import {uploadImageDB, removeImageDB} from './handleImageDB.js';
 import {updateProfileImg} from './getUser';
 import io from 'socket.io-client';
 import HOST_CALL from './hostCall.js';
+import {jwtDecode} from 'jwt-decode';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const socket = io(HOST_CALL);
 
@@ -75,8 +78,10 @@ export default function Profile() {
 
     const handleSignOut = (e) => {
         e.preventDefault();
-        socket.emit('logout', localStorage.getItem('loggedUsername'));
-        localStorage.setItem('x-auth-token', 'none');
+        /* socket.emit('logout', localStorage.getItem('loggedUsername')); */
+        socket.emit('logout', jwtDecode(cookies.get('token')).username);
+        cookies.remove('token', {sameSite: true, secure: true});
+  /*       localStorage.setItem('x-auth-token', 'none'); */
         localStorage.setItem('loggedUsername', null);
         window.location.href = '/';
         setIsLoggedIn(false);

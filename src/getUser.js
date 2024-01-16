@@ -37,18 +37,21 @@ export async function registerUser(firstName, lastName, usernameSignUp, password
 }
 
 export async function loginUser(usernameSignIn, passwordSignIn) {
-    try {
-        const response = await fetch(`${HOST_BACKEND}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                username: usernameSignIn,
-                password: passwordSignIn
-            })
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            username: usernameSignIn,
+            password: passwordSignIn
         })
+    }
+
+    try {
+        const response = await fetch(`${HOST_BACKEND}/login`, options)
         const responseBody = await response.json();
         
         if(responseBody.error) {
@@ -59,10 +62,9 @@ export async function loginUser(usernameSignIn, passwordSignIn) {
         if(responseBody.loginMsg) {
             return responseBody.loginMsg
         }
-        return responseBody
     }
     catch (error) {
-        console.log(error);
+        alert(error.message);
         return null
     }
 }
@@ -90,21 +92,28 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
         })
     }
 
-    try {
-        const response = await fetch(`${HOST_BACKEND}/updateProfilePhotoURL/${size}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain',
-                'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token')
-            },
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain',
+            /* 'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token') */
+        },
+        credentials: 'include',
+        body: body
+    }
 
-            body: body
-        })
+    try {
+        const response = await fetch(`${HOST_BACKEND}/updateProfilePhotoURL/${size}`, options)
+   /*      if(res.status == 401) {
+            alert('401 - Authentication error');
+            logout();
+            return
+        } */
         const user = await response.json();
      
         return user
     }
-    catch (err) {
-        console.log(err);
+    catch (error) {
+        alert(error.message);
     }
 }
