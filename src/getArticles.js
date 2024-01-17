@@ -112,7 +112,6 @@ export async function postArticle({id, title, subtitle, text, paragraphs, note, 
             alert(responseBody.error.message);
             return null;
         }
-        console.log(responseBody);
         if(responseBody.savedArticle) {
             return responseBody.savedArticle;
         }
@@ -195,8 +194,15 @@ export async function deleteArticle(id) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/oneArticle/${id}`, options)
-        const deletedArticle = response.json();
-        return deletedArticle
+        const responseBody = await response.json();
+        
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.articleDeleted) {
+            return responseBody.articleDeleted;
+        }
     }
     catch (error) {
         alert(error.message)
@@ -209,17 +215,21 @@ export async function getFrontpageNews() {
     const options = { 
         headers: {
             'Content-Type': 'application/json'
-            /*'x-auth-token' : localStorage.getItem('x-auth-token') */
-            /* 'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token') */
-
         },
         credentials: 'include'
     }
 
     try {
         const response = await fetch(`${HOST_BACKEND}/frontpageArticlesCMS`, options);
-        const newsFrontpage = await response.json();
-        return newsFrontpage
+        const responseBody = await response.json();
+
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.articles) {
+            return responseBody.articles;
+        }
     }
     catch (error) {
         alert(error.message)

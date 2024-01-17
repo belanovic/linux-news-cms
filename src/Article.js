@@ -365,16 +365,17 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     }, [text])
 
     useEffect(async () => {
-        const n = await getFrontpageNews();
+        const frontpageNews = await getFrontpageNews();
+        if(frontpageNews == null)
         /* n.forEach((prom) => {
             console.log(prom.position + ' ' + prom.title);
         }) */
-        setFrontpageNews(n);
+        setFrontpageNews(frontpageNews);
 
     }, [])
-    useEffect(async () => {
+/*     useEffect(async () => {
         const n = await getFrontpageNews();
-    }, [text])
+    }, [text]) */
 
    useEffect(function () {
         setActiveLink('article');

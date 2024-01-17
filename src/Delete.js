@@ -5,7 +5,7 @@ import { deleteArticle, getAllArticles } from './getArticles.js';
 import Title from './Title.js';
 import Subtitle from './Subtitle.js';
 import Textarea from './Textarea.js';
-import Photo from './Photo.js';
+/* import Photo from './Photo.js'; */
 import firebase from './firebase.js';
 import { removeImageDB } from './handleImageDB';
 import { removeVideoDB } from './handleVideoDB';
@@ -49,6 +49,11 @@ export default function Delete() {
         try {
             const promiseResolveD = setShowCmsOverlay('block');
             const articleDeleted = await deleteArticle(id);
+            if(articleDeleted == null) {
+                setShowCmsOverlay('none');
+                window.location.href = '/allArticles';
+                return
+            }
             console.log('deleted article: ' + articleDeleted);
             const deletedImage = await removeImageDB(imgName, '');
             console.log('deleted image: ' + deletedImage);
@@ -86,9 +91,9 @@ export default function Delete() {
                 <h1 className="deleteTitle">{title}</h1>
                 <h3 className="deleteSubtitle">{subtitle}</h3>
                 <div className="deleteText">{text}</div>
-                <Photo
-                    imgURL={imgURL}
-                />
+            {/*     <Photo
+                   imgURL={imgURL}
+             > */}
                 {title !== '' && text !== '' && imgURL !== '' ?
 
                     <button className="btn" onClick={handleDelete}>Delete</button>

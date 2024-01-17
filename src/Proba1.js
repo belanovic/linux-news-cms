@@ -235,7 +235,7 @@ export default function Proba1() {
             if(resBody.error) {
                 alert(resBody.error.message);
                 return
-            }
+            } 
             if(resBody.registration_msg.registered == false) {
                 alert(resBody.registration_msg.failureMsg);
                 return
