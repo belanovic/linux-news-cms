@@ -50,13 +50,24 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
     }
 
     const handleClick = async (e) => {
-        const result = await getByDate(date);
-        setNewsByDate(result);
+        const newsByDateMsg = await getByDate(date);
+        
+        if(newsByDateMsg == null) {
+            setNewsByDate([]);
+            return
+        }
+        if(newsByDateMsg.isSuccess == false) {
+            setNewsByDate([]);
+            alert(newsByDateMsg.failureMsg);
+            return
+        }
+        setNewsByDate(newsByDateMsg.newsByDate);
     }
 
     const handleSelectArticle = (e) => {
         setDoubleSelectedArticle('');
         const value = e.target.value;
+        console.log(value)
         setSelectedArticle(value);
     }
 
@@ -181,7 +192,10 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
                 </select>
             </div>
             <div className= "order-dateElement order-date-save">
-                <button 
+                {newsByDate.length == 0?
+                <div style = {{background: 'white', color: 'white'}}>.</div>     
+                :             
+                <button                     
                     onClick={(e) => {
                         const storageHasToken = checkStorageToken();
                         setIsLoggedIn(storageHasToken);
@@ -189,7 +203,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
                         handleSave(e);
                     }}
                 >Zameni vest
-                </button>
+                </button>}
             </div>
         </div>
 

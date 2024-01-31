@@ -32,6 +32,8 @@ const storage = firebase.storage();
 
 export default function Article({ setShowCmsOverlay, isNew }) {
 
+
+
     const { listAllArticles, setListAllArticles,
         listLoaded, setListLoaded,setShowMenu,
         /* articleImgLoaded1, setArticleImgLoaded1,
@@ -92,7 +94,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
 
     const { id } = useParams();
     const [isNewArticle, setIsNewArticle] = useState(true);
-
+ 
    /*  let contentLoaded = articleDataLoaded === true */ /* && ((articleImgLoaded1 === true && articleImgLoaded2 === true) || (imgURL === 'generic' || imgURL2 === 'generic') )*/
 
     function findNewLine() {
@@ -194,11 +196,19 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                     photoURL = 'generic'
                 } else { 
                     photoURL = await uploadImageDB(imgName, imgFile, '');
+                    if(photoURL == null) {
+                        setShowCmsOverlay('none');
+                        return;
+                    }
                 }
                 if(imgURL2 === 'generic') {
                     photoURL2 = 'generic'
                 } else { 
                     photoURL2 = await uploadImageDB(imgName2, imgFile2, '');
+                    if(photoURL2 == null) {
+                        setShowCmsOverlay('none');
+                        return;
+                    }
                 }
 
                 if (videoName !== 'none') {
@@ -219,9 +229,9 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                     return;
                 }
 
-                if(sendTwit) {
+              /*   if(sendTwit) {
                     const r = await publishTwit(twit);
-                }
+                } */
                 const allNews = await getAllArticles();
                 if(allNews == null) {
                     allNews = []
@@ -251,7 +261,14 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                         photoURL = 'generic'
                     } else { 
                         photoURL = await uploadImageDB(imgName, imgFile, '');
+                        if(photoURL == null) {
+                            setShowCmsOverlay('none');
+                            return;
+                        }
                         const deletionMsg = await removeImageDB(deployedImgName, '');
+                        if(deletionMsg == null) {
+                            alert('Problem sa brisanjem stare fotografije')
+                        }
                     }
                     vest.imgURL = photoURL;
                 }
@@ -263,7 +280,14 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                         photoURL2 = 'generic'
                     } else { 
                         photoURL2 = await uploadImageDB(imgName2, imgFile2, '');
+                        if(photoURL2 == null) {
+                            setShowCmsOverlay('none');
+                            return;
+                        }
                         const deletionMsg2 = await removeImageDB(deployedImgName2, '');
+                        if(deletionMsg2 == null) {
+                            alert('Problem sa brisanjem stare fotografije')
+                        }
                     }
             
                     vest.imgURL2 = photoURL2;
@@ -299,9 +323,9 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 if(allNews == null) {
                     allNews = []
                 }
-                if(sendTwit) {
+             /*    if(sendTwit) {
                     const r = await publishTwit(twit);
-                }
+                } */
                 const promiseResolveA = await setListAllArticles(allNews);
                 const promiseResolveB = await setListLoaded(true);
                 window.location.href = '/allArticles';
@@ -365,13 +389,15 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     }, [text])
 
     useEffect(async () => {
-        const frontpageNews = await getFrontpageNews();
-        if(frontpageNews == null)
+        const n = await getFrontpageNews();
+        
+        if(n == null) {
+            setFrontpageNews(null);
+        }
         /* n.forEach((prom) => {
             console.log(prom.position + ' ' + prom.title);
         }) */
-        setFrontpageNews(frontpageNews);
-
+        setFrontpageNews(n);
     }, [])
 /*     useEffect(async () => {
         const n = await getFrontpageNews();

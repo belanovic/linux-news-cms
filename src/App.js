@@ -21,11 +21,7 @@ export default function App() {
     const cmsOverlay = useRef(null);
     const { showCmsOverlay, setShowCmsOverlay, 
             isLoggedIn, isNewArticle, 
-            setIsLoggedIn } = useContext(context);
-
-            useEffect(() => {
-                console.log('from App');
-            }, [])
+            setIsLoggedIn } = useContext(context)
 
     return (<>
         {isLoggedIn ?
@@ -35,7 +31,7 @@ export default function App() {
                 <div className="cmsOverlay" ref={cmsOverlay} style={{ display: showCmsOverlay }}></div>
                 <Header showHomepageBtn={false} showFrontend={false} allArticlesBtn={false} newArticleBtn={false} />
               {/* <Proba /> */}
-              {/* <Proba1 /> */}
+              {/* {<Proba1 />} */}
                 <Switch>
                     <Route exact path="/"> 
                         <Homepage /> 

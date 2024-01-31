@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Children} from 'react';
 import {jwtDecode} from 'jwt-decode';
 import Cookies from 'universal-cookie'
 const cookies = new Cookies();
@@ -126,7 +126,7 @@ export default function Proba1() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                title: query
+                title: query 
             })
         }
         try {
@@ -294,7 +294,8 @@ export default function Proba1() {
     /* console.log('pozvana komponenta funkcijaa') */
     
     useEffect(() => {
-        cookies.get('token')? setLoggedIn(true) : setLoggedIn(false)
+        cookies.get('token')? setLoggedIn(true) : setLoggedIn(false);
+  
     }, [])
 
     return (
@@ -303,7 +304,6 @@ export default function Proba1() {
             background: "black"
         }}>
             <h1>Proba1</h1>
-           
             <div
                 className='visitor'
             >

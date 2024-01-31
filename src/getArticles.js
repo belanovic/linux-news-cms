@@ -230,6 +230,8 @@ export async function getFrontpageNews() {
         if(responseBody.articles) {
             return responseBody.articles;
         }
+        alert('Problem sa listom članaka')
+        return null
     }
     catch (error) {
         alert(error.message)
@@ -252,9 +254,18 @@ export async function updateArticlePosition(id, position) {
     }
 
     try {
-        const updatedArticle = await fetch(`${HOST_BACKEND}/articlePosition/${id}`, options);
-        /////???????????????????
-        return updatedArticle
+        const response = await fetch(`${HOST_BACKEND}/articlePosition/${id}`, options);
+        const responseBody = await response.json();
+        
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.updatedArticle) {
+            return responseBody.updatedArticle;
+        }
+        alert('Problem sa promenom pozicije članka')
+        return null
     }
     catch (error) {
         alert(error.message)
@@ -277,9 +288,17 @@ export async function updateFrontpage(idAndPositionArr) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/updateFrontpage`, options)
-        const updatedFrontpage = response.json();
-        return updatedFrontpage
+        const response = await fetch(`${HOST_BACKEND}/updateFrontpage`, options);
+        const responseBody = await response.json();
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.modifiedAllArticles) {
+            return responseBody.modifiedAllArticles;
+        }
+        alert('Problem sa promenom naslovne strane')
+        return null
     }
     catch (error) {
         alert(error.message)
@@ -299,8 +318,17 @@ export async function getByCategory(category) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/category/${category}`, options);
-        const newsByCategory = await response.json();
-        return newsByCategory
+        const responseBody = await response.json();
+        
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.newsByCategory) {
+            return responseBody.newsByCategory;
+        }
+        alert('Problem sa pretragom vesti po kategorijama')
+        return null
     }
     catch (error) {
         alert(error.message)
@@ -326,8 +354,19 @@ export async function getByDate(date) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/articlesByDate`, options)
-        const articlesByDate = response.json();
-        return articlesByDate
+        const responseBody = await response.json();
+
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+
+        if(responseBody.newsByDateMsg) {
+            return responseBody.newsByDateMsg
+        }
+        alert('Problem sa pretragom vesti po datumu')
+        return null
+
     }
     catch (error) {
         alert(error.message)
@@ -352,9 +391,17 @@ export async function publishArticle(id) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/publishArticle/${id}`, options)
-        const publishedArticle = response.json();
-        return publishedArticle
+        const response = await fetch(`${HOST_BACKEND}/publishArticle/${id}`, options);
+        const responseBody = await response.json();
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.publishedArticle) {
+            return responseBody.publishedArticle
+        }
+        alert('Problem sa objavom vesti')
+        return null
     }
     catch (error) {
         alert(error.message)
@@ -377,15 +424,24 @@ export async function scrape(url) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/scraper`, options)
-        const scrapedArticle = await response.json();
-        return scrapedArticle
+        const responseBody = await response.json();
+      
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.scrapedArticle) {
+            return responseBody.scrapedArticle
+        }
+        alert('Problem sa skidanjem teksta')
+        return null
     }
     catch (error) {
         alert(error.message)
         return null
     }
 }
-
+ 
 export async function publishTwit(twit) {
 
     const options = {
@@ -399,7 +455,20 @@ export async function publishTwit(twit) {
             twit: twit
         })
     }
-
-    const r = await fetch(`${HOST_BACKEND}/publishTwit`, options)
-    return r
+    try {
+        const response = await fetch(`${HOST_BACKEND}/publishTwit`, options)
+        const responseBody = await response.json();
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.responseTwitt) {
+            return responseBody.responseTwitt
+        }
+        alert('Problem sa objavom tvita')
+        return null
+    } catch (error) {
+        alert(error.message)
+        return null
+    }
 }

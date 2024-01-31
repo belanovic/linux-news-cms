@@ -11,8 +11,11 @@ export default function Scraper({setTitle, setSubtitle, setInitialText}) {
     }
 
     const getArticleText = async (e, url) => {
+
         const scrapedArticle = await scrape(url);
-        console.log(scrapedArticle);
+
+        if(scrapedArticle == null) return;
+        
         setTitle(scrapedArticle.title) 
         setSubtitle(scrapedArticle.subtitle)
         setInitialText(scrapedArticle.text)

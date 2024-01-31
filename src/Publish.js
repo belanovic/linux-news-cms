@@ -10,15 +10,14 @@ export default function Publish({ id, published }) {
        try {
            setShowCmsOverlay('block');
            const publishedArticle = await publishArticle(id);
+
            const allNews = await getAllArticles();
-           if(allNews == null) {
+           if(allNews == null) {    
             allNews = []
-        }
+           }
            const promiseResolveA = await setListAllArticles(allNews);
            const promiseResolveB = await setListLoaded(true);
-           /* window.location.href = '/allArticles'; */
            setShowCmsOverlay('none');
-           console.log(publishedArticle)
            return publishedArticle
        } catch(err) {
            console.log(err)

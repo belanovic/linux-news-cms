@@ -60,6 +60,12 @@ export default function Order() {
 
         })
         const updatedFrontpage = await updateFrontpage(idAndPositionArr);
+        if(updatedFrontpage == null) {
+            setRequestSent(false);
+            setShowCmsOverlay('none');
+            window.location.href = '/';
+            return
+        }
         setRequestSent(false);
         setShowCmsOverlay('none');
         /* updatedFrontpage.sort((a, b) => a.position - b.position).forEach((prom) => {
@@ -83,6 +89,10 @@ export default function Order() {
     useEffect(async () => {
         setShowCmsOverlay('block');
         const n = await getFrontpageNews();
+        if(n == null) {
+            setShowCmsOverlay('none');
+            window.location.href = '/';
+        }
         setRequestSent(false);
         setFrontpageNews(n);
         setreorderedArticles(n);
@@ -94,8 +104,17 @@ export default function Order() {
             year: new Date().getFullYear()
         }
 
-        const result = await getByDate(d);
-        setNewsByDateAllComp(result);
+        const newsByDateMsg = await getByDate(d);
+
+        if(newsByDateMsg == null) {
+            setNewsByDateAllComp([]);
+            return
+        }
+        if(newsByDateMsg.isSuccess == false) {
+            setNewsByDateAllComp([]);
+            return
+        }
+        setNewsByDateAllComp(newsByDateMsg.newsByDate);
     }, [])
 
     useEffect(() => {

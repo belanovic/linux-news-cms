@@ -45,6 +45,7 @@ export default function PositionPublish({ frontpageNews, setPosition,
                     onChange={handleCheck}
                 ></input>
             </div>
+
             <div className = "position">
             <input
                 type="number"
@@ -54,9 +55,9 @@ export default function PositionPublish({ frontpageNews, setPosition,
                 onChange={handleNumber}
                 value={position}
                 style={{ display: showPosition }}
+                disabled={frontpageNews? false : true}
             ></input>
             </div>
-
         </div>
     )
 }

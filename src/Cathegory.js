@@ -50,6 +50,12 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             setPageNum(1)
         } else {
             let allNews = await getByCategory(cathegory);
+    
+            if(allNews == null) {
+                console.log('evo meeeeeeeeeeeeeeeeeee')
+                console.log(allNews)
+                allNews = []
+            }
             if(isDated) {
                 allNews = allNews.filter((article) => {
                     const articleYear = new Date(article.dateCreated).getFullYear();
@@ -83,7 +89,10 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             const promiseResolveB = await setListLoaded(true);
             setPageNum(1)
         } else {
-            const allNews = await getByCategory(cathegory);
+            let allNews = await getByCategory(cathegory);
+            if(allNews == null) {
+                allNews = []
+            }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
             const promiseResolveB = await setListLoaded(true);

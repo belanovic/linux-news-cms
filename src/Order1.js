@@ -76,6 +76,9 @@ export default function Order() {
 
     useEffect(async () => {
         const n = await getFrontpageNews();
+        if(n == null) {
+            setFrontpageNews(null);
+        }
         setFrontpageNews(n);
         setreorderedArticles(n);
 

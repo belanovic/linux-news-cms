@@ -6,7 +6,7 @@ const cookies = new Cookies();
 const context = React.createContext();
 
 
-function Provider(props) {
+function Provider({children}) {
 
     const [listAllArticles, setListAllArticles] = useState([]);
     const [listLoaded, setListLoaded] = useState(true);
@@ -105,7 +105,7 @@ function Provider(props) {
             roomsCall,
             setRoomsCall
         }}>
-            {props.children}
+            {children}
         </context.Provider>
     )
 }
