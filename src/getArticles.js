@@ -1,9 +1,15 @@
 import HOST_BACKEND from './hostBackend.js';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
-function checkStatus(responseStatus) {
-        if(responseStatus == 401) {
+function checkStatus(response) {
+    if(response.status == 401) {
         alert('401 - Authentication error');
-        /* logout(); */
+        const logout = () => {
+            const removed = cookies.remove('token', {sameSite: true, secure: true});
+            window.location.href = '/';
+        }
+        logout();
         return
     }
 }
@@ -24,6 +30,7 @@ export async function getAllArticles() {
             logout();
             return
         } */
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
@@ -53,6 +60,7 @@ export async function getArticle(id) {
             logout();
             return
         } */
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
@@ -115,6 +123,7 @@ export async function postArticle({id, title, subtitle, text, paragraphs, note, 
             logout();
             return
         } */
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
@@ -170,9 +179,9 @@ export async function updateArticle({id, title, subtitle, text, paragraphs, note
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/oneArticle/${id}`, options)
+        const response = await fetch(`${HOST_BACKEND}/oneArticle/${id}`, options);
+        checkStatus(response);
         const responseBody = await response.json();
-
         if(responseBody.error) {
             alert(responseBody.error.message);
             return null;
@@ -201,7 +210,8 @@ export async function deleteArticle(id) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/oneArticle/${id}`, options)
+        const response = await fetch(`${HOST_BACKEND}/oneArticle/${id}`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         
         if(responseBody.error) {
@@ -229,6 +239,7 @@ export async function getFrontpageNews() {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/frontpageArticlesCMS`, options);
+        checkStatus(response);
         const responseBody = await response.json();
 
         if(responseBody.error) {
@@ -263,6 +274,7 @@ export async function updateArticlePosition(id, position) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/articlePosition/${id}`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         
         if(responseBody.error) {
@@ -297,6 +309,7 @@ export async function updateFrontpage(idAndPositionArr) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/updateFrontpage`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
@@ -326,6 +339,7 @@ export async function getByCategory(category) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/category/${category}`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         
         if(responseBody.error) {
@@ -361,7 +375,8 @@ export async function getByDate(date) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/articlesByDate`, options)
+        const response = await fetch(`${HOST_BACKEND}/articlesByDate`, options);
+        checkStatus(response);
         const responseBody = await response.json();
 
         if(responseBody.error) {
@@ -400,6 +415,7 @@ export async function publishArticle(id) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/publishArticle/${id}`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
@@ -431,7 +447,8 @@ export async function scrape(url) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/scraper`, options)
+        const response = await fetch(`${HOST_BACKEND}/scraper`, options);
+        checkStatus(response);
         const responseBody = await response.json();
       
         if(responseBody.error) {
@@ -464,7 +481,8 @@ export async function publishTwit(twit) {
         })
     }
     try {
-        const response = await fetch(`${HOST_BACKEND}/publishTwit`, options)
+        const response = await fetch(`${HOST_BACKEND}/publishTwit`, options);
+        checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);

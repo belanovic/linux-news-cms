@@ -40,6 +40,8 @@ function Provider({children}) {
         sepia: 0
     }]
 
+   
+
     const checkStorageToken = () => {
 /*         const storageToken = localStorage.getItem('x-auth-token');
         return storageToken === 'none' || storageToken === null || storageToken === undefined ?
@@ -109,6 +111,9 @@ function Provider({children}) {
         </context.Provider>
     )
 }
+
+
+
 
 export { context, Provider };
 

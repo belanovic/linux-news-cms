@@ -32,8 +32,6 @@ const storage = firebase.storage();
 
 export default function Article({ setShowCmsOverlay, isNew }) {
 
-
-
     const { listAllArticles, setListAllArticles,
         listLoaded, setListLoaded,setShowMenu,
         /* articleImgLoaded1, setArticleImgLoaded1,

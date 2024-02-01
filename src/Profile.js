@@ -37,7 +37,6 @@ export default function Profile() {
             updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large' )
             if(deployedImgNameLarge !== 'generic') {
                 const deletionMsg = await removeImageDB(deployedImgNameLarge, 'profile/');
-                console.log(deletionMsg)
             }
             
         } else { 

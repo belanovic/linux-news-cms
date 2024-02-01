@@ -1,4 +1,18 @@
 import HOST_BACKEND from './hostBackend.js';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+function checkStatus(response) {
+    if(response.status == 401) {
+        alert('401 - Authentication error');
+        const logout = () => {
+            const removed = cookies.remove('token', {sameSite: true, secure: true});
+            window.location.href = '/';
+        }
+        logout();
+        return
+    }
+}
 
 export async function registerUser(firstName, lastName, usernameSignUp, passwordSignUp, email, profileImgNameLarge, profileImgURLLarge, profileImgURLSmall, profileImgNameSmall) {
     const options = {
@@ -109,8 +123,8 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
             logout();
             return
         } */
+        checkStatus(response);
         const user = await response.json();
-     
         return user
     }
     catch (error) {

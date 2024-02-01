@@ -1,5 +1,4 @@
 import firebase from './firebase.js';
-
 const storage = firebase.storage();
 
 export async function uploadImageDB(imgName, imgFile, folder) {
