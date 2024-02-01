@@ -213,6 +213,10 @@ export default function Article({ setShowCmsOverlay, isNew }) {
 
                 if (videoName !== 'none') {
                     const videoURL = await uploadVideoDB(videoName, videoFile);
+                    if(videoURL == null) {
+                        setShowCmsOverlay('none');
+                        return;
+                    }
                     vest.videoURL = videoURL;
                 }
                 vest.imgURL = photoURL;
@@ -294,7 +298,14 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 }
                 if (deployedVideoName !== videoName) {
                     const videoURL = await uploadVideoDB(videoName, videoFile);
+                    if(videoURL == null) {
+                        setShowCmsOverlay('none');
+                        return;
+                    }
                     const deletionMsg = await removeVideoDB(deployedVideoName);
+                    if(deletionMsg == null) {
+                        alert('Problem sa brisanjem starog videa')
+                    }
                     vest.videoURL = videoURL;
                 }
 

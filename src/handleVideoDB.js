@@ -8,17 +8,18 @@ export async function uploadVideoDB (videoName, videoFile) {
         const snapshot = await ref8.put(videoFile);
         const videoURL = await ref8.getDownloadURL();
         return videoURL
-    } catch(err) {
-        return err
+    } catch (error) {
+        alert(error.message)
+        return null
     }
 }
-
 export async function removeVideoDB(videoName) {
     try {
         const videoRef = await storage.ref('site-news-images/' + videoName);
         const promiseResolve = await videoRef.delete();
         return 'Videoe deleted'
-    } catch(err) {
-        return err
+    } catch (error) {
+        alert(error.message)
+        return null
     }
 }

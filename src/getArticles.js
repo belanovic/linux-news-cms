@@ -1,5 +1,13 @@
 import HOST_BACKEND from './hostBackend.js';
 
+function checkStatus(responseStatus) {
+        if(responseStatus == 401) {
+        alert('401 - Authentication error');
+        /* logout(); */
+        return
+    }
+}
+
 export async function getAllArticles() {
 
     const options = { 
