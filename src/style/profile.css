@@ -39,8 +39,6 @@
     text-shadow: 3px 3px black;
 }
 
-
-
 .profile-signOut {
     display: block;
     width: 80%;
@@ -51,6 +49,7 @@
     padding: 0.6em 0.6em 0.6em 0.6em;
     color: white;
     background: rgba(0, 98, 0, 0.7);
+    transition: background var(--transition-duration-background);
     box-shadow: 5px 5px 5px 0px rgb(63, 63, 63);
 }
 .profile-signOut:active {

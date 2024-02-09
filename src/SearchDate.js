@@ -16,9 +16,6 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
     const [selectedArticle, setSelectedArticle] = useState(0);
     const [newsByDate, setNewsByDate] = useState([]);
 
-    const {checkStorageToken, setIsLoggedIn} = useContext(context);
-
-
     const handleChange = (e) => {
         let value = e.target.value;
         if (value === '') {
@@ -120,13 +117,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
             <select
                 className="order-selected-articles"
                 value={selectedArticle}
-
-                onChange={(e) => {
-                    const storageHasToken = checkStorageToken();
-                    setIsLoggedIn(storageHasToken);
-                    if(!storageHasToken) return;
-                    handleSelectArticle(e);
-                }}
+                onChange={(e) => handleSelectArticle(e)}
             >
                 {newsByDate.map((prom, i) => {
                     return <option key={i} value={i}>
@@ -138,12 +129,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
             <div className="order-dateElement order-date-display">
                 <button 
                     className="order-dateBtn"
-                    onClick={() => {
-                        const storageHasToken = checkStorageToken();
-                        setIsLoggedIn(storageHasToken);
-                        if(!storageHasToken) return;
-                        handleClick();
-                    }}
+                    onClick={(e) => handleClick(e)}
                 >Prikaži vesti
                 </button>
             </div>
@@ -154,12 +140,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
                     id="dateInput"
                     className="dateInput"
                     value={day}
-                    onChange={(e) => {
-                        const storageHasToken = checkStorageToken();
-                        setIsLoggedIn(storageHasToken);
-                        if(!storageHasToken) return;
-                        handleChange(e);
-                    }}
+                    onChange={(e) => handleChange(e)}
                 ></input>
             </div>
             <div className="order-dateElement">
@@ -180,12 +161,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
             </div>
             <div className="order-dateElement">
                 <select 
-                    onChange={(e) => {
-                        const storageHasToken = checkStorageToken();
-                        setIsLoggedIn(storageHasToken);
-                        if(!storageHasToken) return;
-                        handleSelect(e);
-                    }}
+                    onChange={(e) => handleSelect(e)}
                     value={year} 
                     name="year">
                     {years.map((prom, i) => <option className="year-option" key={i} value={prom}>{prom}</option>)}
@@ -196,12 +172,7 @@ export default function SearchDate({ reorderedArticles, setreorderedArticles, i,
                 <div style = {{background: 'white', color: 'white'}}>.</div>     
                 :             
                 <button                     
-                    onClick={(e) => {
-                        const storageHasToken = checkStorageToken();
-                        setIsLoggedIn(storageHasToken);
-                        if(!storageHasToken) return;
-                        handleSave(e);
-                    }}
+                    onClick={(e) => handleSave(e)}
                 >Zameni vest
                 </button>}
             </div>

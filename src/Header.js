@@ -2,11 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { context } from './newsContext.js';
 import './style/header.css';
+import {jwtDecode} from 'jwt-decode';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 export default function Header() {
        const [showLinks, setShowLinks] = useState(false);
-       const { newArticleBtn, showFrontend,
-            activeLink,showMenu, loggedIn, setIsLoggedIn, checkStorageToken,
-            setShowCalendar } = useContext(context);
+       const {newArticleBtn, showFrontend, activeLink,showMenu, setShowCalendar, showLogin} = useContext(context);
 
     return (
         <header className="header" onClick = {() => setShowCalendar(false)}>
@@ -37,7 +39,6 @@ export default function Header() {
                             <Link to="/">
                                 <div
                                     className="header-homepageBtn-text"
-                                    onClick = {() => setIsLoggedIn(checkStorageToken())}
                                 ><i className="fas fa-home"></i><span>Homepage</span></div>
                             </Link>
                         </div>
@@ -49,7 +50,6 @@ export default function Header() {
                             <Link to={`/allArticles`}>
                                 <div
                                     className="header-allArticlesBtn-text"
-                                    onClick = {() =>setIsLoggedIn(checkStorageToken())}
                                 ><i className="fas fa-list-ul"></i><span>All articles</span></div>
                             </Link>
                         </div>
@@ -59,7 +59,6 @@ export default function Header() {
                         >
                             <Link to={`/order`}>
                                 <div
-                                    onClick = {() => setIsLoggedIn(checkStorageToken())}
                                     className="header-orderBtn-text"
                                 ><i className="fas fa-stream"></i><span>Order articles</span></div>
                             </Link>
@@ -73,7 +72,7 @@ export default function Header() {
             <div className="header-title">
                 <Link to="/">
                         <div
-                            onClick = {() => setIsLoggedIn(checkStorageToken())}
+    
                             className="header-title-text"
                         >CMS</div>
                 </Link>
@@ -87,28 +86,29 @@ export default function Header() {
                     <Link to="/oneArticleNew/new">
                         <div
                             className="header-newArticleBtn-text"
-                            onClick = {() => setIsLoggedIn(checkStorageToken())}
                         ><i className="fas fa-feather-alt"></i><span>New article</span></div>
                     </Link>
                 </div>
+                {cookies.get('token')?
                 <div className="login">
                     <Link to = "/profile">
                         <i 
                             className="fas fa-user-edit" 
-                            onClick={(e) => {
-                                const storageHasToken = checkStorageToken();
-                                setIsLoggedIn(storageHasToken);
-                                if(!storageHasToken) return;
-                              
-                            }}
                         >
                          </i>
                     </Link>
                     <div className = "login-info">
                         <div className = "login-info-title">User logged in:</div>
-                        <div className = "login-info-username">{localStorage.getItem('loggedUsername')}</div>
+                        <div className = "login-info-username">{cookies.get('token')? jwtDecode(cookies.get('token')).username : 'guest'}</div>
                     </div>
+
                 </div>
+                :
+                <div className="guest" style = {{display: showLogin}}>
+                    <Link to = "/profile">
+                        Prijavi se
+                    </Link>
+                </div>}
             </div>
 
         </header>

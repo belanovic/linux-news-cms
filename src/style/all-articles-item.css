@@ -26,6 +26,9 @@
     align-items: center;
 }
  
+.allArticles-item-title-text {
+    transition: color var(--transition-duration-background);
+}
 .allArticles-item-title-text:hover {
     color: rgb(129, 216, 0)
 }

@@ -19,12 +19,10 @@ import Proba1 from './Proba1.js';
 export default function App() {
 
     const cmsOverlay = useRef(null);
-    const { showCmsOverlay, setShowCmsOverlay, 
-            isLoggedIn, isNewArticle, 
-            setIsLoggedIn } = useContext(context)
+    const { showCmsOverlay, setShowCmsOverlay, isNewArticle, showHeader
+             } = useContext(context)
 
     return (<>
-        {isLoggedIn ?
             <div 
                 className="cms"
             >
@@ -55,9 +53,6 @@ export default function App() {
                 </Switch>
                 <Footer />
             </div>
-            :
-            <Form />
-        }
     </>
     )
 }

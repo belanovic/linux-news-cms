@@ -20,7 +20,9 @@ function Provider({children}) {
     const [showMenu, setShowMenu] = useState('none');
     const [activeLink, setActiveLink] = useState('none');
     const [showFrontend, setShowFrontend] = useState('none');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showLogin, setShowLogin] = useState('block');
+
+    
     const [defaultCathegory, setDefaultCathegory] = useState('allArticles');
     const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [showCalendar, setShowCalendar] = useState(false);
@@ -40,35 +42,12 @@ function Provider({children}) {
         sepia: 0
     }]
 
-   
-
-    const checkStorageToken = () => {
-/*         const storageToken = localStorage.getItem('x-auth-token');
-        return storageToken === 'none' || storageToken === null || storageToken === undefined ?
-            false : true */
-        return cookies.get('token')? true : false; 
-    }
-
-    useEffect(() => {
-        setIsLoggedIn(checkStorageToken());
-    })
-
-    /*   useEffect(() => {
-  
-          console.log('User is logged in? ' + isLoggedIn)
-          console.log('in local storage ' + localStorage.getItem('x-auth-token'))
-      }, [isLoggedIn]) */
-
     /*  useEffect(async () => {
          const n = listAllArticles;
          n.sort((a, b) => a.position - b.position);
          console.log(n)
      }, [listAllArticles]) */
 
-/*      useEffect(() => {
-        console.log('from news context');
-        console.log(isLoggedIn);
-    }, [isLoggedIn]) */
 
     return (
         <context.Provider value={{
@@ -90,8 +69,8 @@ function Provider({children}) {
             setActiveLink,
             showFrontend,
             setShowFrontend,
-            isLoggedIn,
-            setIsLoggedIn,
+            showLogin, 
+            setShowLogin,
             defaultCathegory,
             setDefaultCathegory,
             activeCriteria,
@@ -101,7 +80,6 @@ function Provider({children}) {
             showCalendar,
             setShowCalendar,
             defaultFilter,
-            checkStorageToken,
             activeRoom,
             setActiveRoom,
             roomsCall,

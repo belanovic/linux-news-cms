@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 function checkStatus(response) {
     if(response.status == 401) {
-        alert('401 - Authentication error');
+        alert('YOu are not logged in');
         const logout = () => {
             const removed = cookies.remove('token', {sameSite: true, secure: true});
             window.location.href = '/';

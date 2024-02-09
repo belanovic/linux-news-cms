@@ -15,8 +15,8 @@ const NEWS_PER_PAGE = 10;
 
 export default function AllArticles() {
 
-    const { listAllArticles, setListAllArticles, listLoaded, setListLoaded, setIsLoggedIn,
-        setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn, checkStorageToken,
+    const { listAllArticles, setListAllArticles, listLoaded, setListLoaded,
+        setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
         setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay} = useContext(context);
     const [pageNum, setPageNum] = useState(1);
     const [findVisible, setFindVisible] = useState(false);
@@ -135,7 +135,6 @@ export default function AllArticles() {
                                                 className="allArticles-item-title-text"
                                                 onClick = {() => {
                                                     setShowCmsOverlay('block');
-                                                    setIsLoggedIn(checkStorageToken())
                                                 }}
                                             >{oneArticle.title}
                                             </h2>

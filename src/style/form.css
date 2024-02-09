@@ -98,6 +98,7 @@
 .form-send-button:hover {
     cursor: pointer;
     background: rgb(0, 150, 0);
+    transition: background var(--transition-duration-background);
 }
 
 .form-send-button.sending {

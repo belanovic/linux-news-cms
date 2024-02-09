@@ -1,6 +1,7 @@
 import react, { useContext, useEffect, useState } from 'react';
 import {context} from './newsContext';
 import './style/profile.css';
+import Form from './Form.js';
 import ChooseImage from './ChooseImage.js';
 import {uploadImageDB, removeImageDB} from './handleImageDB.js';
 import {updateProfileImg} from './getUser';
@@ -14,7 +15,7 @@ const socket = io(HOST_CALL);
 
 export default function Profile() {
 
-    const {setIsLoggedIn} = useContext(context);
+    const {setNewArticleBtn, setShowCmsOverlay,setShowFrontend, setShowMenu} = useContext(context);
 
     const [deployedImgNameLarge, setDeployedImgNameLarge] = useState('');
     const [profileImgNameLarge, setProfileImgNameLarge] = useState('generic');
@@ -80,63 +81,71 @@ export default function Profile() {
         /* socket.emit('logout', localStorage.getItem('loggedUsername')); */
         socket.emit('logout', jwtDecode(cookies.get('token')).username);
         cookies.remove('token', {sameSite: true, secure: true});
-  /*       localStorage.setItem('x-auth-token', 'none'); */
-        localStorage.setItem('loggedUsername', null);
+        localStorage.clear();
         window.location.href = '/';
-        setIsLoggedIn(false);
     }
 
     useEffect(() => {
-        setProfileImgURLLarge(localStorage.getItem('profileImgURLLarge'));
-        setProfileImgNameLarge(localStorage.getItem('profileImgNameLarge'));
-        setDeployedImgNameLarge(localStorage.getItem('profileImgNameLarge'));
 
-        setProfileImgURLSmall(localStorage.getItem('profileImgURLSmall'));
-        setProfileImgNameSmall(localStorage.getItem('profileImgNameSmall'));
-        setDeployedImgNameSmall(localStorage.getItem('profileImgNameSmall'));
+            setProfileImgURLLarge(localStorage.getItem('profileImgURLLarge'));
+            setProfileImgNameLarge(localStorage.getItem('profileImgNameLarge'));
+            setDeployedImgNameLarge(localStorage.getItem('profileImgNameLarge'));
 
+            setProfileImgURLSmall(localStorage.getItem('profileImgURLSmall'));
+            setProfileImgNameSmall(localStorage.getItem('profileImgNameSmall'));
+            setDeployedImgNameSmall(localStorage.getItem('profileImgNameSmall'));
+
+            setShowMenu('block');
+            setNewArticleBtn('inline-block');
+            setShowFrontend('none'); 
     }, [])
 
     return (
-        <div  className = "profile-container">
-            <div className = "profile">
-                <ChooseImage 
-                    setProfileImgNameLarge = {setProfileImgNameLarge} 
-                    setprofileImgFileLarge = {setprofileImgFileLarge} 
-                    setProfileImgURLLarge = {setProfileImgURLLarge} 
-                    widthLarge = {299}
-                    
-                    setProfileImgNameSmall = {setProfileImgNameSmall} 
-                    setprofileImgFileSmall = {setprofileImgFileSmall} 
-                    setProfileImgURLSmall = {setProfileImgURLSmall} 
-                    widthSmall = {50}
-                />
-                {profileImgURLLarge === 'generic'?
-                        <i className="fas fa-user-edit"></i> 
-                        : 
-                        <img src = {profileImgURLLarge}></img>}
-                <button onClick = {() => handleSave()}>Sačuvaj</button>
-                <div className = "profile-element">
-                    <div className = "profile-element-description">Korisničko ime</div>
-                    <div className = "profile-element-username data">{localStorage.getItem('loggedUsername')}</div>
+        <>
+        {cookies.get('token')?
+            <div  className = "profile-container">
+                <div className = "profile">
+                    <ChooseImage 
+                        setProfileImgNameLarge = {setProfileImgNameLarge} 
+                        setprofileImgFileLarge = {setprofileImgFileLarge} 
+                        setProfileImgURLLarge = {setProfileImgURLLarge} 
+                        widthLarge = {299}
+                        
+                        setProfileImgNameSmall = {setProfileImgNameSmall} 
+                        setprofileImgFileSmall = {setprofileImgFileSmall} 
+                        setProfileImgURLSmall = {setProfileImgURLSmall} 
+                        widthSmall = {50}
+                    />
+                    {profileImgURLLarge === 'generic'?
+                            <i className="fas fa-user-edit"></i> 
+                            : 
+                            <img src = {profileImgURLLarge}></img>}
+                    <button onClick = {() => handleSave()}>Sačuvaj</button>
+                    <div className = "profile-element">
+                        <div className = "profile-element-description">Korisničko ime</div>
+                        <div className = "profile-element-username data">{localStorage.getItem('loggedUsername')}</div>
+                    </div>
+                    <div className = "profile-element">
+                        <div className = "profile-element-description">Ime</div>
+                        <div className = "profile-element-firstname data">{localStorage.getItem('loggedFirstName')}</div>
+                    </div>
+                    <div className = "profile-element">
+                        <div className = "profile-element-description">Prezime</div>
+                        <div className = "profile-element-lastname data">{localStorage.getItem('loggedLastName')}</div>
+                    </div>
+                    <div className = "profile-element">
+                        <div className = "profile-element-description">email</div>
+                        <div className = "profile-element-email data">{localStorage.getItem('loggedEmail')}</div>
+                    </div>
+                    <button 
+                        className = "profile-signOut"
+                        onClick = {(e) => handleSignOut(e)}
+                    >Odjavi se</button>
                 </div>
-                <div className = "profile-element">
-                    <div className = "profile-element-description">Ime</div>
-                    <div className = "profile-element-firstname data">{localStorage.getItem('loggedFirstName')}</div>
-                </div>
-                <div className = "profile-element">
-                    <div className = "profile-element-description">Prezime</div>
-                    <div className = "profile-element-lastname data">{localStorage.getItem('loggedLastName')}</div>
-                </div>
-                <div className = "profile-element">
-                    <div className = "profile-element-description">email</div>
-                    <div className = "profile-element-email data">{localStorage.getItem('loggedEmail')}</div>
-                </div>
-                <button 
-                    className = "profile-signOut"
-                    onClick = {(e) => handleSignOut(e)}
-                >Odjavi se</button>
             </div>
-        </div>
+            :
+            <Form />
+        }
+        </>
     )
 }

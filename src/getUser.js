@@ -84,8 +84,6 @@ export async function loginUser(usernameSignIn, passwordSignIn) {
 }
 
 export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgURL, profileImgName, size ) {
-   /*  console.log(usernameSignIn, passwordSignIn, profileImgURL, profileImgName);
-    return */
 
     let body;
 
@@ -109,8 +107,7 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
     const options = {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/plain',
-            /* 'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token') */
+            'Content-Type': 'text/plain'
         },
         credentials: 'include',
         body: body
@@ -118,11 +115,6 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
 
     try {
         const response = await fetch(`${HOST_BACKEND}/updateProfilePhotoURL/${size}`, options)
-   /*      if(res.status == 401) {
-            alert('401 - Authentication error');
-            logout();
-            return
-        } */
         checkStatus(response);
         const user = await response.json();
         return user

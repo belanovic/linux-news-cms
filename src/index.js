@@ -4,5 +4,6 @@ import App from './App.js';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from './newsContext';
 import './style/index.css';
+import './style/variables.css';
 
 ReactDom.render(<Provider><Router><App /></Router></Provider>, document.getElementById('root'));

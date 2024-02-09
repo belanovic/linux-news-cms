@@ -17,6 +17,7 @@
     color: white;
     background: green;
     transition: transform 50ms;
+    transition: background var(--transition-duration-background);
     border: none;
 }
 

@@ -16,9 +16,8 @@ export default function Order() {
     const [activeArrow, setActiveArrow] = useState('');
     const [doubleSelectedArticle, setDoubleSelectedArticle] = useState('');
     const [newsByDateAllComp, setNewsByDateAllComp] = useState([]);
-    const { setActiveLink, setShowCmsOverlay, setIsLoggedIn,
-        setNewArticleBtn, setShowMenu, checkStorageToken,
-        setShowFrontend } = useContext(context);
+    const { setActiveLink, setShowCmsOverlay,
+        setNewArticleBtn, setShowMenu, setShowFrontend } = useContext(context);
 
     const onDragEnd = (result) => {
         const { destination, source, reason } = result;
@@ -191,9 +190,6 @@ export default function Order() {
                 <button
                     className={`order-send-button ${requestSent && 'sending'}`}
                     onClick={() => {
-                        const storageHasToken = checkStorageToken();
-                        setIsLoggedIn(storageHasToken);
-                        if(!storageHasToken) return;
                         handleClickOrder();
                     }}
                     disabled={requestSent ? true : false}

@@ -15,11 +15,13 @@ const socket = io(HOST_CALL); */
 
 export default function Form() {
 
-    const { alphabet, isLoggedIn, setIsLoggedIn, showCmsOverlay,
-            setLoggedUsername,
+    const { alphabet, showCmsOverlay, setLoggedUsername,
             setNewArticleBtn, setActiveLink, setShowCmsOverlay,
-            setShowFrontend, setShowMenu, isNewArticle
+            setShowFrontend, setShowMenu, isNewArticle, setShowLogin
         } = useContext(context);
+
+    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const cmsOverlay = useRef(null);
 
@@ -80,7 +82,7 @@ export default function Form() {
         } else if (tab === 'sign-in') {
             setSignUpIsActive(false);
             setSignInIsActive(true);
-        }        
+        }
     }
     const handleClickSignIn = async (e) => {
         e.preventDefault();
@@ -122,6 +124,7 @@ export default function Form() {
                 const v = jwtDecode(cookies.get('token'))? true : false; 
                 return v
            })
+          
 
         }
         /* socket.emit('create', localStorage.getItem('loggedUsername')); */
@@ -156,7 +159,18 @@ export default function Form() {
         setShowMenu('block');
         setShowFrontend('none');
         setActiveLink('none');
-    }) 
+        setShowLogin('none');
+    })
+
+    useEffect(() => {
+        return () => {
+            setShowLogin('block');
+        }
+    }, [])
+
+    useEffect(() => {
+        setShowLogin('none');
+    }, [])
 
     useEffect(changeButtonLabel, [signInisActive, signUpisActive, requestSent])
 

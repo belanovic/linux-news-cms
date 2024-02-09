@@ -23,13 +23,17 @@
     border-radius: 15px;
     box-shadow: -5px 5px 25px 0px rgb(0, 0, 0);
     background: linear-gradient(180deg, rgb(54, 54, 54),rgb(90, 90, 106));
+    background: rgb(54, 54, 54);
+    transition: background var(--transition-duration-background);
 }
 
 .order-articles-item-elements:hover {
     background: linear-gradient(180deg, rgb(59, 75, 59), rgb(26, 110, 26), rgb(59, 75, 59));
+    background: rgb(26, 110, 26);
 }
 .order-articles-item-elements:active {
     background: linear-gradient(180deg, rgb(59, 75, 59), rgb(26, 110, 26), rgb(59, 75, 59));
+    background: blue
 }
 
 .order-articles-item-elements.arrowUp {
@@ -79,6 +83,7 @@
     padding: 0.6em 0.6em 0.6em 0.6em;
     color: white;
     background: green;
+    transition: background var(--transition-duration-background);
     margin-bottom: 1em;
 }
 .order-send-button:active {
