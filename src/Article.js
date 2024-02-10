@@ -268,6 +268,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                             return;
                         }
                         const deletionMsg = await removeImageDB(deployedImgName, '');
+                        console.log(deletionMsg + ' deletion message')
                         if(deletionMsg == null) {
                             alert('Problem sa brisanjem stare fotografije')
                         }
@@ -340,8 +341,8 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 window.location.href = '/allArticles';
                 setShowCmsOverlay('block');
                 return updateMsg.updatedArticle
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log(error.message);
             }
         }
     }
