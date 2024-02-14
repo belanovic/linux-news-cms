@@ -9,6 +9,7 @@ import { context } from './newsContext';
 import Footer from './Footer'; 
 import Form from './Form.js';
 import Profile from './Profile';
+import Visitor from './Visitor.js';
 import Order from './Order.js';
 import SearchDate from './SearchDate';
 import Proba from './Proba.js';
@@ -34,7 +35,8 @@ export default function App() {
                     <Route exact path="/"> 
                         <Homepage /> 
                     </Route>
-                    <Route path="/profile"><Profile /></Route>
+                    {/* <Route path="/profile"><Profile /></Route>  */}
+                    <Route path="/profile"><Visitor /></Route> 
                     <Route path="/order"><Order /></Route>
                     <Route path="/search-date"><SearchDate /></Route> 
                     <Route path='/allArticles'>  

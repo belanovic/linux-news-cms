@@ -85,7 +85,7 @@ export async function loginUser(usernameSignIn, passwordSignIn) {
 
 export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgURL, profileImgName, size ) {
 
-    let body;
+    let body; 
 
     if(size === 'large') {
         body = JSON.stringify({

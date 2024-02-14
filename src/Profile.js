@@ -33,7 +33,7 @@ export default function Profile() {
         let photoURLLarge;
         let photoURLSmall;
 
-        if(profileImgURLLarge === 'generic') {
+        if(profileImgURLLarge === 'generic') { 
             photoURLLarge = 'generic';
             updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large' )
             if(deployedImgNameLarge !== 'generic') {
@@ -101,8 +101,6 @@ export default function Profile() {
     }, [])
 
     return (
-        <>
-        {cookies.get('token')?
             <div  className = "profile-container">
                 <div className = "profile">
                     <ChooseImage 
@@ -143,9 +141,5 @@ export default function Profile() {
                     >Odjavi se</button>
                 </div>
             </div>
-            :
-            <Form />
-        }
-        </>
     )
 }

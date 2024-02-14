@@ -20,6 +20,8 @@ export default function ChooseImage({
 
     async function uploadHandler(e) {
 
+     
+
         let file = e.target.files[0];
         if (file === undefined) return;
         const fileNameLarge = Date.now() + '_' + file.name + '_large';
@@ -34,16 +36,16 @@ export default function ChooseImage({
         const fileSmall= compressedFileSmall;
 
         const customURLLarge = URL.createObjectURL(fileLarge);
-        setProfileImgURLLarge(customURLLarge);
 
+        setProfileImgURLLarge(customURLLarge);
         setProfileImgNameLarge(fileNameLarge);
         setprofileImgFileLarge(fileLarge);
-        
+
+        console.log(fileNameLarge)
         
         const customURLSmall = URL.createObjectURL(fileSmall);
+
         setProfileImgURLSmall(customURLSmall);
-
-
         setProfileImgNameSmall(fileNameSmall);
         setprofileImgFileSmall(fileSmall);
     }
