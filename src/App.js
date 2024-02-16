@@ -35,8 +35,7 @@ export default function App() {
                     <Route exact path="/"> 
                         <Homepage /> 
                     </Route>
-                    {/* <Route path="/profile"><Profile /></Route>  */}
-                    <Route path="/profile"><Visitor /></Route> 
+                    <Route path="/visitor"><Visitor /></Route> 
                     <Route path="/order"><Order /></Route>
                     <Route path="/search-date"><SearchDate /></Route> 
                     <Route path='/allArticles'>  

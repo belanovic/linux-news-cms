@@ -18,16 +18,20 @@ export default function Profile() {
     const {setNewArticleBtn, setShowCmsOverlay,setShowFrontend, setShowMenu} = useContext(context);
 
     const [deployedImgNameLarge, setDeployedImgNameLarge] = useState('');
-    const [profileImgNameLarge, setProfileImgNameLarge] = useState('generic');
-    const [profileImgURLLarge, setProfileImgURLLarge] = useState('generic');
+    const [profileImgNameLarge, setProfileImgNameLarge] = useState('');
+    const [profileImgURLLarge, setProfileImgURLLarge] = useState('');
     const [profileImgFileLarge, setprofileImgFileLarge] = useState('');
 
     const [deployedImgNameSmall, setDeployedImgNameSmall] = useState('');
-    const [profileImgNameSmall, setProfileImgNameSmall] = useState('generic');
-    const [profileImgURLSmall, setProfileImgURLSmall] = useState('generic');
+    const [profileImgNameSmall, setProfileImgNameSmall] = useState('');
+    const [profileImgURLSmall, setProfileImgURLSmall] = useState('');
     const [profileImgFileSmall, setprofileImgFileSmall] = useState('');
 
     const handleSave = async () => {
+
+        if(deployedImgNameLarge == profileImgNameLarge) {
+            return
+        }
 
         let updatedUser;
         let photoURLLarge;
@@ -48,10 +52,13 @@ export default function Profile() {
 
                 const deletionMsg = await removeImageDB(deployedImgNameLarge, 'profile/');
             }
-
+            /* localStorage.setItem('deployedImgNameLarge', updatedUser[1].profileImgNameLarge); */
             setDeployedImgNameLarge(updatedUser[1].profileImgNameLarge);
+
             localStorage.setItem('profileImgURLLarge', updatedUser[1].profileImgURLLarge);
             setProfileImgURLLarge(localStorage.getItem('profileImgURLLarge'));
+            localStorage.setItem('profileImgNameLarge', updatedUser[1].profileImgNameLarge);
+            setProfileImgNameLarge(localStorage.getItem('profileImgNameLarge'));
         }
 
 
@@ -71,8 +78,11 @@ export default function Profile() {
             }
 
             setDeployedImgNameSmall(updatedUser[1].profileImgNameSmall);
+            
             localStorage.setItem('profileImgURLSmall', updatedUser[1].profileImgURLSmall);
             setProfileImgURLSmall(localStorage.getItem('profileImgURLSmall'));
+            localStorage.setItem('profileImgNameSmall', updatedUser[1].profileImgNameSmall);
+            setProfileImgNameSmall(localStorage.getItem('profileImgNameSmall'));
         }
     }
 
@@ -115,9 +125,9 @@ export default function Profile() {
                         widthSmall = {50}
                     />
                     {profileImgURLLarge === 'generic'?
-                            <i className="fas fa-user-edit"></i> 
-                            : 
-                            <img src = {profileImgURLLarge}></img>}
+                    <i className="fas fa-user-edit"></i>
+                    : 
+                    <img src = {profileImgURLLarge}></img>}
                     <button onClick = {() => handleSave()}>Sačuvaj</button>
                     <div className = "profile-element">
                         <div className = "profile-element-description">Korisničko ime</div>

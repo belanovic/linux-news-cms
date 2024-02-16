@@ -91,7 +91,7 @@ export default function Header() {
                 </div>
                 {cookies.get('token')?
                 <div className="login">
-                    <Link to = "/profile">
+                    <Link to = "/visitor">
                         <i 
                             className="fas fa-user-edit" 
                         >
@@ -105,7 +105,7 @@ export default function Header() {
                 </div>
                 :
                 <div className="guest" style = {{display: showLogin}}>
-                    <Link to = "/profile">
+                    <Link to = "/visitor">
                         Prijavi se
                     </Link>
                 </div>}
