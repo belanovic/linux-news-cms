@@ -54,6 +54,7 @@ export default function ChooseImage({
         <div className = "inputImage">
             <input
                 type="file"
+                accept='image/*'
                 onChange={uploadHandler}>
             </input>
         </div>

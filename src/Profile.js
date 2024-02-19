@@ -15,7 +15,7 @@ const socket = io(HOST_CALL);
 
 export default function Profile() {
 
-    const {setNewArticleBtn, setShowCmsOverlay,setShowFrontend, setShowMenu} = useContext(context);
+    const {setNewArticleBtn, showCmsOverlay, setShowCmsOverlay,setShowFrontend, setShowMenu} = useContext(context);
 
     const [deployedImgNameLarge, setDeployedImgNameLarge] = useState('');
     const [profileImgNameLarge, setProfileImgNameLarge] = useState('');
@@ -29,9 +29,7 @@ export default function Profile() {
 
     const handleSave = async () => {
 
-        if(deployedImgNameLarge == profileImgNameLarge) {
-            return
-        }
+        setShowCmsOverlay('block');
 
         let updatedUser;
         let photoURLLarge;
@@ -84,6 +82,7 @@ export default function Profile() {
             localStorage.setItem('profileImgNameSmall', updatedUser[1].profileImgNameSmall);
             setProfileImgNameSmall(localStorage.getItem('profileImgNameSmall'));
         }
+        setShowCmsOverlay('none');
     }
 
     const handleSignOut = (e) => {
@@ -113,6 +112,12 @@ export default function Profile() {
     return (
             <div  className = "profile-container">
                 <div className = "profile">
+        
+                    {profileImgURLLarge === 'generic'?
+                    <i className="fas fa-user-edit"></i>
+                    : 
+                    <img src = {profileImgURLLarge}></img>}
+                    {deployedImgNameLarge == profileImgNameLarge && showCmsOverlay == 'none'?
                     <ChooseImage 
                         setProfileImgNameLarge = {setProfileImgNameLarge} 
                         setprofileImgFileLarge = {setprofileImgFileLarge} 
@@ -124,11 +129,16 @@ export default function Profile() {
                         setProfileImgURLSmall = {setProfileImgURLSmall} 
                         widthSmall = {50}
                     />
-                    {profileImgURLLarge === 'generic'?
-                    <i className="fas fa-user-edit"></i>
-                    : 
-                    <img src = {profileImgURLLarge}></img>}
-                    <button onClick = {() => handleSave()}>Sačuvaj</button>
+                    :
+                    <div>
+                        <button 
+                            className='profile-img-save'
+                            onClick = {() => handleSave()}
+                        >Sačuvaj
+                        </button>
+                    </div>
+                    }
+
                     <div className = "profile-element">
                         <div className = "profile-element-description">Korisničko ime</div>
                         <div className = "profile-element-username data">{localStorage.getItem('loggedUsername')}</div>

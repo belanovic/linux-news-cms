@@ -6,7 +6,7 @@ import './style/cathegory.css';
 
 export default function Cathegory({ setPageNum, sortArticles }) {
 
-    const { listAllArticles, setListAllArticles, defaultCathegory, setDefaultCathegory,
+    const {setShowCmsOverlay, listAllArticles, setListAllArticles, defaultCathegory, setDefaultCathegory,
         listLoaded, setListLoaded, shouldLoadArticles } = useContext(context);
 
     const [cathegory, setCathegory] = useState(defaultCathegory);
@@ -80,6 +80,7 @@ export default function Cathegory({ setPageNum, sortArticles }) {
 
     useEffect(async () => {
         if (cathegory === 'allArticles') {
+            setShowCmsOverlay('block');
             let allNews = await getAllArticles();
             if(allNews == null) {
                 allNews = []
@@ -89,6 +90,7 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             const promiseResolveB = await setListLoaded(true);
             setPageNum(1)
         } else {
+            setShowCmsOverlay('block');
             let allNews = await getByCategory(cathegory);
             if(allNews == null) {
                 allNews = []

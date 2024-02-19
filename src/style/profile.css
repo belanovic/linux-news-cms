@@ -39,7 +39,7 @@
     text-shadow: 3px 3px black;
 }
 
-.profile-signOut {
+.profile-signOut, .profile-img-save {
     display: block;
     width: 80%;
     margin: auto;
@@ -52,10 +52,16 @@
     transition: background var(--transition-duration-background);
     box-shadow: 5px 5px 5px 0px rgb(63, 63, 63);
 }
-.profile-signOut:active {
+.profile-signOut:active, .profile-img-save:active {
     transform: scale(0.99, 0.92);
 }
-.profile-signOut:hover {
+.profile-signOut:hover, .profile-img-save:hover {
     cursor: pointer;
     background: rgba(0, 150, 0, 0.7);
+}
+
+.profile-img-save {
+   width: 35%;
+   margin: 0;   
+   font-size: 1.15rem;
 }

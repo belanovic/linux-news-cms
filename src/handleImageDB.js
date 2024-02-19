@@ -14,8 +14,7 @@ export async function uploadImageDB(imgName, imgFile, folder) {
 }
 
 export async function removeImageDB(imgName, folder) {
-    
-    if(imgName === 'generic') return 'image name generic'
+
     try {
         const imgRef = await storage.ref(`site-news-images/${folder}` + imgName);
         const promiseResolve = await imgRef.delete();
