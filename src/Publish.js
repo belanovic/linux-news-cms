@@ -3,12 +3,12 @@ import {publishArticle, getAllArticles} from './getArticles.js';
 import { context } from './newsContext';
 
 export default function Publish({ id, published }) {
-    const {listAllArticles, setListAllArticles, setListLoaded,
+    const {listAllArticles, setListAllArticles,
             showCmsOverlay, setShowCmsOverlay
             } = useContext(context);
     async function handleClick(e) {
        try {
-           setShowCmsOverlay('block');
+           setShowCmsOverlay('flex');
            const publishedArticle = await publishArticle(id);
 
            const allNews = await getAllArticles();
@@ -16,7 +16,6 @@ export default function Publish({ id, published }) {
             allNews = []
            }
            const promiseResolveA = await setListAllArticles(allNews);
-           const promiseResolveB = await setListLoaded(true);
            setShowCmsOverlay('none');
            return publishedArticle
        } catch(err) {

@@ -9,7 +9,6 @@ const context = React.createContext();
 function Provider({children}) {
 
     const [listAllArticles, setListAllArticles] = useState([]);
-    const [listLoaded, setListLoaded] = useState(true);
   /*   const [articleDataLoaded, setArticleDataLoaded] = useState(false);
     const [articleImgLoaded1, setArticleImgLoaded1] = useState(false);
     const [articleImgLoaded2, setArticleImgLoaded2] = useState(false); */
@@ -23,7 +22,7 @@ function Provider({children}) {
     const [showLogin, setShowLogin] = useState('block');
 
     
-    const [defaultCathegory, setDefaultCathegory] = useState('allArticles');
+    const [cathegory, setCathegory] = useState('allArticles');
     const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [showCalendar, setShowCalendar] = useState(false);
     const [activeRoom, setActiveRoom] = useState('');
@@ -53,8 +52,6 @@ function Provider({children}) {
         <context.Provider value={{
             listAllArticles,
             setListAllArticles,
-            listLoaded,
-            setListLoaded,
             /* articleDataLoaded,
             setArticleDataLoaded,
             articleImgLoaded1,
@@ -71,8 +68,8 @@ function Provider({children}) {
             setShowFrontend,
             showLogin, 
             setShowLogin,
-            defaultCathegory,
-            setDefaultCathegory,
+            cathegory,
+            setCathegory,
             activeCriteria,
             setActiveCriteria,
             showMenu,

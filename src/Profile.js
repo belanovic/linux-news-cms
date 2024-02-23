@@ -29,7 +29,7 @@ export default function Profile() {
 
     const handleSave = async () => {
 
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
 
         let updatedUser;
         let photoURLLarge;

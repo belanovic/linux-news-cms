@@ -86,7 +86,7 @@ export default function Form() {
     }
     const handleClickSignIn = async (e) => {
         e.preventDefault();
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
         setRequestSent(true);
         const loginMsg = await loginUser(usernameSignIn, passwordSignIn);
         
@@ -133,7 +133,7 @@ export default function Form() {
     const handleClickSignUp = async (e) => {
         e.preventDefault();
         setRequestSent(true);
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
         const registrationMsg = await registerUser(firstName, lastName, usernameSignUp, passwordSignUp, email, profileImgNameLarge, profileImgURLLarge, profileImgURLSmall, profileImgNameSmall);
         setRequestSent(false); 
         setShowCmsOverlay('none');

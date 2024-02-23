@@ -33,8 +33,7 @@ const storage = firebase.storage();
 export default function Article({ setShowCmsOverlay, isNew }) {
 
     const { listAllArticles, setListAllArticles,
-        listLoaded, setListLoaded,setShowMenu,
-        /* articleImgLoaded1, setArticleImgLoaded1,
+        setShowMenu, /* articleImgLoaded1, setArticleImgLoaded1,
         articleImgLoaded2, setArticleImgLoaded2,articleDataLoaded, */
         setActiveLink, /* setArticleDataLoaded */
         setNewArticleBtn, setShowFrontend, defaultFilter
@@ -104,16 +103,15 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     async function findSelectedArticle() {
 
         if (id === 'new') {
-            setShowCmsOverlay('block');
             setIsNewArticle(true);
             /* setArticleDataLoaded(true); */
             /* setArticleVideoLoaded(true); */
             /* setArticleImgLoaded1(true);*/
-            setShowCmsOverlay('none');
             return
         }
-
+        setShowCmsOverlay('flex');
         const selectedArticle = await getArticle(id);
+        setShowCmsOverlay('none');
         if(selectedArticle == null) {
             setShowCmsOverlay('none');
             window.location.href = '/allArticles';
@@ -162,7 +160,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     }
     async function handleSave() {
 
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
 
         const vest = {
             id: id,
@@ -239,14 +237,13 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                     allNews = []
                 }
                 const promiseResolveA = await setListAllArticles(allNews);
-                const promiseResolveB = await setListLoaded(true);
 
                 if (IdArticleToChangePosition !== '') {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);
                 }
                 
                 window.location.href = '/allArticles';
-                setShowCmsOverlay('block');
+                setShowCmsOverlay('flex');
                 return deployedArticle
             } catch (error) {
                 alert(error.message);
@@ -267,10 +264,12 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                             setShowCmsOverlay('none');
                             return;
                         }
-                        const deletionMsg = await removeImageDB(deployedImgName, '');
-                        console.log(deletionMsg + ' deletion message')
-                        if(deletionMsg == null) {
-                            alert('Problem sa brisanjem stare fotografije')
+                        setDeployedImgName(imgName)
+                        if(deployedImgName !== 'generic') {
+                            const deletionMsg = await removeImageDB(deployedImgName, '');
+                            if(deletionMsg == null) {
+                                alert('Problem sa brisanjem prethodne fotografije')
+                            }
                         }
                     }
                     vest.imgURL = photoURL;
@@ -287,9 +286,12 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                             setShowCmsOverlay('none');
                             return;
                         }
-                        const deletionMsg2 = await removeImageDB(deployedImgName2, '');
-                        if(deletionMsg2 == null) {
-                            alert('Problem sa brisanjem stare fotografije')
+                        setDeployedImgName2(imgName2)
+                        if(deployedImgName2 !== 'generic') {
+                            const deletionMsg2 = await removeImageDB(deployedImgName2, '');
+                            if(deletionMsg2 == null) {
+                                alert('Problem sa brisanjem prethodne fotografije')
+                            }
                         }
                     }
             
@@ -301,10 +303,14 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                         setShowCmsOverlay('none');
                         return;
                     }
-                    const deletionMsg = await removeVideoDB(deployedVideoName);
-                    if(deletionMsg == null) {
-                        alert('Problem sa brisanjem starog videa')
+                    setDeployedVideoName(videoName);
+                    if(deployedVideoName !== 'none') {
+                        const deletionMsg = await removeVideoDB(deployedVideoName);
+                        if(deletionMsg == null) {
+                            alert('Problem sa brisanjem starog videa')
+                        }
                     }
+    
                     vest.videoURL = videoURL;
                 }
 
@@ -329,17 +335,16 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 if (IdArticleToChangePosition !== '') {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);
                 }
-                const allNews = await getAllArticles();
+                /* const allNews = await getAllArticles();
                 if(allNews == null) {
                     allNews = []
-                }
+                } */
              /*    if(sendTwit) {
                     const r = await publishTwit(twit);
                 } */
-                const promiseResolveA = await setListAllArticles(allNews);
-                const promiseResolveB = await setListLoaded(true);
-                window.location.href = '/allArticles';
-                setShowCmsOverlay('block');
+                /* const promiseResolveA = await setListAllArticles(allNews);
+                window.location.href = '/allArticles'; */
+                setShowCmsOverlay('none');
                 return updateMsg.updatedArticle
             } catch (error) {
                 console.log(error.message);
@@ -386,12 +391,6 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     }
     useEffect(() => {
         findSelectedArticle();
-/*         return () => {
-            setArticleImgLoaded1(false);
-            setArticleImgLoaded2(false);
-             setArticleVideoLoaded(false);
-            setArticleDataLoaded(false);
-        } */
     }, [])
 
     useEffect(() => {
@@ -422,11 +421,6 @@ export default function Article({ setShowCmsOverlay, isNew }) {
         setShowMenu('block');
         setShowFrontend('none');
     })
-
- /*    useEffect(() => {
-        setShowCmsOverlay('none');
-        console.log('from Article');
-    }, []) */
 
     return (
         <div className="article"/*  style={{
@@ -577,15 +571,6 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 onChange={inputHandler}
                 tabVideoVisibility = {tabVideoVisibility}
             />
-
-            {/* <div className="loadingArticle" style={{
-                display: contentLoaded === true || isNewArticle === true ? 'none' : 'block',
-                fontSize: '5rem',
-                fontWeight: 'bold',
-                textAlign: 'center',
-                pointerEvents: 'none'
-            }}>Loading...</div> */}
-
         </div>
     )
 }

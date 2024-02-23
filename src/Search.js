@@ -10,8 +10,7 @@ export default function Search({option}) {
 
     const caption = option === 'title'? "Pretraži naslove" : "Pretraži tagove";
     
-    const { listAllArticles, setListAllArticles,
-        listLoaded, setListLoaded } = useContext(context);
+    const { listAllArticles, setListAllArticles} = useContext(context);
 
     const handleChange = (e) => {
         const v = e.target.value;
@@ -26,7 +25,6 @@ export default function Search({option}) {
         const newsFound = allNews.filter((article) => {
             const reg = new RegExp(`${query}`, 'i');
             const i = article.title.search(reg);
-            console.log(i);
             return i === -1? false : true
         })
         setRequestSent(false);
@@ -45,10 +43,8 @@ export default function Search({option}) {
                 console.log(i)
                 return i === -1? false : true
             });
-            console.log(some);
             return some
         })
-        console.log(newsFound);
         setRequestSent(false);
         return newsFound
     }

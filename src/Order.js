@@ -49,7 +49,7 @@ export default function Order() {
 
     const handleClickOrder = async () => {
         setRequestSent(true);
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
         const idAndPositionArr = reorderedArticles.map((prom, i) => {
             const idAndPosition = {
                 id: prom._id,
@@ -86,7 +86,7 @@ export default function Order() {
     })
 
     useEffect(async () => {
-        setShowCmsOverlay('block');
+        setShowCmsOverlay('flex');
         const n = await getFrontpageNews();
         if(n == null) {
             setShowCmsOverlay('none');

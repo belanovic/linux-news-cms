@@ -15,8 +15,7 @@ const NEWS_PER_PAGE = 10;
 
 export default function AllArticles() {
 
-    const { listAllArticles, setListAllArticles, listLoaded, setListLoaded,
-        setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
+    const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
         setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay} = useContext(context);
     const [pageNum, setPageNum] = useState(1);
     const [findVisible, setFindVisible] = useState(false);
@@ -39,29 +38,16 @@ export default function AllArticles() {
         })
     }
     
-    useEffect(async function () {
-        /* setShowCmsOverlay('none'); */
-        return () => {
-            setListLoaded(false)
-        };
+    useEffect(function () {
+        setActiveLink('allArticles');
     }, [])
 
-
-    useEffect(function () {
-
-    setActiveLink('allArticles');
-    })
-
     useEffect(() => sortArticles(), [activeCriteria])
-    useEffect(() => {
 
+    useEffect(() => {
         setNewArticleBtn('inline-block');
         setShowMenu('block');
         setShowFrontend('none');
-    })
-
-    useEffect(() => {
-        console.log('from All articles');
     }, [])
 
      return (
@@ -133,9 +119,6 @@ export default function AllArticles() {
                                         <Link to={`/oneArticle/${oneArticle._id}`}>
                                             <h2 
                                                 className="allArticles-item-title-text"
-                                                onClick = {() => {
-                                                    setShowCmsOverlay('block');
-                                                }}
                                             >{oneArticle.title}
                                             </h2>
                                         </Link>

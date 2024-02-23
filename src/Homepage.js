@@ -9,34 +9,37 @@ import './style/homepage.css';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
+/* HTML: <div class="loader"></div> */
 
 export default function Homepage() {
 
-    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay } = useContext(context);
+    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay, setCathegory } = useContext(context);
 
     useEffect(() => {
 
         setNewArticleBtn('none');
         setShowMenu('none');
         setShowFrontend('block'); 
-    })
+
+        setCathegory('allArticles')
+    }, [])
 
     return (
         <div className="homepage">
           {/*   <Chat /> */}
             <div className="homepage-links">
-                <div className="homepage-allArticlesBtn" onClick = {() => setShowCmsOverlay('block')}>
-                    <Link to={`/allArticles`}>
-                        <div
-                            className="homepage-allArticlesBtn-text"
-                        ><i className="fas fa-list-ul"></i>List of all articles</div>
-                    </Link>
-                </div>
                 <div className="homepage-newArticleBtn">
                     <Link to="/oneArticle/new">
                         <div
                             className="homepage-newArticleBtn-text"
                         ><i className="fas fa-feather-alt"></i>Create new article</div>
+                    </Link>
+                </div>
+                <div className="homepage-allArticlesBtn" onClick = {() => setShowCmsOverlay('flex')}>
+                    <Link to={`/allArticles`}>
+                        <div className="homepage-allArticlesBtn-text">
+                            <i className="fas fa-list-ul"></i>  Search articles
+                        </div>
                     </Link>
                 </div>
                 <div className="homepage-frontpage-order">

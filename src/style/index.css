@@ -35,8 +35,30 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.6)
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: 
+      radial-gradient(farthest-side,green 94%,#0000) top/8px 8px no-repeat,
+      conic-gradient(#0000 30%,green);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+    animation: l13 1s infinite linear;
+  }
+  @keyframes l13{ 
+    100%{transform: rotate(1turn)}
+  }
+  @keyframes l14{ 
+    100%{transform: rotate(1turn)}
+  }
 
 .textdiv {
     min-height: 50px;
@@ -46,6 +68,7 @@ body {
 input, textarea, select {
     background-color: white;
 }
+
 
 @media all and (max-width: 768px) {
     html {

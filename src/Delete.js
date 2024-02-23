@@ -23,7 +23,6 @@ export default function Delete() {
     const [videoName, setVideoName] = useState('');
     const { id } = useParams();
     const { listAllArticles, setListAllArticles,
-        listLoaded, setListLoaded,
         /*  articleImgLoaded1, setArticleImgLoaded1,
          articleImgLoaded2, setArticleImgLoaded2,
          articleVideoLoaded, setArticleVideoLoaded,
@@ -47,7 +46,7 @@ export default function Delete() {
 
     async function handleDelete() {
         try {
-            const promiseResolveD = setShowCmsOverlay('block');
+            const promiseResolveD = setShowCmsOverlay('flex');
             const articleDeleted = await deleteArticle(id);
             if(articleDeleted == null) {
                 setShowCmsOverlay('none');
@@ -65,7 +64,7 @@ export default function Delete() {
                 allNews = []
             }
             const promiseResolveA = await setListAllArticles(allNews);
-            const promiseResolveB = await setListLoaded(true);
+
             window.location.href = '/allArticles';
             return articleDeleted
         } catch (err) {

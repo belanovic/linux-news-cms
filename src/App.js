@@ -19,7 +19,6 @@ import Proba1 from './Proba1.js';
 
 export default function App() {
 
-    const cmsOverlay = useRef(null);
     const { showCmsOverlay, setShowCmsOverlay, isNewArticle, showHeader
              } = useContext(context)
 
@@ -27,7 +26,7 @@ export default function App() {
             <div 
                 className="cms"
             >
-                <div className="cmsOverlay" ref={cmsOverlay} style={{ display: showCmsOverlay }}></div>
+                <div className="cmsOverlay" style={{ display: showCmsOverlay }}><div className="loader"></div> </div>
                 <Header showHomepageBtn={false} showFrontend={false} allArticlesBtn={false} newArticleBtn={false} />
               {/* <Proba /> */}
               {/* {<Proba1 />} */}

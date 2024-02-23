@@ -50,7 +50,7 @@ export default function Header() {
                             <Link to={`/allArticles`}>
                                 <div
                                     className="header-allArticlesBtn-text"
-                                ><i className="fas fa-list-ul"></i><span>All articles</span></div>
+                                ><i className="fas fa-list-ul"></i><span>Search articles</span></div>
                             </Link>
                         </div>
                         <div

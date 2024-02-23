@@ -22,6 +22,7 @@ export default function ChooseVideo({ setVideoName, setVideoFile, setVideoURL })
         <input
             id = "videoFile"
             type="file"
+            accept='video/*'
             onChange={uploadHandler}>
         </input>
         </div>

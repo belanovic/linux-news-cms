@@ -6,25 +6,24 @@ import './style/cathegory.css';
 
 export default function Cathegory({ setPageNum, sortArticles }) {
 
-    const {setShowCmsOverlay, listAllArticles, setListAllArticles, defaultCathegory, setDefaultCathegory,
-        listLoaded, setListLoaded, shouldLoadArticles } = useContext(context);
+    const {setShowCmsOverlay, listAllArticles, setListAllArticles, cathegory, setCathegory,
+        shouldLoadArticles } = useContext(context);
 
-    const [cathegory, setCathegory] = useState(defaultCathegory);
     const [isDated, setIsDated] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
 
     const handleSelect = (e) => {
         const option = e.target.value;
-        console.log(option);
         setCathegory(option);
-        setDefaultCathegory(option);
     }
 
     const handleClick = async (e) => {
         e.preventDefault();
 
         if (cathegory === 'allArticles') {
+            setShowCmsOverlay('flex');
             let allNews = await getAllArticles();
+            //setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
@@ -46,14 +45,13 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             const promiseResolveA = await setListAllArticles(allNews);
             
             sortArticles();
-            const promiseResolveB = await setListLoaded(true);
             setPageNum(1)
         } else {
+            setShowCmsOverlay('flex');
             let allNews = await getByCategory(cathegory);
+            setShowCmsOverlay('none');
     
             if(allNews == null) {
-                console.log('evo meeeeeeeeeeeeeeeeeee')
-                console.log(allNews)
                 allNews = []
             }
             if(isDated) {
@@ -73,31 +71,31 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
-            const promiseResolveB = await setListLoaded(true);
             setPageNum(1);
         }
     }
 
     useEffect(async () => {
         if (cathegory === 'allArticles') {
-            setShowCmsOverlay('block');
+            setShowCmsOverlay('flex');
             let allNews = await getAllArticles();
+            setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
-            const promiseResolveB = await setListLoaded(true);
+            
             setPageNum(1)
         } else {
-            setShowCmsOverlay('block');
+            setShowCmsOverlay('flex');
             let allNews = await getByCategory(cathegory);
+            setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
-            const promiseResolveB = await setListLoaded(true);
             setPageNum(1);
         }
     }, [])
