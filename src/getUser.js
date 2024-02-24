@@ -116,10 +116,20 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
     try {
         const response = await fetch(`${HOST_BACKEND}/updateProfilePhotoURL/${size}`, options)
         checkStatus(response);
-        const user = await response.json();
-        return user
+        const responseBody = await response.json();
+
+        if(responseBody.error) {
+            alert(responseBody.error.message);
+            return null;
+        }
+        if(responseBody.updateMsg) {
+            return responseBody.updateMsg;
+        }
+        alert('Problem sa promenom fotografije')
+        return null
     }
     catch (error) {
-        alert(error.message);
+        alert(error.message)
+        return null; 
     }
 }

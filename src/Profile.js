@@ -37,49 +37,53 @@ export default function Profile() {
 
         if(profileImgURLLarge === 'generic') { 
             photoURLLarge = 'generic';
-            updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large' )
+            let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large' )
+            updatedUser = updateMsg.userUpdated;
             if(deployedImgNameLarge !== 'generic') {
                 const deletionMsg = await removeImageDB(deployedImgNameLarge, 'profile/');
             }
             
         } else { 
             photoURLLarge = await uploadImageDB(profileImgNameLarge, profileImgFileLarge, 'profile/');
-            updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large'  )
-            
+            let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large'  )
+            updatedUser = updateMsg.userUpdated;
             if(deployedImgNameLarge !== 'generic') {
 
                 const deletionMsg = await removeImageDB(deployedImgNameLarge, 'profile/');
             }
-            /* localStorage.setItem('deployedImgNameLarge', updatedUser[1].profileImgNameLarge); */
-            setDeployedImgNameLarge(updatedUser[1].profileImgNameLarge);
+            /* localStorage.setItem('deployedImgNameLarge', updatedUser.profileImgNameLarge); */
+            setDeployedImgNameLarge(updatedUser.profileImgNameLarge);
 
-            localStorage.setItem('profileImgURLLarge', updatedUser[1].profileImgURLLarge);
+            localStorage.setItem('profileImgURLLarge', updatedUser.profileImgURLLarge);
             setProfileImgURLLarge(localStorage.getItem('profileImgURLLarge'));
-            localStorage.setItem('profileImgNameLarge', updatedUser[1].profileImgNameLarge);
+            localStorage.setItem('profileImgNameLarge', updatedUser.profileImgNameLarge);
             setProfileImgNameLarge(localStorage.getItem('profileImgNameLarge'));
         }
 
 
         if(profileImgURLSmall === 'generic') {
             photoURLSmall = 'generic';
-            updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small' )
+            let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small' )
+            updatedUser = updateMsg.userUpdated;
+            
             if(deployedImgNameSmall !== 'generic') {
                 const deletionMsg = await removeImageDB(deployedImgNameSmall, 'profile/');
             }
             
         } else { 
             photoURLSmall = await uploadImageDB(profileImgNameSmall, profileImgFileSmall, 'profile/');
-            updatedUser = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small'  )
+            let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small'  )
+            updatedUser = updateMsg.userUpdated;
 
             if(deployedImgNameSmall !== 'generic') { 
                 const deletionMsg = await removeImageDB(deployedImgNameSmall, 'profile/');
             }
 
-            setDeployedImgNameSmall(updatedUser[1].profileImgNameSmall);
+            setDeployedImgNameSmall(updatedUser.profileImgNameSmall);
             
-            localStorage.setItem('profileImgURLSmall', updatedUser[1].profileImgURLSmall);
+            localStorage.setItem('profileImgURLSmall', updatedUser.profileImgURLSmall);
             setProfileImgURLSmall(localStorage.getItem('profileImgURLSmall'));
-            localStorage.setItem('profileImgNameSmall', updatedUser[1].profileImgNameSmall);
+            localStorage.setItem('profileImgNameSmall', updatedUser.profileImgNameSmall);
             setProfileImgNameSmall(localStorage.getItem('profileImgNameSmall'));
         }
         setShowCmsOverlay('none');
