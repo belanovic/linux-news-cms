@@ -13,7 +13,7 @@
 .find > div:last-child {
     margin-right: 0px;
 }
-.cathegory {
+.category {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,20 +25,20 @@
     
 }
 
-.cathegory-cathegories label {
+.category-categories label {
     font-size: .8rem;
     letter-spacing: 1px;
     margin-right: 1.25em;
 }
-.cathegory-cathegories select {
+.category-categories select {
     letter-spacing: 1.25px;
     margin-right: 1.25em;
 }
-.cathegory-cathegories option {
+.category-categories option {
     letter-spacing: 1px;
     font-size: 1rem;
 }
-.cathegory-button .btn {
+.category-button .btn {
     background: green;
     color: white;
     text-align: center;
@@ -46,7 +46,7 @@
     width: 100px;
 }
 
-.cathegory-button .btn:hover {
+.category-button .btn:hover {
     background:rgb(0, 150, 0);   
     cursor: pointer;
 }
@@ -121,7 +121,7 @@
     .find.show {
         display: block;
     }
-    .cathegory {
+    .category {
         order: -1;
         padding: 1em 0.5em 1em 0.5em;
       /*   flex-direction: column; */
@@ -133,13 +133,13 @@
     .fa-search:hover {
         cursor: pointer;
     }
-    .cathegory-button .btn {
+    .category-button .btn {
         display: none;
     }
-    .cathegory > * {
+    .category > * {
         /* margin-bottom: 1em; */
     }
-    #cathegory-cathegories {
+    #category-categories {
         /* margin-right: 0; */
     }
     .calendar-container {

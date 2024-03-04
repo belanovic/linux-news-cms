@@ -16,7 +16,7 @@ export default function Order() {
     const [activeArrow, setActiveArrow] = useState('');
     const [doubleSelectedArticle, setDoubleSelectedArticle] = useState('');
     const [newsByDateAllComp, setNewsByDateAllComp] = useState([]);
-    const { setActiveLink, setShowCmsOverlay, setPageNum, setCathegory,
+    const { setActiveLink, setShowCmsOverlay, setPageNum, setCategory,
         setNewArticleBtn, setShowMenu, setShowFrontend } = useContext(context);
 
     const onDragEnd = (result) => {
@@ -121,7 +121,7 @@ export default function Order() {
         setShowMenu('block');
         setShowFrontend('none');
 
-        setCathegory('allArticles');
+        setCategory('allArticles');
         setPageNum(1)
     }, [])
 

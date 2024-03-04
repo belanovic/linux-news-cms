@@ -4,7 +4,7 @@ import { context } from './newsContext.js';
 import Pagination from './Pagination.js';
 import {DatePublished, DateCreated, DateUpdated} from './Time.js';
 import Publish from './Publish.js';
-import Cathegory from './Cathegory.js';
+import Category from './Category.js';
 import Search from './Search.js';
 import './style/all-articles.css'; 
 import './style/all-articles-item.css';
@@ -59,7 +59,7 @@ export default function AllArticles() {
                     <FindLabel setFindVisible = {setFindVisible} />
                     <div className = {`find ${findVisible && 'show'}`}>
                         <Search option = 'title' setTitle = {setTitle} setTag = {setTag} />
-                        <Cathegory pageNum = {pageNum} setPageNum = {setPageNum} sortArticles = {sortArticles} title = {title} tag = {tag}/>
+                        <Category pageNum = {pageNum} setPageNum = {setPageNum} sortArticles = {sortArticles} title = {title} tag = {tag}/>
                         <Search option = "tag" setTag = {setTag} setTitle = {setTitle} />
                         
                     </div>

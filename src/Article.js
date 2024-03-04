@@ -469,9 +469,9 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                             sendTwit = {sendTwit}
                             setSendTwit = {setSendTwit}
                         />
-                        <div className="cathegories">
-                            <label htmlFor="cathegories">Rubrike</label>
-                            <select id="cathegories" value={category} onChange={handleSelect}>
+                        <div className="categories">
+                            <label htmlFor="categories">Rubrike</label>
+                            <select id="categories" value={category} onChange={handleSelect}>
                                 <option value="politics">Politics</option>
                                 <option value="business">Business</option>
                                 <option value="technology">Technology</option>
@@ -526,7 +526,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 tabPhotoVisibility={tabPhotoVisibility}
                 imgDescription={imgDescription}
                 inputHandler={inputHandler}
-                cathegory = {category} 
+                category = {category} 
 
                 imgURL={imgURL} 
                 setImgURL={setImgURL}

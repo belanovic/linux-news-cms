@@ -19,7 +19,7 @@ function Provider({children}) {
     const [showLogin, setShowLogin] = useState('block');
 
     const [pageNum, setPageNum] = useState(1);
-    const [cathegory, setCathegory] = useState('allArticles');
+    const [category, setCategory] = useState('allArticles');
     const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [showCalendar, setShowCalendar] = useState(false);
     const [activeRoom, setActiveRoom] = useState('');
@@ -60,8 +60,8 @@ function Provider({children}) {
             setShowLogin,
             pageNum, 
             setPageNum,
-            cathegory,
-            setCathegory,
+            category,
+            setCategory,
             activeCriteria,
             setActiveCriteria,
             showMenu,

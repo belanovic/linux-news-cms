@@ -8,7 +8,7 @@ import Line from './Line'
 export default function Photo({ imgURL, setImgURL, setImgName, setImgFile,
       imgURL2, setImgURL2, setImgName2, setImgFile2, imgFilter, setImgFilter,
       imgFilter2, setImgFilter2, tabPhotoVisibility, imgDescription, 
-      inputHandler, cathegory }) {
+      inputHandler, category }) {
 
     /* const { articleImgLoaded1, setArticleImgLoaded1, articleImgLoaded2, setArticleImgLoaded2 } = useContext(context); */
 
@@ -49,7 +49,7 @@ export default function Photo({ imgURL, setImgURL, setImgName, setImgFile,
                             <GenericThumb 
                                 className="article-photo-img"
                                 shape = {'wide'} 
-                                cathegory={cathegory} 
+                                category={category} 
                             />
                             :
                             <img
@@ -83,7 +83,7 @@ export default function Photo({ imgURL, setImgURL, setImgName, setImgFile,
                             <GenericThumb 
                                 className="article-photo-img"
                                 shape = {'square'} 
-                                cathegory={cathegory} 
+                                category={category} 
                             />
                             :
                             <img

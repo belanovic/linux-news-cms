@@ -2,11 +2,11 @@ import react, { useState, useContext, useEffect } from 'react';
 import { context } from './newsContext.js';
 import { getAllArticles, getByCategory } from './getArticles';
 import Calendar from './Calendar';
-import './style/cathegory.css';
+import './style/category.css';
 
-export default function Cathegory({ pageNum, setPageNum, sortArticles, title, tag }) {
+export default function Category({ pageNum, setPageNum, sortArticles, title, tag }) {
 
-    const {setShowCmsOverlay, listAllArticles, setListAllArticles, cathegory, setCathegory,
+    const {setShowCmsOverlay, listAllArticles, setListAllArticles, category, setCategory,
         shouldLoadArticles } = useContext(context);
 
     const [isDated, setIsDated] = useState(false);
@@ -14,13 +14,13 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
 
     const handleSelect = (e) => {
         const option = e.target.value;
-        setCathegory(option);
+        setCategory(option);
     }
 
     const handleClick = async (e) => {
         e.preventDefault();
 
-        if (cathegory === 'allArticles') {
+        if (category === 'allArticles') {
             setShowCmsOverlay('flex');
             let allNews = await getAllArticles(pageNum, title, tag);
             setShowCmsOverlay('none');
@@ -46,7 +46,7 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
             //setPageNum(1)
         } else {
             setShowCmsOverlay('flex');
-            let allNews = await getByCategory(cathegory);
+            let allNews = await getByCategory(category);
             setShowCmsOverlay('none');
     
             if(allNews == null) {
@@ -74,7 +74,7 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
     }
 
     useEffect(async () => {
-        if (cathegory === 'allArticles') {
+        if (category === 'allArticles') {
             setShowCmsOverlay('flex');
             let allNews = await getAllArticles(pageNum, title, tag);
             setShowCmsOverlay('none');
@@ -86,7 +86,7 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
             //setPageNum(1)
         } else {
             setShowCmsOverlay('flex');
-            let allNews = await getByCategory(cathegory, pageNum);
+            let allNews = await getByCategory(category, pageNum);
             setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
@@ -98,11 +98,11 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
     }, [pageNum])
 
     return (
-        <div className="cathegory">
+        <div className="category">
             <Calendar setIsDated = {setIsDated} setSelectedDate = {setSelectedDate} />
-            <div className="cathegory-cathegories">
-                {/* <label htmlFor="cathegory-cathegories">Rubrike</label> */}
-                <select id="cathegory-cathegories" value={cathegory} onChange={handleSelect}>
+            <div className="category-categories">
+                {/* <label htmlFor="category-categories">Rubrike</label> */}
+                <select id="category-categories" value={category} onChange={handleSelect}>
                     <option value="allArticles">Sve vesti</option>
                     <option value="politics">Politics</option>  
                     <option value="business">Business</option>
@@ -112,10 +112,10 @@ export default function Cathegory({ pageNum, setPageNum, sortArticles, title, ta
                 </select>
             </div>   
             <div 
-                className="cathegory-button"
+                className="category-button"
             >
                 <button
-                    className="cathegory-button btn"
+                    className="category-button btn"
                     onClick={(e) => {
                         handleClick(e);
                     }}
