@@ -58,7 +58,7 @@
 .allArticles-item-dateUpdated,
 .allArticles-item-datePublished,
 .allArticles-item-dateCreated {
-    flex: 0 0 22%;
+    flex: 0 0 20%;
 }
 
 .allArticles-item-delete,
@@ -73,6 +73,7 @@
 .allArticles-item-delete,
 .allArticles-item-publish {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

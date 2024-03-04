@@ -32,11 +32,8 @@ const storage = firebase.storage();
 
 export default function Article({ setShowCmsOverlay, isNew }) {
 
-    const { listAllArticles, setListAllArticles,
-        setShowMenu, /* articleImgLoaded1, setArticleImgLoaded1,
-        articleImgLoaded2, setArticleImgLoaded2,articleDataLoaded, */
-        setActiveLink, /* setArticleDataLoaded */
-        setNewArticleBtn, setShowFrontend, defaultFilter
+    const { listAllArticles, setListAllArticles, setShowMenu, setActiveLink,
+        setNewArticleBtn, setShowFrontend, defaultFilter, pageNum
     } = useContext(context);
 
     const [tabPublishVisibility, setTabPublishVisibility] = useState('none')
@@ -92,8 +89,6 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     const { id } = useParams();
     const [isNewArticle, setIsNewArticle] = useState(true);
  
-   /*  let contentLoaded = articleDataLoaded === true */ /* && ((articleImgLoaded1 === true && articleImgLoaded2 === true) || (imgURL === 'generic' || imgURL2 === 'generic') )*/
-
     function findNewLine() {
         const pasusi = text.split('\n')
         const elementsP = pasusi.map((prom, i) => prom);
@@ -104,9 +99,6 @@ export default function Article({ setShowCmsOverlay, isNew }) {
 
         if (id === 'new') {
             setIsNewArticle(true);
-            /* setArticleDataLoaded(true); */
-            /* setArticleVideoLoaded(true); */
-            /* setArticleImgLoaded1(true);*/
             return
         }
         setShowCmsOverlay('flex');
@@ -232,7 +224,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
               /*   if(sendTwit) {
                     const r = await publishTwit(twit);
                 } */
-                const allNews = await getAllArticles();
+                const allNews = await getAllArticles(pageNum);
                 if(allNews == null) {
                     allNews = []
                 }
@@ -242,9 +234,9 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);
                 }
                 
-                window.location.href = '/allArticles';
-                setShowCmsOverlay('flex');
-                return deployedArticle
+                /* window.location.href = '/allArticles'; */
+                setShowCmsOverlay('none');
+
             } catch (error) {
                 alert(error.message);
             }
@@ -335,17 +327,10 @@ export default function Article({ setShowCmsOverlay, isNew }) {
                 if (IdArticleToChangePosition !== '') {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);
                 }
-                /* const allNews = await getAllArticles();
-                if(allNews == null) {
-                    allNews = []
-                } */
              /*    if(sendTwit) {
                     const r = await publishTwit(twit);
                 } */
-                /* const promiseResolveA = await setListAllArticles(allNews);
-                window.location.href = '/allArticles'; */
                 setShowCmsOverlay('none');
-                return updateMsg.updatedArticle
             } catch (error) {
                 console.log(error.message);
             }
@@ -423,9 +408,7 @@ export default function Article({ setShowCmsOverlay, isNew }) {
     })
 
     return (
-        <div className="article"/*  style={{
-            display: contentLoaded ? 'block' : 'none'
-        }} */>
+        <div className="article">
 
             <div className="article-navigation">
                 <Save 

@@ -9,16 +9,19 @@ import Search from './Search.js';
 import './style/all-articles.css'; 
 import './style/all-articles-item.css';
 import {alphabet} from './cirilizatorDecirilizator.js';
-import FindLabel from './FindLabel.js'
+import FindLabel from './FindLabel.js';
 
-const NEWS_PER_PAGE = 10; 
+
 
 export default function AllArticles() {
 
     const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
-        setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay} = useContext(context);
-    const [pageNum, setPageNum] = useState(1);
+        setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay, pageNum, setPageNum} = useContext(context);
+    
     const [findVisible, setFindVisible] = useState(false);
+
+    const [title, setTitle] = useState('');
+    const [tag, setTag] = useState('');
 
     const sortArticles = () => {
         setListAllArticles((prev) => {
@@ -55,9 +58,9 @@ export default function AllArticles() {
                 <div className="allArticles">
                     <FindLabel setFindVisible = {setFindVisible} />
                     <div className = {`find ${findVisible && 'show'}`}>
-                        <Search option = 'title' />
-                        <Cathegory setPageNum = {setPageNum} sortArticles = {sortArticles} />
-                        <Search option = "tag" />
+                        <Search option = 'title' setTitle = {setTitle} setTag = {setTag} />
+                        <Cathegory pageNum = {pageNum} setPageNum = {setPageNum} sortArticles = {sortArticles} title = {title} tag = {tag}/>
+                        <Search option = "tag" setTag = {setTag} setTitle = {setTitle} />
                         
                     </div>
                     <div className = "allArticles-columnNames" onClick = {() => setShowCalendar(false)}>
@@ -111,10 +114,11 @@ export default function AllArticles() {
                         </div>
                     </div>
                     {listAllArticles.map((oneArticle, i) => {
-                        const isOnLastPage = (i + 1 > listAllArticles.length - (listAllArticles.length % 10));
-                        return ((i + 1) <= pageNum * NEWS_PER_PAGE && (i + 1) > pageNum * NEWS_PER_PAGE - NEWS_PER_PAGE) &&
+                        // const isOnLastPage = (i + 1 > listAllArticles.length - (listAllArticles.length % 10));
+                         /* ((i + 1) <= pageNum * 10 && (i + 1) > pageNum * 10 - 10) && */
 
-                                <div key={i} className={`allArticles-item ${isOnLastPage? 'allArticles-item-lastPage' : ''}`} onClick = {() => setShowCalendar(false)}>
+                                // <div key={i} className={`allArticles-item ${isOnLastPage? 'allArticles-item-lastPage' : ''}`} onClick = {() => setShowCalendar(false)}>
+                                return    <div key={i} className={`allArticles-item`} onClick = {() => setShowCalendar(false)}>
                                     <div className="allArticles-item-title allArticles-item-part">
                                         <Link to={`/oneArticle/${oneArticle._id}`}>
                                             <h2 
@@ -142,8 +146,7 @@ export default function AllArticles() {
                     })}
                 </div>
             <Pagination
-                isLastPage={pageNum * NEWS_PER_PAGE >= listAllArticles.length ? true : false}
-                NEWS_PER_PAGE={NEWS_PER_PAGE}
+                isLastPage={pageNum * 10 >= listAllArticles.length ? true : false}
                 pageNum={pageNum}
                 setPageNum={setPageNum}
             />

@@ -112,7 +112,7 @@ export async function updateProfileImg(usernameSignIn, loggedEmail, profileImgUR
         credentials: 'include',
         body: body
     }
-
+ 
     try {
         const response = await fetch(`${HOST_BACKEND}/updateProfilePhotoURL/${size}`, options)
         checkStatus(response);

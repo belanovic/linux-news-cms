@@ -3,81 +3,20 @@ import { context } from './newsContext.js';
 import { getAllArticles } from './getArticles';
 import './style/search.css';
 
-export default function Search({option}) {
+export default function Search({option, setTag, setTitle}) {
 
     const [query, setQuery] = useState('');
-    const [requestSent, setRequestSent] = useState(false);
-
-    const caption = option === 'title'? "Pretraži naslove" : "Pretraži tagove";
-    
-    const { listAllArticles, setListAllArticles} = useContext(context);
-
+ 
     const handleChange = (e) => {
         const v = e.target.value;
+        if(option === 'title') {
+            setTitle(v);
+        } else if(option === 'tag') {
+            setTag(v)
+        }
         setQuery(v);
     }
-    const findTitle = async () => {
-        setRequestSent(true);
-        const allNews = await getAllArticles();
-        if(allNews == null) {
-            allNews = []
-        }
-        const newsFound = allNews.filter((article) => {
-            const reg = new RegExp(`${query}`, 'i');
-            const i = article.title.search(reg);
-            return i === -1? false : true
-        })
-        setRequestSent(false);
-        return newsFound
-    }
-    const findTag = async () => {
-        setRequestSent(true);
-        const allNews = await getAllArticles();
-        if(allNews == null) {
-            allNews = []
-        }
-        const newsFound = allNews.filter((article) => {
-            const reg = new RegExp(`${query}`, 'i'); 
-            const some = article.tagsArr.some(tag => {
-                const i = tag.search(reg);
-                console.log(i)
-                return i === -1? false : true
-            });
-            return some
-        })
-        setRequestSent(false);
-        return newsFound
-    }
-    const handleClick = async (e) => {
-        e.preventDefault();
-        if(query.trim() === '') {
-            setQuery('');
-            return '';
-        }
-        let newsFound;
-        if(option === 'title') {
-            newsFound = await findTitle();
-        } else if(option === 'tag') {
-            newsFound = await findTag();
-        }
-        setListAllArticles(newsFound);
-    }
-
-    const handleKeyDown = async (e) => {
-    
-        if(e.keyCode === 13) {
-            let newsFound;
-            if(option === 'title') {
-                newsFound = await findTitle();
-            } else if(option === 'tag') {
-                newsFound = await findTag()
-            }
-            setListAllArticles(newsFound);
-        }
-    }
-
-    /* useEffect(() => setRequestSent(false)); */
-
+ 
     return (
         <div className="search">
             <input 
@@ -85,23 +24,9 @@ export default function Search({option}) {
                 type = "text"
                 value = {query}
                 onChange = {handleChange}
-                onKeyDown={(e) => {
-                    handleKeyDown(e);
-                }}
-                placeholder = {`${caption}`}
+                placeholder = {option == 'title'? "Pretraži naslove" : "Pretraži tagove"}
                 >    
             </input>
-            {/* <i class="fas fa-search"></i> */}
-            
-            <button
-                className = {`search-button ${requestSent && 'sending'}`}
-                onClick={(e) => handleClick(e)}
-            >{requestSent? 'Pretraživanje...' : 'Traži'}
-            </button>
-            <i
-                onClick={(e) => handleClick(e)}
-                className = {`fas fa-search ${requestSent && 'sending'}`}
-            ></i>
         </div>
     )
 }

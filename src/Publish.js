@@ -4,14 +4,14 @@ import { context } from './newsContext';
 
 export default function Publish({ id, published }) {
     const {listAllArticles, setListAllArticles,
-            showCmsOverlay, setShowCmsOverlay
+            showCmsOverlay, setShowCmsOverlay, pageNum
             } = useContext(context);
     async function handleClick(e) {
        try {
            setShowCmsOverlay('flex');
            const publishedArticle = await publishArticle(id);
 
-           const allNews = await getAllArticles();
+           const allNews = await getAllArticles(pageNum);
            if(allNews == null) {    
             allNews = []
            }

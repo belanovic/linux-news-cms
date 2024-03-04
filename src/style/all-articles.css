@@ -26,7 +26,7 @@
 .allArticles-columnNames-dateCreated,
 .allArticles-columnNames-dateUpdated,
 .allArticles-columnNames-datePublished {
-    flex: 0 0 22%;
+    flex: 0 0 20%;
     text-align: center;
 }
 .allArticles-columnNames-delete,

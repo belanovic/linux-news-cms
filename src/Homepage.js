@@ -13,7 +13,7 @@ const cookies = new Cookies();
 
 export default function Homepage() {
 
-    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay, setCathegory } = useContext(context);
+    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay, setCathegory, setPageNum } = useContext(context);
 
     useEffect(() => {
 
@@ -21,7 +21,8 @@ export default function Homepage() {
         setShowMenu('none');
         setShowFrontend('block'); 
 
-        setCathegory('allArticles')
+        setCathegory('allArticles');
+        setPageNum(1)
     }, [])
 
     return (

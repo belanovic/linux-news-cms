@@ -3,9 +3,9 @@ import PaginationButton from './Pagination-button';
 import { context } from './newsContext';
 import './style/pagination.css';
 
-export default function Pagination({ pageNum, setPageNum, isLastPage, NEWS_PER_PAGE }) {
+export default function Pagination({ pageNum, setPageNum, isLastPage }) {
     const { listAllArticles } = useContext(context);
-    const numOfPages = Math.ceil(listAllArticles.length / NEWS_PER_PAGE)
+    const numOfPages = Math.ceil(listAllArticles.length / 10)
 
     const increasePageNum = () => {
         setPageNum((prev) => {
@@ -26,7 +26,7 @@ export default function Pagination({ pageNum, setPageNum, isLastPage, NEWS_PER_P
         setPageNum(numOfPages);
     }
 
-    const generateNumButtons = () => {
+/*     const generateNumButtons = () => {
         let list = [];
         for (let i = 1; i <=numOfPages; i++) {
             list.push(<PaginationButton key={i} sign={i} setPageNum={setPageNum} currentBtn={pageNum === i} />)
@@ -34,33 +34,33 @@ export default function Pagination({ pageNum, setPageNum, isLastPage, NEWS_PER_P
         let shortList = list.slice(pageNum - 1 - 1, pageNum  + 1);
         if (pageNum === 1) shortList.unshift(list[0])
         return shortList;
-    }
+    } */
 
     return (
         <div className="pagination">
-            {pageNum !== 1 && 
+            
                 <PaginationButton 
                     sign= {<i className="fas fa-fast-backward"></i>}
                     clickHandler = {firstPageNum} 
-            />}
-            { pageNum !== 1 &&
+                />   
                 <PaginationButton
                     sign= {<i className="fas fa-chevron-left"></i>}
                     pageNum={pageNum}
                     clickHandler={decreasePageNum}
-                />}
-            {generateNumButtons()}
-            {!isLastPage &&
+                />
+
+                <PaginationButton sign = {pageNum} setPageNum={setPageNum}/>
+         
                 <PaginationButton
                     sign= {<i className="fas fa-chevron-right"></i>}
                     pageNum={pageNum}
                     clickHandler={increasePageNum}
-                />}
-            {pageNum !== numOfPages && 
+                />
+             
                 <PaginationButton 
                     sign = {<i className="fas fa-fast-forward"></i>}
                     clickHandler = {lastPageNum}
-            />}
+            />
         </div>
     )
 }

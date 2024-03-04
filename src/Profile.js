@@ -38,6 +38,15 @@ export default function Profile() {
         if(profileImgURLLarge === 'generic') { 
             photoURLLarge = 'generic';
             let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large' )
+            if(updateMsg == null) {
+                setShowCmsOverlay('none');
+                return
+            }
+            if(updateMsg.isSuccess == false) {
+                alert(updateMsg.failureMsg);
+                setShowCmsOverlay('none');
+                return
+            }
             updatedUser = updateMsg.userUpdated;
             if(deployedImgNameLarge !== 'generic') {
                 const deletionMsg = await removeImageDB(deployedImgNameLarge, 'profile/');
@@ -46,6 +55,17 @@ export default function Profile() {
         } else { 
             photoURLLarge = await uploadImageDB(profileImgNameLarge, profileImgFileLarge, 'profile/');
             let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLLarge, profileImgNameLarge, 'large'  )
+            if(updateMsg == null) {
+                const deletionMsg = await removeImageDB(profileImgNameLarge, 'profile/');
+                setShowCmsOverlay('none');
+                return
+            }
+            if(updateMsg.isSuccess == false) {
+                const deletionMsg = await removeImageDB(profileImgNameLarge, 'profile/');
+                alert(updateMsg.failureMsg);
+                setShowCmsOverlay('none');
+                return
+            }
             updatedUser = updateMsg.userUpdated;
             if(deployedImgNameLarge !== 'generic') {
 
@@ -64,6 +84,15 @@ export default function Profile() {
         if(profileImgURLSmall === 'generic') {
             photoURLSmall = 'generic';
             let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small' )
+            if(updateMsg == null) {
+                setShowCmsOverlay('none');
+                return
+            }
+            if(updateMsg.isSuccess == false) {
+                alert(updateMsg.failureMsg);
+                setShowCmsOverlay('none');
+                return
+            }
             updatedUser = updateMsg.userUpdated;
             
             if(deployedImgNameSmall !== 'generic') {
@@ -73,6 +102,17 @@ export default function Profile() {
         } else { 
             photoURLSmall = await uploadImageDB(profileImgNameSmall, profileImgFileSmall, 'profile/');
             let updateMsg = await updateProfileImg(localStorage.getItem('loggedUsername'), localStorage.getItem('loggedEmail'), photoURLSmall, profileImgNameSmall, 'small'  )
+            if(updateMsg == null) {
+                const deletionMsg = await removeImageDB(profileImgNameSmall, 'profile/');
+                setShowCmsOverlay('none');
+                return
+            }
+            if(updateMsg.isSuccess == false) {
+                const deletionMsg = await removeImageDB(profileImgNameSmall, 'profile/');
+                alert(updateMsg.failureMsg);
+                setShowCmsOverlay('none');
+                return
+            }
             updatedUser = updateMsg.userUpdated;
 
             if(deployedImgNameSmall !== 'generic') { 
@@ -122,24 +162,37 @@ export default function Profile() {
                     : 
                     <img src = {profileImgURLLarge}></img>}
                     {deployedImgNameLarge == profileImgNameLarge && showCmsOverlay == 'none'?
-                    <ChooseImage 
-                        setProfileImgNameLarge = {setProfileImgNameLarge} 
-                        setprofileImgFileLarge = {setprofileImgFileLarge} 
-                        setProfileImgURLLarge = {setProfileImgURLLarge} 
-                        widthLarge = {299}
-                        
-                        setProfileImgNameSmall = {setProfileImgNameSmall} 
-                        setprofileImgFileSmall = {setprofileImgFileSmall} 
-                        setProfileImgURLSmall = {setProfileImgURLSmall} 
-                        widthSmall = {50}
-                    />
+                    <div className='profile-img-edit'>
+                        <ChooseImage 
+                            setProfileImgNameLarge = {setProfileImgNameLarge} 
+                            setprofileImgFileLarge = {setprofileImgFileLarge} 
+                            setProfileImgURLLarge = {setProfileImgURLLarge} 
+                            widthLarge = {299}
+                            
+                            setProfileImgNameSmall = {setProfileImgNameSmall} 
+                            setprofileImgFileSmall = {setprofileImgFileSmall} 
+                            setProfileImgURLSmall = {setProfileImgURLSmall} 
+                            widthSmall = {50}
+                        />
+                    </div>
                     :
-                    <div>
-                        <button 
-                            className='profile-img-save'
-                            onClick = {() => handleSave()}
-                        >Sačuvaj
-                        </button>
+                    <div className='profile-img-edit'>
+                        <ChooseImage 
+                            setProfileImgNameLarge = {setProfileImgNameLarge} 
+                            setprofileImgFileLarge = {setprofileImgFileLarge} 
+                            setProfileImgURLLarge = {setProfileImgURLLarge} 
+                            widthLarge = {299}
+                            
+                            setProfileImgNameSmall = {setProfileImgNameSmall} 
+                            setprofileImgFileSmall = {setprofileImgFileSmall} 
+                            setProfileImgURLSmall = {setProfileImgURLSmall} 
+                            widthSmall = {50}
+                        />
+                            <button 
+                                className='profile-img-save'
+                                onClick = {() => handleSave()}
+                            >Sačuvaj
+                            </button>
                     </div>
                     }
 

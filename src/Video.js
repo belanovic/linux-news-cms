@@ -24,9 +24,6 @@ export default function Video({ videoURL, setVideoName, inputHandler,
                 <video
                     className="video"
                     controls
-                    /* onLoadStart = {() => {
-                        setArticleVideoLoaded(true);
-                    }} */
                     key={videoURL}
                 >
                     <source src={videoURL} /* type="video/mp4" */ />

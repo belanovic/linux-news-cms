@@ -9,10 +9,7 @@ const context = React.createContext();
 function Provider({children}) {
 
     const [listAllArticles, setListAllArticles] = useState([]);
-  /*   const [articleDataLoaded, setArticleDataLoaded] = useState(false);
-    const [articleImgLoaded1, setArticleImgLoaded1] = useState(false);
-    const [articleImgLoaded2, setArticleImgLoaded2] = useState(false); */
-    /* const [articleVideoLoaded, setArticleVideoLoaded] = useState(false); */
+
     const [showCmsOverlay, setShowCmsOverlay] = useState('none');
 
     const [newArticleBtn, setNewArticleBtn] = useState('none');
@@ -21,7 +18,7 @@ function Provider({children}) {
     const [showFrontend, setShowFrontend] = useState('none');
     const [showLogin, setShowLogin] = useState('block');
 
-    
+    const [pageNum, setPageNum] = useState(1);
     const [cathegory, setCathegory] = useState('allArticles');
     const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [showCalendar, setShowCalendar] = useState(false);
@@ -40,13 +37,6 @@ function Provider({children}) {
         saturate: 100,
         sepia: 0
     }]
-
-    /*  useEffect(async () => {
-         const n = listAllArticles;
-         n.sort((a, b) => a.position - b.position);
-         console.log(n)
-     }, [listAllArticles]) */
-
 
     return (
         <context.Provider value={{
@@ -68,6 +58,8 @@ function Provider({children}) {
             setShowFrontend,
             showLogin, 
             setShowLogin,
+            pageNum, 
+            setPageNum,
             cathegory,
             setCathegory,
             activeCriteria,

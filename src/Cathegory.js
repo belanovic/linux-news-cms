@@ -4,7 +4,7 @@ import { getAllArticles, getByCategory } from './getArticles';
 import Calendar from './Calendar';
 import './style/cathegory.css';
 
-export default function Cathegory({ setPageNum, sortArticles }) {
+export default function Cathegory({ pageNum, setPageNum, sortArticles, title, tag }) {
 
     const {setShowCmsOverlay, listAllArticles, setListAllArticles, cathegory, setCathegory,
         shouldLoadArticles } = useContext(context);
@@ -22,8 +22,8 @@ export default function Cathegory({ setPageNum, sortArticles }) {
 
         if (cathegory === 'allArticles') {
             setShowCmsOverlay('flex');
-            let allNews = await getAllArticles();
-            //setShowCmsOverlay('none');
+            let allNews = await getAllArticles(pageNum, title, tag);
+            setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
@@ -37,15 +37,13 @@ export default function Cathegory({ setPageNum, sortArticles }) {
                     const selectedDay = new Date(selectedDate).getDate();
                   
                     return articleYear === selectedYear && articleMonth === selectedMonth && articleDay === selectedDay
-        
-
                 })
 
             }
             const promiseResolveA = await setListAllArticles(allNews);
             
             sortArticles();
-            setPageNum(1)
+            //setPageNum(1)
         } else {
             setShowCmsOverlay('flex');
             let allNews = await getByCategory(cathegory);
@@ -71,34 +69,33 @@ export default function Cathegory({ setPageNum, sortArticles }) {
             }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
-            setPageNum(1);
+            //setPageNum(1);
         }
     }
 
     useEffect(async () => {
         if (cathegory === 'allArticles') {
             setShowCmsOverlay('flex');
-            let allNews = await getAllArticles();
+            let allNews = await getAllArticles(pageNum, title, tag);
             setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
             const promiseResolveA = await setListAllArticles(allNews);
-            sortArticles();
-            
-            setPageNum(1)
+            sortArticles();          
+            //setPageNum(1)
         } else {
             setShowCmsOverlay('flex');
-            let allNews = await getByCategory(cathegory);
+            let allNews = await getByCategory(cathegory, pageNum);
             setShowCmsOverlay('none');
             if(allNews == null) {
                 allNews = []
             }
             const promiseResolveA = await setListAllArticles(allNews);
             sortArticles();
-            setPageNum(1);
+            //setPageNum(1);
         }
-    }, [])
+    }, [pageNum])
 
     return (
         <div className="cathegory">

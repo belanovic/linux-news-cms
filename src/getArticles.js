@@ -14,22 +14,23 @@ function checkStatus(response) {
     }
 }
 
-export async function getAllArticles() {
+export async function getAllArticles(pageNum, title, tag) {
 
     const options = { 
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include'
+        credentials: 'include',
+        body: JSON.stringify({
+            pageNum: pageNum,
+            tag: tag.trim(),
+            title: title.trim()
+        })
     }
 
     try {
         const response = await fetch(`${HOST_BACKEND}/allArticles`, options);
-           /*      if(response.status == 401) {
-            alert('401 - Authentication error');
-            logout();
-            return
-        } */
         checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
@@ -327,7 +328,7 @@ export async function updateFrontpage(idAndPositionArr) {
     }
 }
 
-export async function getByCategory(category) {
+export async function getByCategory(category, pageNum) {
 
     const options = {
         headers: {
@@ -338,7 +339,7 @@ export async function getByCategory(category) {
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/category/${category}`, options);
+        const response = await fetch(`${HOST_BACKEND}/category/${category}/${pageNum}`, options);
         checkStatus(response);
         const responseBody = await response.json();
         
