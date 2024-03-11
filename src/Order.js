@@ -122,7 +122,7 @@ export default function Order() {
         setShowFrontend('none');
 
         setCategory('allArticles');
-        setPageNum(1)
+        setPageNum({number: 1, isLast: false})
     }, [])
 
     return (

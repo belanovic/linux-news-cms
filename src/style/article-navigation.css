@@ -1,7 +1,7 @@
 .article-navigation {
     display: flex;
     font-size: 1.5rem;
-    padding-top: 0.5em;
+    padding-top: 1.5em;
     padding-bottom: 0.5em;
     background: linear-gradient(180deg, rgb(102, 102, 102), rgb(151, 151, 151));
 }

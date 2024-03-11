@@ -1,4 +1,4 @@
-.find-label {
+.search-label {
     display: none;
     justify-content: space-between;
     align-items: center;
@@ -9,33 +9,33 @@
     margin-bottom: 0.7em;
 }
 
-.find-label:hover {
+.search-label:hover {
     cursor: pointer;
 }
 
-.find-label-fake {
+.search-label-fake {
     visibility: hidden;
 }
 
-.find-label-text {
+.search-label-text {
     font-family: 'Times New Roman', Times, serif
 }
 
-.find-label .fa-chevron-down {
+.search-label .fa-chevron-down {
     transition: transform 0.25s;
     transform: rotateZ(0deg);
 }
-.find-label .fa-chevron-down.up {
+.search-label .fa-chevron-down.up {
     transform: rotateZ(180deg)
 }
 
-.find-label .fa-chevron-down:hover {
+.search-label .fa-chevron-down:hover {
     cursor: pointer;
     color: red;
 }
 
 @media all and (max-width: 768px) {
-    .find-label {
+    .search-label {
         display: flex;
     }
 }

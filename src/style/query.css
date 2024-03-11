@@ -1,0 +1,12 @@
+.query {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background: #585867;
+    padding: 0.2em 2em 0.2em 2em;
+    transition: transform 250ms;
+}
+.query input {
+/*     margin-right: 1.25em; */
+    outline: none;
+}

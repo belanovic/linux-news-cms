@@ -6,6 +6,7 @@
 
 .allArticles-columnNames {
     display: flex;
+    box-shadow: 0 0 15px 3px black;
 }
 .allArticles-columnNames-info {
     display: flex;

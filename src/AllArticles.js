@@ -1,27 +1,40 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { context } from './newsContext.js';
+import { getAllArticles } from './getArticles.js';
 import Pagination from './Pagination.js';
 import {DatePublished, DateCreated, DateUpdated} from './Time.js';
 import Publish from './Publish.js';
-import Category from './Category.js';
 import Search from './Search.js';
 import './style/all-articles.css'; 
 import './style/all-articles-item.css';
 import {alphabet} from './cirilizatorDecirilizator.js';
-import FindLabel from './FindLabel.js';
-
-
+import SearchLabel from './SearchLabel.js';
 
 export default function AllArticles() {
 
     const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
-        setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay, pageNum, setPageNum} = useContext(context);
+        setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay, pageNum, setPageNum, category} = useContext(context);
     
-    const [findVisible, setFindVisible] = useState(false);
+    const [searchVisible, setSearchVisible] = useState(false);
 
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
+
+
+    async function pageArticles(category, pageNum, title, tag) {
+        setShowCmsOverlay('flex');
+        let articlesMsg = await getAllArticles(category, pageNum, title, tag);
+        setShowCmsOverlay('none');
+        if(articlesMsg == null) {
+            const promiseResolveA = await setListAllArticles([]);
+            return null
+        }
+        const promiseResolveA = await setListAllArticles(articlesMsg.articles);
+        sortArticles();
+        if(pageNum.isLast == true) return articlesMsg.numOfPages
+        return true
+    }
 
     const sortArticles = () => {
         setListAllArticles((prev) => {
@@ -41,13 +54,14 @@ export default function AllArticles() {
         })
     }
     
-    useEffect(function () {
-        setActiveLink('allArticles');
-    }, [])
-
     useEffect(() => sortArticles(), [activeCriteria])
-
+    
     useEffect(() => {
+
+        pageArticles(category, pageNum, title, tag);
+
+        setActiveLink('allArticles');
+
         setNewArticleBtn('inline-block');
         setShowMenu('block');
         setShowFrontend('none');
@@ -56,13 +70,16 @@ export default function AllArticles() {
      return (
         <>
                 <div className="allArticles">
-                    <FindLabel setFindVisible = {setFindVisible} />
-                    <div className = {`find ${findVisible && 'show'}`}>
-                        <Search option = 'title' setTitle = {setTitle} setTag = {setTag} />
-                        <Category pageNum = {pageNum} setPageNum = {setPageNum} sortArticles = {sortArticles} title = {title} tag = {tag}/>
-                        <Search option = "tag" setTag = {setTag} setTitle = {setTitle} />
-                        
-                    </div>
+                    <SearchLabel setSearchVisible = {setSearchVisible} />
+                    <Search 
+                        searchVisible = {searchVisible}
+                        pageNum = {pageNum}
+                        setPageNum = {setPageNum} 
+                        title = {title} tag = {tag} 
+                        setTag = {setTag} setTitle = {setTitle} 
+                        pageArticles = {pageArticles} 
+                        sortArticles = {sortArticles} 
+                    />
                     <div className = "allArticles-columnNames" onClick = {() => setShowCalendar(false)}>
                         <div 
                             className = "allArticles-columnNames-title allArticles-columnNames-text">
@@ -114,10 +131,6 @@ export default function AllArticles() {
                         </div>
                     </div>
                     {listAllArticles.map((oneArticle, i) => {
-                        // const isOnLastPage = (i + 1 > listAllArticles.length - (listAllArticles.length % 10));
-                         /* ((i + 1) <= pageNum * 10 && (i + 1) > pageNum * 10 - 10) && */
-
-                                // <div key={i} className={`allArticles-item ${isOnLastPage? 'allArticles-item-lastPage' : ''}`} onClick = {() => setShowCalendar(false)}>
                                 return    <div key={i} className={`allArticles-item`} onClick = {() => setShowCalendar(false)}>
                                     <div className="allArticles-item-title allArticles-item-part">
                                         <Link to={`/oneArticle/${oneArticle._id}`}>
@@ -131,10 +144,17 @@ export default function AllArticles() {
                                         <div className = "allArticles-item-note allArticles-item-part">{oneArticle.note}</div>
                                         <DateUpdated timeUpdated = {oneArticle.dateUpdated}/>
                                         <DateCreated timeCreated = {oneArticle.dateCreated}/>
-                                        <DatePublished timePublished = {oneArticle.datePublished} published = {oneArticle.published}/>
-                    
-                                        <Publish id={oneArticle._id} published = {oneArticle.published} />
-
+                                        <DatePublished 
+                                            timePublished = {oneArticle.datePublished} 
+                                            published = {oneArticle.published}
+                                        />
+                                        <Publish 
+                                            id={oneArticle._id} 
+                                            published = {oneArticle.published} 
+                                            pageArticles = {pageArticles} 
+                                            title = {title}
+                                            tag = {tag}
+                                        />
                                         <div className="allArticles-item-delete allArticles-item-part"> 
                                         {!oneArticle.published && <Link to={`/delete/${oneArticle._id}`}>
                                             <button>Izbriši</button>
@@ -146,9 +166,11 @@ export default function AllArticles() {
                     })}
                 </div>
             <Pagination
-                isLastPage={pageNum * 10 >= listAllArticles.length ? true : false}
                 pageNum={pageNum}
                 setPageNum={setPageNum}
+                pageArticles = {pageArticles}
+                title = {title} 
+                tag = {tag}
             />
         </>
     )

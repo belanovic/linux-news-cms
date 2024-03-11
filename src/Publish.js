@@ -2,24 +2,19 @@ import React, { useContext, useEffect } from 'react';
 import {publishArticle, getAllArticles} from './getArticles.js';
 import { context } from './newsContext';
 
-export default function Publish({ id, published }) {
-    const {listAllArticles, setListAllArticles,
-            showCmsOverlay, setShowCmsOverlay, pageNum
-            } = useContext(context);
+export default function Publish({ id, published, pageArticles, title, tag }) {
+    const {category, pageNum, showCmsOverlay, setShowCmsOverlay } = useContext(context);
     async function handleClick(e) {
        try {
            setShowCmsOverlay('flex');
+
            const publishedArticle = await publishArticle(id);
 
-           const allNews = await getAllArticles(pageNum);
-           if(allNews == null) {    
-            allNews = []
-           }
-           const promiseResolveA = await setListAllArticles(allNews);
-           setShowCmsOverlay('none');
-           return publishedArticle
-       } catch(err) {
-           console.log(err)
+           await pageArticles(category, pageNum, title, tag);
+           
+       } catch(error) {
+           alert(error.message);
+           await pageArticles(category, pageNum, title, tag);
        }
     }
 

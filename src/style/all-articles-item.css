@@ -6,7 +6,7 @@
 }
 
 .allArticles-columnNames {
-    background: rgb(189, 189, 189);
+    background: rgb(205, 205, 205);
 }
 
 .allArticles-item-info {
@@ -15,7 +15,7 @@
 }
 
 .allArticles-item-part {
-    padding: 0em 0 0em 0;
+    padding: 0 0 0 0;
     border-right: 1px solid black;
     letter-spacing: 0.5px;
 }

@@ -22,7 +22,7 @@ export default function Homepage() {
         setShowFrontend('block'); 
 
         setCategory('allArticles');
-        setPageNum(1)
+        setPageNum({number: 1, isLast: false})
     }, [])
 
     return (

@@ -3,6 +3,7 @@ import ReactCalendar from 'react-calendar';
 import dateFormat from './dateFormat';
 import {context} from './newsContext'
 import 'react-calendar/dist/Calendar.css';
+import './style/calendar.css';
 
 export default function Calendar({setIsDated, setSelectedDate}) {
 

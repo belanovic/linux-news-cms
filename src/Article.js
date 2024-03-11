@@ -33,7 +33,7 @@ const storage = firebase.storage();
 export default function Article({ setShowCmsOverlay, isNew }) {
 
     const { listAllArticles, setListAllArticles, setShowMenu, setActiveLink,
-        setNewArticleBtn, setShowFrontend, defaultFilter, pageNum
+        setNewArticleBtn, setShowFrontend, defaultFilter, pageNum,
     } = useContext(context);
 
     const [tabPublishVisibility, setTabPublishVisibility] = useState('none')
@@ -224,11 +224,13 @@ export default function Article({ setShowCmsOverlay, isNew }) {
               /*   if(sendTwit) {
                     const r = await publishTwit(twit);
                 } */
-                const allNews = await getAllArticles(pageNum);
-                if(allNews == null) {
-                    allNews = []
+                const articlesMsg = await getAllArticles(category, pageNum);
+                let articles;
+                if(articlesMsg == null) {
+                    articles = []
                 }
-                const promiseResolveA = await setListAllArticles(allNews);
+                articles = articlesMsg.articles;
+                const promiseResolveA = await setListAllArticles(articles);
 
                 if (IdArticleToChangePosition !== '') {
                     let changedPositionArticle = await updateArticlePosition(IdArticleToChangePosition, currentPosition);

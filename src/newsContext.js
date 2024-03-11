@@ -18,7 +18,7 @@ function Provider({children}) {
     const [showFrontend, setShowFrontend] = useState('none');
     const [showLogin, setShowLogin] = useState('block');
 
-    const [pageNum, setPageNum] = useState(1);
+    const [pageNum, setPageNum] = useState({number: 1, isLast: false, numOfPages: ''});
     const [category, setCategory] = useState('allArticles');
     const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [showCalendar, setShowCalendar] = useState(false);

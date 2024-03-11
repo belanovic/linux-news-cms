@@ -14,7 +14,9 @@ function checkStatus(response) {
     }
 }
 
-export async function getAllArticles(pageNum, title, tag) {
+export async function getAllArticles(category, pageNum, title, tag) {
+
+    console.log(pageNum)
 
     const options = { 
         method: 'POST',
@@ -23,21 +25,22 @@ export async function getAllArticles(pageNum, title, tag) {
         },
         credentials: 'include',
         body: JSON.stringify({
+            category: category,
             pageNum: pageNum,
-            tag: tag.trim(),
-            title: title.trim()
+            title: title.trim(),
+            tag: tag.trim()
         })
     }
 
     try {
-        const response = await fetch(`${HOST_BACKEND}/allArticles`, options);
+        const response = await fetch(`${HOST_BACKEND}/${pageNum.isLast == true? 'lastPage' : 'allArticles'}`, options);
         checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
             alert(responseBody.error.message);
             return null
         }
-        return responseBody
+        return responseBody.articlesMsg
     }
     catch (error) {
         alert(error.message)
@@ -56,11 +59,7 @@ export async function getArticle(id) {
 
     try {
         const response = await fetch(`${HOST_BACKEND}/oneArticleCMS/${id}`, options);
-        /*      if(response.status == 401) {
-            alert('401 - Authentication error');
-            logout();
-            return
-        } */
+        
         checkStatus(response);
         const responseBody = await response.json();
         if(responseBody.error) {
@@ -320,37 +319,6 @@ export async function updateFrontpage(idAndPositionArr) {
             return responseBody.modifiedAllArticles;
         }
         alert('Problem sa promenom naslovne strane')
-        return null
-    }
-    catch (error) {
-        alert(error.message)
-        return null
-    }
-}
-
-export async function getByCategory(category, pageNum) {
-
-    const options = {
-        headers: {
-            'Content-Type': 'application/json',
-            /* 'Authorization' : 'Bearer ' + localStorage.getItem('x-auth-token') */
-        },
-        credentials: 'include'
-    }
-
-    try {
-        const response = await fetch(`${HOST_BACKEND}/category/${category}/${pageNum}`, options);
-        checkStatus(response);
-        const responseBody = await response.json();
-        
-        if(responseBody.error) {
-            alert(responseBody.error.message);
-            return null;
-        }
-        if(responseBody.newsByCategory) {
-            return responseBody.newsByCategory;
-        }
-        alert('Problem sa pretragom vesti po kategorijama')
         return null
     }
     catch (error) {

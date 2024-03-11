@@ -1,148 +1,39 @@
-.find {
-    display: flex;
-    padding: 1em 3em 1em 3em;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-}
 
-.find > * {
-    
-    /* margin-right: 5.5em; */
-}
-.find > div:last-child {
-    margin-right: 0px;
-}
 .category {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 0 0 40%;
-    padding: 1em 0.5em 1em 0.5em;
-    background:rgb(148, 148, 148);
+    padding: 0.2em 2em 0.2em 2em;
+    background: #585867;
     color: white;
     transition: transform 250ms;
-    
 }
 
 .category-categories label {
     font-size: .8rem;
     letter-spacing: 1px;
-    margin-right: 1.25em;
 }
 .category-categories select {
     letter-spacing: 1.25px;
-    margin-right: 1.25em;
 }
 .category-categories option {
     letter-spacing: 1px;
     font-size: 1rem;
 }
-.category-button .btn {
-    background: green;
-    color: white;
-    text-align: center;
-    padding: 0.2em 2em 0.2em 2em;
-    width: 100px;
-}
-
-.category-button .btn:hover {
-    background:rgb(0, 150, 0);   
-    cursor: pointer;
-}
-
-/*calendar*/
-
-/* .calendar-wrapper input {
-    border: 2px solid blue;
-} */
-
-.calendar-container {
-    display: inline-block;
-    margin-right: 2em;
-    cursor: not-allowed;
-    pointer-events: none;
-    color: black;
-}
-
-.calendar-container.active {
-    cursor: pointer;
-    pointer-events: all;
-    color: white;
-}
-
-/* .calendar-select:hover {
-    cursor: pointer;
-} */
-
-
-.calendar-select span {
-    margin-right: 0.5em;
-}
-
-.react-calendar {
-    position: absolute;
-    display: none;
-}
-
-.fa-search {
-    display: none;
-}
-
-.react-calendar.show {
-    display: block;
-}
-
-.search-button.sending {
-    background: rgb(81, 219, 1);
-    cursor: pointer;
-}
-
-.fa-calendar-alt.show {
-    transform: scale(1.11)
-}
-/* .fa-calendar-alt:hover {
-    cursor: pointer;
-}
- */
-
 
 @media all and (max-width: 748px) {
-    .find {
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0em 0em 1em 0em;
-    }
-   
-    .find > * {
-        flex: 0 0 90%;
-    }
-    .find.show {
-        display: block;
-    }
+
     .category {
         order: -1;
         padding: 1em 0.5em 1em 0.5em;
       /*   flex-direction: column; */
         margin-bottom: 1em;
     }
-    .fa-search {
-        display: block;
-    }
-    .fa-search:hover {
-        cursor: pointer;
-    }
-    .category-button .btn {
-        display: none;
-    }
+
     .category > * {
         /* margin-bottom: 1em; */
     }
     #category-categories {
-        /* margin-right: 0; */
-    }
-    .calendar-container {
         /* margin-right: 0; */
     }
 }

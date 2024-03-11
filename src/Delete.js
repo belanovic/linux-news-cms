@@ -23,7 +23,8 @@ export default function Delete() {
     const [videoURL, setVideoURL] = useState('');
     const [videoName, setVideoName] = useState('');
     const { id } = useParams();
-    const { listAllArticles, setListAllArticles, showCmsOverlay, setShowCmsOverlay, pageNum
+    const { listAllArticles, setListAllArticles, showCmsOverlay, 
+        setShowCmsOverlay, pageNum, category
     } = useContext(context);
 
     const findSelectedArticle = () => {
@@ -55,13 +56,6 @@ export default function Delete() {
             if(videoName !== 'none') {
                 const deletedImage = await removeImageDB(videoName, '');
             }
-
-            const allNews = await getAllArticles(pageNum);
-            if(allNews == null) {
-                allNews = []
-            }
-            const promiseResolveA = await setListAllArticles(allNews);
-
             window.location.href = '/allArticles';
         } catch (error) {
             alert(error.message)

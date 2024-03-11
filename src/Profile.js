@@ -156,66 +156,69 @@ export default function Profile() {
     return (
             <div  className = "profile-container">
                 <div className = "profile">
-        
-                    {profileImgURLLarge === 'generic'?
-                    <i className="fas fa-user-edit"></i>
-                    : 
-                    <img src = {profileImgURLLarge}></img>}
-                    {deployedImgNameLarge == profileImgNameLarge && showCmsOverlay == 'none'?
-                    <div className='profile-img-edit'>
-                        <ChooseImage 
-                            setProfileImgNameLarge = {setProfileImgNameLarge} 
-                            setprofileImgFileLarge = {setprofileImgFileLarge} 
-                            setProfileImgURLLarge = {setProfileImgURLLarge} 
-                            widthLarge = {299}
-                            
-                            setProfileImgNameSmall = {setProfileImgNameSmall} 
-                            setprofileImgFileSmall = {setprofileImgFileSmall} 
-                            setProfileImgURLSmall = {setProfileImgURLSmall} 
-                            widthSmall = {50}
-                        />
+                    <div className='profile-img'>
+                        {profileImgURLLarge === 'generic'?
+                        <div className='profile-guest'><i className="fas fa-user-edit"></i></div>
+                        : 
+                        <img src = {profileImgURLLarge} ></img>}
+                        {deployedImgNameLarge == profileImgNameLarge && showCmsOverlay == 'none'?
+                        <div className='profile-img-edit'>
+                            <ChooseImage 
+                                setProfileImgNameLarge = {setProfileImgNameLarge} 
+                                setprofileImgFileLarge = {setprofileImgFileLarge} 
+                                setProfileImgURLLarge = {setProfileImgURLLarge} 
+                                widthLarge = {299}
+                                
+                                setProfileImgNameSmall = {setProfileImgNameSmall} 
+                                setprofileImgFileSmall = {setprofileImgFileSmall} 
+                                setProfileImgURLSmall = {setProfileImgURLSmall} 
+                                widthSmall = {50}
+                            />
+                        </div>
+                        :
+                        <div className='profile-img-edit'>
+                            <ChooseImage 
+                                setProfileImgNameLarge = {setProfileImgNameLarge} 
+                                setprofileImgFileLarge = {setprofileImgFileLarge} 
+                                setProfileImgURLLarge = {setProfileImgURLLarge} 
+                                widthLarge = {299}
+                                
+                                setProfileImgNameSmall = {setProfileImgNameSmall} 
+                                setprofileImgFileSmall = {setprofileImgFileSmall} 
+                                setProfileImgURLSmall = {setProfileImgURLSmall} 
+                                widthSmall = {50}
+                            />
+                                <button 
+                                    className='profile-img-save'
+                                    onClick = {() => handleSave()}
+                                >Sačuvaj
+                                </button>
+                        </div>
+                        }
                     </div>
-                    :
-                    <div className='profile-img-edit'>
-                        <ChooseImage 
-                            setProfileImgNameLarge = {setProfileImgNameLarge} 
-                            setprofileImgFileLarge = {setprofileImgFileLarge} 
-                            setProfileImgURLLarge = {setProfileImgURLLarge} 
-                            widthLarge = {299}
-                            
-                            setProfileImgNameSmall = {setProfileImgNameSmall} 
-                            setprofileImgFileSmall = {setprofileImgFileSmall} 
-                            setProfileImgURLSmall = {setProfileImgURLSmall} 
-                            widthSmall = {50}
-                        />
-                            <button 
-                                className='profile-img-save'
-                                onClick = {() => handleSave()}
-                            >Sačuvaj
-                            </button>
-                    </div>
-                    }
-
-                    <div className = "profile-element">
-                        <div className = "profile-element-description">Korisničko ime</div>
-                        <div className = "profile-element-username data">{localStorage.getItem('loggedUsername')}</div>
-                    </div>
-                    <div className = "profile-element">
-                        <div className = "profile-element-description">Ime</div>
-                        <div className = "profile-element-firstname data">{localStorage.getItem('loggedFirstName')}</div>
-                    </div>
-                    <div className = "profile-element">
-                        <div className = "profile-element-description">Prezime</div>
-                        <div className = "profile-element-lastname data">{localStorage.getItem('loggedLastName')}</div>
-                    </div>
-                    <div className = "profile-element">
-                        <div className = "profile-element-description">email</div>
-                        <div className = "profile-element-email data">{localStorage.getItem('loggedEmail')}</div>
-                    </div>
-                    <button 
-                        className = "profile-signOut"
-                        onClick = {(e) => handleSignOut(e)}
-                    >Odjavi se</button>
+                    <div className='profile-elements'>
+                        <div className = "profile-element">
+                            <div className = "profile-element-description">Korisničko ime</div>
+                            <div className = "profile-element-username data">{localStorage.getItem('loggedUsername')}</div>
+                        </div>
+                        <div className = "profile-element">
+                            <div className = "profile-element-description">Ime</div>
+                            <div className = "profile-element-firstname data">{localStorage.getItem('loggedFirstName')}</div>
+                        </div>
+                        <div className = "profile-element">
+                            <div className = "profile-element-description">Prezime</div>
+                            <div className = "profile-element-lastname data">{localStorage.getItem('loggedLastName')}</div>
+                        </div>
+                        <div className = "profile-element">
+                            <div className = "profile-element-description">email</div>
+                            <div className = "profile-element-email data">{localStorage.getItem('loggedEmail')}</div>
+                        </div>
+                        <button 
+                            className = "profile-signOut"
+                            onClick = {(e) => handleSignOut(e)}
+                        >Odjavi se
+                        </button>
+                    </div> 
                 </div>
             </div>
     )
