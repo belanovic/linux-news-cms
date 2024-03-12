@@ -4,11 +4,11 @@ import { context } from './newsContext';
 import { lastPage } from './getArticles';
 import './style/pagination.css';
 
-export default function Pagination({ pageNum, setPageNum, pageArticles, tag, title }) {
+export default function Pagination({ pageNum, setPageNum, pageArticles, tag, title, selectedDate }) {
     const { listAllArticles, category } = useContext(context);
 
     const increasePageNum = async () => {
-        const done = await pageArticles(category, {number: pageNum.number + 1, isLast: false}, title, tag);
+        const done = await pageArticles(category, {number: pageNum.number + 1, isLast: false}, title, tag, selectedDate);
         if(done == null) return;
 
         setPageNum((prev) => {
@@ -16,7 +16,7 @@ export default function Pagination({ pageNum, setPageNum, pageArticles, tag, tit
         })
     }
     const decreasePageNum = async () => {
-        const done = await pageArticles(category, {number: pageNum.number - 1, isLast: false}, title, tag);
+        const done = await pageArticles(category, {number: pageNum.number - 1, isLast: false}, title, tag, selectedDate);
         if(done == null) return;
         setPageNum((prev) => {
             if (prev.number == 1) return prev;
@@ -25,12 +25,12 @@ export default function Pagination({ pageNum, setPageNum, pageArticles, tag, tit
     }
 
     const firstPageNum = async () => {
-        const done = await pageArticles(category, {number:1, isLast: false}, title, tag);
+        const done = await pageArticles(category, {number:1, isLast: false}, title, tag, selectedDate);
         if(done == null) return;
         setPageNum({number: 1, isLast: false})
     }
     const lastPageNum = async () => {
-        const numOfPages = await pageArticles(category, {number: pageNum.number, isLast: true}, title, tag);
+        const numOfPages = await pageArticles(category, {number: pageNum.number, isLast: true}, title, tag, selectedDate);
         setPageNum({number: numOfPages, isLast: true});
     }
 

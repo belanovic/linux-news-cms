@@ -14,10 +14,8 @@ function checkStatus(response) {
     }
 }
 
-export async function getAllArticles(category, pageNum, title, tag) {
-
-    console.log(pageNum)
-
+export async function getAllArticles(category, pageNum, title, tag, selectedDate) {
+    // console.log(selectedDate);
     const options = { 
         method: 'POST',
         headers: {
@@ -28,7 +26,8 @@ export async function getAllArticles(category, pageNum, title, tag) {
             category: category,
             pageNum: pageNum,
             title: title.trim(),
-            tag: tag.trim()
+            tag: tag.trim(),
+            selectedDate: selectedDate
         })
     }
 

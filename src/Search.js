@@ -6,32 +6,17 @@ import Category from './Category.js';
 import Calendar from './Calendar.js';
 import './style/search.css';
 
-export default function Search({pageArticles, pageNum, setPageNum, sortArticles, title, tag, setTitle, setTag, searchVisible }) {
+export default function Search({pageArticles, pageNum, setPageNum, 
+    sortArticles, title, tag, setTitle, 
+    setTag, searchVisible, selectedDate, setSelectedDate }) {
 
     const {category} = useContext(context);
-
-    const [isDated, setIsDated] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('');
-
+    
     const handleClick = async (e) => {
             e.preventDefault();
-            const done = await pageArticles(category, 1, title, tag);
+            const done = await pageArticles(category, 1, title, tag, selectedDate );
             if(done == null) return;
             setPageNum({number: 1, isLast: false});
-
-        /*  if(isDated) {
-            allNews = allNews.filter((article) => {
-                const articleYear = new Date(article.dateCreated).getFullYear();
-                const selectedYear = new Date(selectedDate).getFullYear();
-                const articleMonth = new Date(article.dateCreated).getMonth();
-                const selectedMonth = new Date(selectedDate).getMonth();
-                const articleDay = new Date(article.dateCreated).getDate();
-                const selectedDay = new Date(selectedDate).getDate();
-                
-                return articleYear === selectedYear && articleMonth === selectedMonth && articleDay === selectedDay
-            })
-
-        } */
     }
 
     return (
@@ -49,7 +34,7 @@ export default function Search({pageArticles, pageNum, setPageNum, sortArticles,
                     setTitle = {setTitle} 
                     setTag = {setTag} 
                 />
-                <Calendar setIsDated = {setIsDated} setSelectedDate = {setSelectedDate} />
+                <Calendar setSelectedDate = {setSelectedDate} />
                 <div 
                     className="search-button"
                 >

@@ -4,13 +4,12 @@ import { getAllArticles, getArticle } from './getArticles.js';
 import Calendar from './Calendar.js';
 import './style/category.css';
 
-export default function Category({pageArticles, pageNum, setPageNum, sortArticles, title, tag, setTitle, setTag }) {
+export default function Category({pageArticles, pageNum, setPageNum, sortArticles, 
+        title, tag, setTitle, setTag, selectedDate }) {
 
     const {setShowCmsOverlay, listAllArticles, setListAllArticles, category, setCategory,
         shouldLoadArticles } = useContext(context);
 
-    const [isDated, setIsDated] = useState(false);
-    const [selectedDate, setSelectedDate] = useState('');
 
     const handleSelect = (e) => {
             const option = e.target.value;

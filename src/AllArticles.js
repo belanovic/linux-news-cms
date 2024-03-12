@@ -20,11 +20,12 @@ export default function AllArticles() {
 
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
 
 
-    async function pageArticles(category, pageNum, title, tag) {
+    async function pageArticles(category, pageNum, title, tag, selectedDate) {
         setShowCmsOverlay('flex');
-        let articlesMsg = await getAllArticles(category, pageNum, title, tag);
+        let articlesMsg = await getAllArticles(category, pageNum, title, tag, selectedDate);
         setShowCmsOverlay('none');
         if(articlesMsg == null) {
             const promiseResolveA = await setListAllArticles([]);
@@ -55,10 +56,12 @@ export default function AllArticles() {
     }
     
     useEffect(() => sortArticles(), [activeCriteria])
+
+    useEffect(() => console.log(selectedDate), [selectedDate])
     
     useEffect(() => {
 
-        pageArticles(category, pageNum, title, tag);
+        pageArticles(category, pageNum, title, tag, selectedDate);
 
         setActiveLink('allArticles');
 
@@ -78,7 +81,9 @@ export default function AllArticles() {
                         title = {title} tag = {tag} 
                         setTag = {setTag} setTitle = {setTitle} 
                         pageArticles = {pageArticles} 
-                        sortArticles = {sortArticles} 
+                        sortArticles = {sortArticles}
+                        selectedDate = {selectedDate}
+                        setSelectedDate = {setSelectedDate}
                     />
                     <div className = "allArticles-columnNames" onClick = {() => setShowCalendar(false)}>
                         <div 
@@ -154,6 +159,7 @@ export default function AllArticles() {
                                             pageArticles = {pageArticles} 
                                             title = {title}
                                             tag = {tag}
+                                            selectedDate = {selectedDate}
                                         />
                                         <div className="allArticles-item-delete allArticles-item-part"> 
                                         {!oneArticle.published && <Link to={`/delete/${oneArticle._id}`}>
@@ -171,6 +177,7 @@ export default function AllArticles() {
                 pageArticles = {pageArticles}
                 title = {title} 
                 tag = {tag}
+                selectedDate = {selectedDate}
             />
         </>
     )

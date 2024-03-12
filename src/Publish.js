@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import {publishArticle, getAllArticles} from './getArticles.js';
 import { context } from './newsContext';
 
-export default function Publish({ id, published, pageArticles, title, tag }) {
+export default function Publish({ id, published, pageArticles, title, tag, selectedDate }) {
     const {category, pageNum, showCmsOverlay, setShowCmsOverlay } = useContext(context);
     async function handleClick(e) {
        try {
@@ -10,11 +10,11 @@ export default function Publish({ id, published, pageArticles, title, tag }) {
 
            const publishedArticle = await publishArticle(id);
 
-           await pageArticles(category, pageNum, title, tag);
+           await pageArticles(category, pageNum, title, tag, selectedDate);
            
        } catch(error) {
            alert(error.message);
-           await pageArticles(category, pageNum, title, tag);
+           await pageArticles(category, pageNum, title, tag, selectedDate);
        }
     }
 
