@@ -14,7 +14,7 @@ import SearchLabel from './SearchLabel.js';
 export default function AllArticles() {
 
     const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
-        setShowFrontend, setShowMenu, setShowCalendar, setShowCmsOverlay, pageNum, setPageNum, category} = useContext(context);
+        setShowFrontend, setShowMenu, setShowCmsOverlay, pageNum, setPageNum, category} = useContext(context);
     
     const [searchVisible, setSearchVisible] = useState(false);
 
@@ -85,7 +85,7 @@ export default function AllArticles() {
                         selectedDate = {selectedDate}
                         setSelectedDate = {setSelectedDate}
                     />
-                    <div className = "allArticles-columnNames" onClick = {() => setShowCalendar(false)}>
+                    <div className = "allArticles-columnNames">
                         <div 
                             className = "allArticles-columnNames-title allArticles-columnNames-text">
                                 <i className= {`fas fa-arrow-down ${activeCriteria[2] === 1? 'activeArrow' : ''}`} 
@@ -136,7 +136,7 @@ export default function AllArticles() {
                         </div>
                     </div>
                     {listAllArticles.map((oneArticle, i) => {
-                                return    <div key={i} className={`allArticles-item`} onClick = {() => setShowCalendar(false)}>
+                                return <div key={i} className={`allArticles-item`}>
                                     <div className="allArticles-item-title allArticles-item-part">
                                         <Link to={`/oneArticle/${oneArticle._id}`}>
                                             <h2 
@@ -166,7 +166,7 @@ export default function AllArticles() {
                                             <button>Izbriši</button>
                                         </Link>}
                                         </div>
-                                    </div>
+                                    </div> 
                                 </div>
                      
                     })}

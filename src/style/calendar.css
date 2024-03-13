@@ -14,7 +14,7 @@
     margin-right: 2em;
     cursor: not-allowed;
     pointer-events: none;
-    color: white;
+    color: rgb(141, 132, 132);
 }
 
 .calendar-container.active {
@@ -66,9 +66,6 @@
     }
     .fa-search:hover {
         cursor: pointer;
-    }
-    .calendar-container {
-        /* margin-right: 0; */
     }
 }
 
