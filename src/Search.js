@@ -22,17 +22,9 @@ export default function Search({pageArticles, pageNum, setPageNum,
     return (
         
             <div className = {`search ${searchVisible && 'show'}`}>
-                <Query option = "title" setTag = {setTag} setTitle = {setTitle} />
+                <Query option = "title" setTag = {setTag} setTitle = {setTitle}  title  = {title}  tag  = {tag} />
                 <Query option = "tag" setTag = {setTag} setTitle = {setTitle} />
-                <Category 
-                    pageArticles = {pageArticles} 
-                    pageNum = {pageNum} 
-                    setPageNum = {setPageNum} 
-                    sortArticles = {sortArticles} 
-                    title = {title} 
-                    tag = {tag} 
-                    setTitle = {setTitle} 
-                    setTag = {setTag} 
+                <Category   
                 />
                 <Calendar setSelectedDate = {setSelectedDate} />
                 <div 

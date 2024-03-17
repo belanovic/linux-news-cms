@@ -17,7 +17,8 @@ export default function Order() {
     const [doubleSelectedArticle, setDoubleSelectedArticle] = useState('');
     const [newsByDateAllComp, setNewsByDateAllComp] = useState([]);
     const { setActiveLink, setShowCmsOverlay, setPageNum, setCategory,
-        setNewArticleBtn, setShowMenu, setShowFrontend } = useContext(context);
+        setNewArticleBtn, setShowMenu, setShowFrontend, setTitle, setTag,
+        setSelectedDate, calendarHandleChange, calendarSetCheckValue } = useContext(context);
 
     const onDragEnd = (result) => {
         const { destination, source, reason } = result;
@@ -44,7 +45,7 @@ export default function Order() {
 
         articles.splice(source.index, 1);
         articles.splice(destination.index, 0, droppedArticle);
-        setreorderedArticles(articles)
+        setreorderedArticles(articles);
     }
 
     const handleClickOrder = async () => {
@@ -120,9 +121,14 @@ export default function Order() {
         setNewArticleBtn('inline-block');
         setShowMenu('block');
         setShowFrontend('none');
-
+       
+        setTitle('');
+        setTag('');
         setCategory('allArticles');
-        setPageNum({number: 1, isLast: false})
+        setPageNum({number: 1, isLast: false});
+        setSelectedDate(null);
+        calendarHandleChange(null);
+        calendarSetCheckValue(false);
     }, [])
 
     return (

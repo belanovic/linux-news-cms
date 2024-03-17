@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import AllArticles from './AllArticles.js';
 import Article from './Article.js';
 import { context } from './newsContext.js';
-/* import Chat from './Chat';
-import Call from './Call'; */
+import Chat from './Chat';
+/* import Call from './Call'; */
 import './style/homepage.css';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -13,7 +13,8 @@ const cookies = new Cookies();
 
 export default function Homepage() {
 
-    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay, setCategory, setPageNum } = useContext(context);
+    const {setShowMenu, setNewArticleBtn, setShowFrontend, setShowCmsOverlay, setCategory, setPageNum,
+        setSelectedDate, calendarHandleChange, calendarSetCheckValue, setTitle, setTag } = useContext(context);
 
     useEffect(() => {
 
@@ -21,13 +22,18 @@ export default function Homepage() {
         setShowMenu('none');
         setShowFrontend('block'); 
 
+        setTitle('');
+        setTag('');
         setCategory('allArticles');
-        setPageNum({number: 1, isLast: false})
+        setPageNum({number: 1, isLast: false});
+        setSelectedDate(null);
+        calendarHandleChange(null);
+        calendarSetCheckValue(false);
     }, [])
 
     return (
         <div className="homepage">
-          {/*   <Chat /> */}
+            <Chat />
             <div className="homepage-links">
                 <div className="homepage-newArticleBtn">
                     <Link to="/oneArticle/new">

@@ -4,11 +4,9 @@ import { getAllArticles, getArticle } from './getArticles.js';
 import Calendar from './Calendar.js';
 import './style/category.css';
 
-export default function Category({pageArticles, pageNum, setPageNum, sortArticles, 
-        title, tag, setTitle, setTag, selectedDate }) {
+export default function Category() {
 
-    const {setShowCmsOverlay, listAllArticles, setListAllArticles, category, setCategory,
-        shouldLoadArticles } = useContext(context);
+    const {category, setCategory } = useContext(context);
 
 
     const handleSelect = (e) => {

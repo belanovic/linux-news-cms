@@ -7,24 +7,22 @@ import './style/calendar.css';
 
 export default function Calendar({setSelectedDate}) {
 
-    const {showCalendar, setShowCalendar} = useContext(context);
-
-    const [value, handleChange] = useState(null);
-    const [checkValue, setCheckValue] = useState(false);
+    const {showCalendar, setShowCalendar, calendarValue, calendarHandleChange, 
+        calendarCheckValue, calendarSetCheckValue} = useContext(context);
 
     const handleCheck = (e)  => {
-        setCheckValue(prev => !prev);
+        calendarSetCheckValue(prev => !prev);
     }
 
     useEffect(() => {
-        if(checkValue == false) {
+        if(calendarCheckValue == false) {
             setSelectedDate(null)
         } else {
-            setSelectedDate(value)
+            setSelectedDate(calendarValue)
         }
-    }, [checkValue])
+    }, [calendarCheckValue])
 
-    useEffect(() => {setSelectedDate(value)}, [value])
+    useEffect(() => {setSelectedDate(calendarValue)}, [calendarValue])
 
     return (
         <div
@@ -32,26 +30,26 @@ export default function Calendar({setSelectedDate}) {
         >
             <input 
                 type = "checkbox"
-                checked = {checkValue}
+                checked = {calendarCheckValue}
                 onChange = {handleCheck}
             ></input>
             <div
-                className= {`calendar-container ${checkValue && 'active'}`}
+                className= {`calendar-container ${calendarCheckValue && 'active'}`}
                 /* onClick={() => setShowCalendar(prev => !prev)} */
             >
                 <div
                     className="calendar-select"
                     onClick={() => setShowCalendar(prev => !prev)}
                 >
-                    <span>{dateFormat(value, 'month', 'dayMonth', 'year')}</span>
+                    <span>{dateFormat(calendarValue, 'month', 'dayMonth', 'year')}</span>
                     <i
                         className={`far fa-calendar-alt ${showCalendar && 'show'}`}
                     ></i>
                 </div>
                 <ReactCalendar
-                    onChange={handleChange}
-                    value={value}
-                    className={showCalendar && checkValue? 'show' : ''}
+                    onChange={calendarHandleChange}
+                    value={calendarValue}
+                    className={showCalendar && calendarCheckValue? 'show' : ''}
                     onClickDay = {() => setShowCalendar(prev => !prev)}
                 />
 

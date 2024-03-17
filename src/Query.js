@@ -1,7 +1,7 @@
-import react, { useState } from 'react';
+import react, { useEffect, useState } from 'react';
 import './style/query.css';
 
-export default function Query({option, setTag, setTitle}) {
+export default function Query({option, setTag, setTitle, tag, title}) {
 
     const [query, setQuery] = useState('');
  
@@ -14,6 +14,15 @@ export default function Query({option, setTag, setTitle}) {
         }
         setQuery(v);
     }
+
+    useEffect(() => {
+
+        if(option === 'title') {
+            setQuery(title);
+        } else if(option === 'tag') {
+            setQuery(tag)
+        }
+    }, [])
  
     return (
         <div className="query">

@@ -18,10 +18,17 @@ function Provider({children}) {
     const [showFrontend, setShowFrontend] = useState('none');
     const [showLogin, setShowLogin] = useState('block');
 
+    const [title, setTitle] = useState('');
+    const [tag, setTag] = useState('');
     const [pageNum, setPageNum] = useState({number: 1, isLast: false, numOfPages: ''});
     const [category, setCategory] = useState('allArticles');
-    const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [calendarValue, calendarHandleChange] = useState(null);
+    const [calendarCheckValue, calendarSetCheckValue] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
+
+
+    const [activeCriteria, setActiveCriteria] = useState(['dateUpdated', 'down', 3]);
     const [activeRoom, setActiveRoom] = useState('');
     const [roomsCall, setRoomsCall] = useState([]);
 
@@ -42,12 +49,10 @@ function Provider({children}) {
         <context.Provider value={{
             listAllArticles,
             setListAllArticles,
-            /* articleDataLoaded,
-            setArticleDataLoaded,
-            articleImgLoaded1,
-            setArticleImgLoaded1,
-            articleImgLoaded2,
-            setArticleImgLoaded2, */
+            title, 
+            setTitle,
+            tag, 
+            setTag,
             showCmsOverlay,
             setShowCmsOverlay,
             newArticleBtn,
@@ -58,6 +63,8 @@ function Provider({children}) {
             setShowFrontend,
             showLogin, 
             setShowLogin,
+            selectedDate, 
+            setSelectedDate,
             pageNum, 
             setPageNum,
             category,
@@ -66,6 +73,10 @@ function Provider({children}) {
             setActiveCriteria,
             showMenu,
             setShowMenu,
+            calendarValue, 
+            calendarHandleChange,
+            calendarCheckValue, 
+            calendarSetCheckValue,
             showCalendar,
             setShowCalendar,
             defaultFilter,

@@ -13,14 +13,13 @@ import SearchLabel from './SearchLabel.js';
 
 export default function AllArticles() {
 
-    const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn,
-        setShowFrontend, setShowMenu, setShowCmsOverlay, pageNum, setPageNum, category} = useContext(context);
+    const { listAllArticles, setListAllArticles, setActiveLink, activeCriteria, setActiveCriteria,setNewArticleBtn, title, setTitle, tag, setTag,
+        setShowFrontend, setShowMenu, setShowCmsOverlay, pageNum, setPageNum, category, selectedDate, setSelectedDate} = useContext(context);
     
     const [searchVisible, setSearchVisible] = useState(false);
 
-    const [title, setTitle] = useState('');
-    const [tag, setTag] = useState('');
-    const [selectedDate, setSelectedDate] = useState(null);
+
+
 
 
     async function pageArticles(category, pageNum, title, tag, selectedDate) {
