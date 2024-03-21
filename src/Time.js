@@ -19,7 +19,7 @@ export function DateUpdated({  timeUpdated }) {
 }
 export function DatePublished({ timePublished, published }) {
     return (
-        <div className="allArticles-item-datePublished  allArticles-item-part">
+        <div className="allArticles-item-datePublished allArticles-item-part">
                 {published? 
                 <>
                 <div className="date">{dateFormat(timePublished, 'month', 'dayMonth', 'year', 'comma')}</div>
